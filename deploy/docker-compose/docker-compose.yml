@@ -1,0 +1,57 @@
+version: "3.1"
+
+services:
+  nginx: 
+    container_name: nginx
+    image: nginx:1.19.1
+    restart: always
+    ports:
+      - 80:80
+    volumes:
+      - ./nginx/nginx.conf:/etc/nginx/nginx.conf
+
+  dashboard:
+    container_name: dashboard
+    image: webalytic/dashboard:latest
+    build: ../../src/dashboard
+    restart: always
+    env_file:
+      - .env
+
+  api-gateway:
+    container_name: api-gateway
+    image: webalytic/api-gateway:latest
+    build: ../../src/api-gateway
+    restart: always
+    env_file:
+      - .env
+
+  log-collector:
+    container_name: log-collector
+    image: webalytic/log-collector:latest
+    build: ../../src/log-collector
+    restart: always
+    env_file:
+      - .env
+
+  log-processing:
+    container_name: log-processing
+    image: webalytic/log-processing:latest
+    build: ../../src/log-processing
+    restart: always
+    env_file:
+      - .env
+
+  data-storage:
+    container_name: data-storage
+    image: webalytic/data-storage:latest
+    build: ../../src/data-storage
+    restart: always
+    command: bash -c "yarn migration && yarn start"
+    env_file:
+      - .env
+
+networks:
+  default:
+    external:
+      name: app

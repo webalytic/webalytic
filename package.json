@@ -1,0 +1,21 @@
+{
+  "name": "webalytic",
+  "version": "0.0.1",
+  "main": "",
+  "license": "MIT",
+  "private": true,
+  "workspaces": [
+    "src/*"
+  ],
+  "scripts": {
+    "api-gateway": "lerna run start --stream --scope api-gateway",
+    "data-storage": "lerna run start --stream --scope data-storage",
+    "log-collector": "lerna run start --stream --scope log-collector",
+    "log-processing": "lerna run start --stream --scope log-processing",
+    "test": "lerna run test",
+    "migration": "lerna run migration"
+  },
+  "dependencies": {
+    "lerna": "^3.22.1"
+  }
+}

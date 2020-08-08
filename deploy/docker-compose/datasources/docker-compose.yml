@@ -1,0 +1,70 @@
+version: "3.1"
+
+services:
+  postgresql:
+    container_name: postgresql
+    image: postgres:12.2
+    restart: always
+    ports:
+      - 5432:5432
+    environment:
+      POSTGRES_USER: "tracker"
+      POSTGRES_PASSWORD: "tracker"
+      POSTGRES_DB: "tracker"
+    volumes:
+      - ./data/postgresql:/var/lib/postgresql/data
+
+  redis:
+    container_name: redis
+    image: redis:5
+    restart: always
+    ports:
+      - 6379:6379
+    command: redis-server --requirepass auth
+    volumes:
+      - ./data/redis:/data
+
+  clickhouse:
+    container_name: clickhouse
+    image: yandex/clickhouse-server:20.3.5.21
+    restart: always
+    ports:
+      - 9000:9000
+      - 8124:8123
+    volumes:
+      - ./clickhouse/config.xml:/etc/clickhouse-server/config.xml
+      - ./data/clickhouse/data:/opt/clickhouse/data
+      - ./data/clickhouse/lib:/var/lib/clickhouse
+
+  clickhouse-bulk:
+    container_name: clickhouse-bulk
+    image: nikepan/clickhouse-bulk:1.2.5
+    ports:
+      - 8123:8124
+    environment:
+      CLICKHOUSE_SERVERS: http://clickhouse:8123
+      CLICKHOUSE_FLUSH_INTERVAL: 3000
+
+  nats-streaming:
+    container_name: nats
+    image: nats-streaming:0.17.0-linux
+    restart: unless-stopped
+    ports:
+      - 4222:4222
+      - 8222:8222
+    command: "-cluster_id webalytic -http_port 8222 -max_age 168h -store file -dir /datastore"
+    volumes:
+      - ./data/nats/data:/datastore
+
+  geoip: 
+    image: webalytic/geoip:latest
+    build: ../../../src/geoip
+    container_name: geoip
+    restart: always
+    volumes:
+      - ./maxmind/GeoIP2-City.mmdb:/var/maxmind/GeoIP2-City.mmdb
+
+networks:
+  default:
+    external:
+      name: app

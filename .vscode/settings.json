@@ -1,0 +1,20 @@
+{
+  "eslint.validate": [
+    "typescript",
+    "json",
+    "javascript",
+    "vue"
+  ],
+  "eslint.format.enable": true,
+  "eslint.workingDirectories": [
+    "./src/api-gateway",
+    "./src/log-processing",
+    "./src/log-collector",
+    "./src/geoip",
+    "./src/dashboard",
+    "./src/data-storage"
+  ],
+  "editor.codeActionsOnSave": {
+    "source.fixAll.eslint": true
+  }
+}
