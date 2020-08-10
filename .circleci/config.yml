@@ -32,21 +32,19 @@ jobs:
         type: string
     working_directory: ~/project/src/<< parameters.package_name >>
     steps:
-      - checkout
-      - run: pwd
-      - run: ls
-      - run: ls ~/project/src
-      # - restore_cache:
-      #     keys:
-      #     - v1-dependencies-{{ checksum "<< parameters.package_path >>/package.json" }}
-      #     - v1-dependencies-
-      # - run: cd << parameters.package_path >> && yarn install
-      # - save_cache:
-      #     paths:
-      #       - node_modules
-      #     key: v1-dependencies-{{ checksum "<< parameters.package_path >>/package.json" }}
-      # - run: cd << parameters.package_path >> && yarn build
-      # - run: cd << parameters.package_path >> && yarn test
+      - checkout:
+          path: ~/project
+      - restore_cache:
+          keys:
+          - v1-dependencies-{{ checksum "./package.json" }}
+          - v1-dependencies-
+      - run: yarn install
+      - save_cache:
+          paths:
+            - node_modules
+          key: v1-dependencies-{{ checksum "./package.json" }}
+      - run: yarn build
+      - run: yarn test
 
 workflows:
   version: 2
