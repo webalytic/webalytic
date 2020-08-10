@@ -1,7 +1,7 @@
 package.json
 .eslintrc.js
 
-src/api/sdk/sdk.js
+src/sdk/sdk.js
 helm
 shared
 

@@ -12,7 +12,7 @@ export default class {
     this.eventProducer = eventProducer
   }
 
-  private getChannelNameByClientId(clientId: string): string {
+  public getChannelNameByClientId(clientId: string): string {
     const index = clientId.split('')
       .reduce((sum, char) =>
         sum + char.charCodeAt(0), 0) % this.countOfShards

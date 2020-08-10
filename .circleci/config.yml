@@ -11,6 +11,10 @@ parameters:
     type: boolean
     default: false
 
+  log-collector:
+    type: boolean
+    default: false
+
 executors:
   node:
     docker:
@@ -98,3 +102,18 @@ workflows:
           package_name: log-processing
           requires:
             - log-processing-build
+
+  log-collector:
+    when: << pipeline.parameters.log-collector >>
+    jobs:
+      - build:
+          name: log-collector-build
+          package_name: log-collector
+      - lint:
+          package_name: log-collector
+          requires:
+            - log-collector-build
+      - test:
+          package_name: log-collector
+          requires:
+            - log-collector-build
