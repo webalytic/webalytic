@@ -1,0 +1,27 @@
+version: 2
+
+jobs:
+  test:
+    docker:
+      - image: circleci/node:12
+
+    steps:
+      - checkout
+      - run: cd src/<< parameters.service >>
+      - restore_cache:
+          keys:
+          - v1-dependencies-{{ checksum "package.json" }}
+          - v1-dependencies-
+      - run: yarn install
+      - save_cache:
+          paths:
+            - node_modules
+          key: v1-dependencies-{{ checksum "package.json" }}
+      - run: yarn test
+
+workflows:
+  version: 2
+  log_processing:
+    jobs:
+      - test:
+          service: log-processing
