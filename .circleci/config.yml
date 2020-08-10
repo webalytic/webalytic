@@ -80,10 +80,10 @@ jobs:
       - run:
           name: Install dependencies
           command: |
-            wget -qO- https://deb.nodesource.com/setup_12.x | sudo -E bash && \
-            sudo apt-get install -y nodejs && \
-            node -v && \
-            sudo npm install -g yarn
+            ./load-nvm.sh
+            nvm install v12.18.1
+            nvm alias default v12.18.1
+
       - run: yarn test
 
 workflows:
