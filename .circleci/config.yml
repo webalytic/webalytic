@@ -7,7 +7,7 @@ jobs:
 
     steps:
       - checkout
-      - run: cd src/<< parameters.service >>
+      - run: cd src/<< parameters.ms_service_name >>
       - restore_cache:
           keys:
           - v1-dependencies-{{ checksum "package.json" }}
@@ -24,4 +24,4 @@ workflows:
   log_processing:
     jobs:
       - test:
-          service: log-processing
+          ms_service_name: log-processing
