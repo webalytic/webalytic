@@ -47,7 +47,7 @@ jobs:
       - persist_to_workspace:
           root: ~/project
           paths:
-            - ~/project/src/<< parameters.package_name >>
+            - src/<< parameters.package_name >>
 
   lint:
     executor: node
