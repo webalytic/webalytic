@@ -84,13 +84,14 @@ jobs:
             export NVM_DIR="/opt/circleci/.nvm"
             [ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"
             nvm install v12.18.1 && nvm use v12.18.1 && nvm alias default v12.18.1
+            curl -o- -L https://yarnpkg.com/install.sh | bash
             node -v
       - run: 
           command: |
             export NVM_DIR="/opt/circleci/.nvm"
             [ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"
             nvm use v12.18.1 && nvm alias default v12.18.1
-            npm run test
+            yarn test
 
 workflows:
   version: 2
