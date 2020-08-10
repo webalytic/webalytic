@@ -5,6 +5,10 @@ jobs:
     docker:
       - image: circleci/node:12
 
+    parameters:
+      ms-service-name:
+        type: string
+
     steps:
       - checkout
       - run: cd src/<< parameters.ms-service-name >>
