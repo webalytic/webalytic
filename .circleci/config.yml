@@ -20,6 +20,7 @@ jobs:
       - run: yarn test
 
 workflows:
+  version: 2
   log_processing:
     jobs:
       - test:
