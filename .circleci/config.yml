@@ -22,7 +22,6 @@ executors:
   node-machine:
     machine:
       image: default
-      docker_layer_caching: true
 
 jobs:
   trigger-workflows:
