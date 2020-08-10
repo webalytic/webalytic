@@ -90,7 +90,7 @@ jobs:
             export NVM_DIR="/opt/circleci/.nvm"
             [ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"
             nvm use v12.18.1 && nvm alias default v12.18.1
-            yarn test
+            npm run test
 
 workflows:
   version: 2
