@@ -1,4 +1,4 @@
-version: 2
+version: 2.1
 
 jobs:
   test:
@@ -22,7 +22,6 @@ jobs:
       - run: yarn test
 
 workflows:
-  version: 2
   log_processing:
     jobs:
       - test:
