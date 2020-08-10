@@ -15,6 +15,12 @@ yarn start
 # Run test, unit + integration
 yarn test
 
+# Run unit tests
+yarn test:unit
+
+# Run integration tests
+yarn test:integration
+
 # Run unit test with coverage report 
 yarn coverage
 
