@@ -80,7 +80,7 @@ jobs:
       - run:
           name: Install dependencies
           command: |
-            ./.circleci/load-nvm.sh
+            ~/project/.circleci/load-nvm.sh
             nvm install v12.18.1
             nvm alias default v12.18.1
 
