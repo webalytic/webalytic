@@ -5,6 +5,5 @@ process.env.NODE_ENV = 'test'
 dotenv.config()
 
 describe('Integrations tests', () => {
-  require('./services/CollectorService')
-  require('./api')
+  // Todo: start nats, redis, send and check events
 })

@@ -2,15 +2,8 @@
 import { createServer, Server } from 'http'
 import { expect } from 'chai'
 import * as faker from 'faker'
+import { session } from '@shared/value-objects/session'
 import Parser from './Parser'
-
-const addHitInput = {
-  resourceId: faker.random.uuid(),
-  clientId: faker.random.uuid(),
-  userId: faker.random.uuid(),
-  ip: faker.internet.ip(),
-  userAgent: faker.internet.userAgent()
-}
 
 let servers: Server[]
 function factoryGeoServer({ success }): Promise<Server> {
@@ -53,21 +46,30 @@ describe('Parser unit test', () => {
     })
   })
 
-  describe('getTrafficSource(data: Partial<AddHitInput>): TrafficSource | null', () => {
-    it('Send empty TrafficSource, return null', () => {
+  const emptyTrafficSource = {
+    campaignSource: '',
+    campaignContent: '',
+    campaignKeyword: '',
+    campaignMedium: '',
+    campaignId: '',
+    campaignName: ''
+  }
+  describe('getTrafficSource', () => {
+    it('Send empty return TrafficSource', () => {
       const parser = new Parser()
-      const trafficSource = parser.getTrafficSource(addHitInput)
-      expect(trafficSource).to.be.equal(null)
+      const trafficSource = parser.getTrafficSource(emptyTrafficSource, '', '')
+
+      expect(trafficSource.toJSON()).to.be.deep.equal(new session.TrafficSource().toJSON())
     })
 
     it('Return TrafficSource, send campaign props,not be null, ', () => {
       const parser = new Parser()
       const trafficSource = parser.getTrafficSource({
-        ...addHitInput,
+        ...emptyTrafficSource,
         campaignSource: 'source',
         campaignName: 'campaign',
         campaignMedium: 'cpa'
-      })
+      }, '', '')
 
       expect(trafficSource).not.be.equal(null)
     })
@@ -75,12 +77,11 @@ describe('Parser unit test', () => {
     it('Return TrafficSource, send utm params in document location, not be null, ', () => {
       const parser = new Parser()
       const trafficSource = parser.getTrafficSource({
-        ...addHitInput,
-        documentLocation: [
-          faker.internet.url(),
-          'utm_source=source&utm_campaign=campaign&utm_medium=cpa'
-        ].join('?')
-      })
+        ...emptyTrafficSource
+      }, [
+        faker.internet.url(),
+        'utm_source=source&utm_campaign=campaign&utm_medium=cpa'
+      ].join('?'), '')
 
       expect(trafficSource).not.be.equal(null)
     })
@@ -88,10 +89,10 @@ describe('Parser unit test', () => {
     it('Return TrafficSource, send referrer, not be null, ', () => {
       const parser = new Parser()
       const trafficSource = parser.getTrafficSource({
-        ...addHitInput,
-        documentLocation: faker.internet.url(),
-        documentReferrer: faker.internet.url()
-      })
+        ...emptyTrafficSource
+      },
+      faker.internet.url(),
+      faker.internet.url())
 
       expect(trafficSource).not.be.equal(null)
     })
@@ -99,16 +100,16 @@ describe('Parser unit test', () => {
     it('Return TrafficSource, send referrer with search engine, not be null, ', () => {
       const parser = new Parser()
       const trafficSource = parser.getTrafficSource({
-        ...addHitInput,
-        documentLocation: faker.internet.url(),
-        documentReferrer: 'https://www.google.com?q=keyword'
-      })
+        ...emptyTrafficSource
+      },
+      faker.internet.url(),
+      'https://www.google.com?q=keyword')
 
       expect(trafficSource).not.be.equal(null)
     })
   })
 
-  describe('getGeoNetwork(ipAdress: string): <GeoNetwork>', () => {
+  describe('getGeoNetwork', () => {
     it('Return GeoNetwork, not be null', () => {
       const parser = new Parser()
       const geoNetwork = parser.getGeoNetwork(faker.internet.ip())
@@ -130,7 +131,7 @@ describe('Parser unit test', () => {
     })
   })
 
-  describe('getDevice(userAgent: string): Device', () => {
+  describe('getDevice', () => {
     it('Return Device, not be null', () => {
       const parser = new Parser()
       const device = parser.getDevice(faker.internet.userAgent())

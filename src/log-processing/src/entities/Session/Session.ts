@@ -6,8 +6,9 @@ import { HitSessionControl, HitType, TrafficSourceSystemValues } from '../../con
 
 import SessionCreatedEvent from './events/SessionCreatedEvent'
 import SessionUpdatedEvent from './events/SessionUpdatedEvent'
+import { createInputValidate, addHitInputValidatte } from './Validator'
 
-interface SessionCreateProps {
+export interface SessionCreateProps {
   resourceId: string
   userId: string
   clientId: string
@@ -47,10 +48,10 @@ export default class Session {
   }
 
   static create(data: SessionCreateProps, hitProps: session.IHit): Session {
-    // Todo: реализовать валидацию входяхищ данных
+    createInputValidate(data, hitProps)
 
     const hit = new session.Hit(hitProps)
-    
+
     const props = new session.SessionProps({
       ...data,
       trafficSource: new session.TrafficSource(data.trafficSource || {
@@ -77,14 +78,14 @@ export default class Session {
     return instance
   }
 
-  public addHit(hitInput: session.IHit): boolean {
-    // Todo: реализовать валидацию входяхищ данных
+  public addHit(hitProps: session.IHit): boolean {
+    addHitInputValidatte(hitProps)
 
     const prevProps = new session.SessionProps(this.props.toJSON())
-    const hit = new session.Hit(hitInput)
+    const hit = new session.Hit(hitProps)
 
     this.props.totals.hits += 1
-    
+
     if (hit.type === HitType.PAGEVIEW) {
       this.props.totals.pageviews += 1
     }
@@ -102,7 +103,7 @@ export default class Session {
       sessionControl === HitSessionControl.START
       || this.date !== moment().format('YYYY-MM-DD')
       || (newTrafficSource && !this.trafficSourceEql(newTrafficSource))
-    ) 
+    )
   }
 
   private trafficSourceEql(newTrafficSource: session.TrafficSource): boolean {

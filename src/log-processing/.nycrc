@@ -1,5 +1,6 @@
 {
   "extends": "@istanbuljs/nyc-config-typescript",
   "all": false,
-  "check-coverage": true
+  "check-coverage": true,
+  "exclude": ["**/shared/**"]
 }

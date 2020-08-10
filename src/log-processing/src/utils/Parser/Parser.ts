@@ -59,7 +59,7 @@ export default class Parser {
     campaignSource: CampaignSource,
     documentLocation: string,
     documentReferrer: string
-  ): session.TrafficSource | null {
+  ): session.TrafficSource {
     return new session.TrafficSource(
       this._getByCampaignSource(campaignSource)
     || this._getByDocumentLocation(documentLocation)

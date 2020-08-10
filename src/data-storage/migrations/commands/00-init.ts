@@ -3,7 +3,7 @@ import { clickhouse } from '@webalytic/ms-tools/lib/datasources'
 
 module.exports = {
   up: async () => {
-    await clickhouse.querying(`CREATE DATABASE tracker`)
+    await clickhouse.querying('CREATE DATABASE tracker')
     await clickhouse.querying(`
       CREATE TABLE tracker.sessions (
         sign Int8,
