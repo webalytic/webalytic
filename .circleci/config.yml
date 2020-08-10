@@ -32,6 +32,7 @@ jobs:
         type: string
     working_directory: ~/project/src/<< parameters.package_name >>
     steps:
+      - checkout
       - run: pwd
       - run: ls
       - run: ls ~/project/src
