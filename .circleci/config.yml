@@ -30,7 +30,7 @@ jobs:
     parameters:
       package_name:
         type: string
-    working_directory: ~/src/<< parameters.package_name >>
+    working_directory: ~/project/src/<< parameters.package_name >>
     steps:
       - checkout
       - restore_cache:
