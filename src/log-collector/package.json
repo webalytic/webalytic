@@ -46,9 +46,9 @@
   "scripts": {
     "start": "ts-node --transpile-only -r tsconfig-paths/register --project ./tsconfig.json ./src/index.ts",
     "build": "ts-node --transpile-only -r tsconfig-paths/register --project ./tsconfig.json ./bin/proto.ts",
-    "test": "yarn test:integration",
-    "test:integration": "mocha -r ts-node/register/transpile-only -r tsconfig-paths/register --timeout 120000 -b ./test/index.ts",
     "lint": "eslint --ext .js,.ts ./",
-    "ts-check": "tsc -p ./tsconfig.json --noEmit"
+    "ts-check": "tsc -p ./tsconfig.json --noEmit",
+    "test": "yarn test:integration",
+    "test:integration": "mocha -r ts-node/register/transpile-only -r tsconfig-paths/register --timeout 120000 -b ./test/index.ts"
   }
 }
