@@ -4,14 +4,12 @@ jobs:
   test:
     docker:
       - image: circleci/node:12
-
     parameters:
-      ms-service-name:
+      servicename:
         type: string
-
     steps:
       - checkout
-      - run: cd src/<< parameters.ms-service-name >>
+      - run: cd src/<< parameters.servicename >>
       - restore_cache:
           keys:
           - v1-dependencies-{{ checksum "package.json" }}
@@ -28,4 +26,4 @@ workflows:
   log_processing:
     jobs:
       - test:
-          ms-service-name: log-processing
+          servicename: log-processing
