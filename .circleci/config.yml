@@ -28,10 +28,13 @@ jobs:
   test:
     executor: node
     parameters:
-      package_path:
+      package_name:
         type: string
+    working_directory: ~/project/src/<< parameters.package_name >>
     steps:
       - run: pwd
+      - run: ls
+      - run: ls ~/project/src
       # - restore_cache:
       #     keys:
       #     - v1-dependencies-{{ checksum "<< parameters.package_path >>/package.json" }}
@@ -61,4 +64,4 @@ workflows:
     when: << pipeline.parameters.log-processing >>
     jobs:
       - test:
-          package_path: "src/log-processing"
+          package_name: "log-processing"
