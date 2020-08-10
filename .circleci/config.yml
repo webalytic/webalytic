@@ -19,6 +19,10 @@ executors:
   node:
     docker:
       - image: circleci/node:12
+  node-machine:
+    machine:
+      image: default
+      docker_layer_caching: true
 
 jobs:
   trigger-workflows:
@@ -65,7 +69,7 @@ jobs:
       - run: yarn lint
 
   test:
-    executor: node
+    executor: node-machine
     parameters:
       package_name:
         type: string
