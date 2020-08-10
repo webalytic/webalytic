@@ -25,7 +25,7 @@ jobs:
           name: Trigger workflows
           command: chmod +x .circleci/circle_trigger.sh && .circleci/circle_trigger.sh
 
-  test:
+  build:
     executor: node
     parameters:
       package_name:
@@ -44,6 +44,31 @@ jobs:
             - ~/project/src/<< parameters.package_name >>/node_modules
           key: v1-dependencies-{{ checksum "./package.json" }}
       - run: yarn build
+      - persist_to_workspace:
+          root: ~/project
+          paths:
+            - ~/project/src/<< parameters.package_name >>
+
+  lint:
+    executor: node
+    parameters:
+      package_name:
+        type: string
+    working_directory: ~/project/src/<< parameters.package_name >>
+    steps:
+      - attach_workspace:
+          at: ~/project
+      - run: yarn lint
+
+  test:
+    executor: node
+    parameters:
+      package_name:
+        type: string
+    working_directory: ~/project/src/<< parameters.package_name >>
+    steps:
+      - attach_workspace:
+          at: ~/project
       - run: yarn test
 
 workflows:
@@ -62,5 +87,14 @@ workflows:
   log-processing:
     when: << pipeline.parameters.log-processing >>
     jobs:
+      - build:
+          name: log-processing-build
+          package_name: log-processing
+      - lint:
+          package_name: log-processing
+          requires:
+            - log-processing-build
       - test:
-          package_name: "log-processing"
+          package_name: log-processing
+          requires:
+            - log-processing-build
