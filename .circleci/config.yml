@@ -19,7 +19,8 @@ executors:
   node:
     docker:
       - image: circleci/node:12
-  node-machine:
+
+  node-machine: 
     machine:
       image: default
 
@@ -80,11 +81,16 @@ jobs:
       - run:
           name: Install dependencies
           command: |
-            chmod +x ~/project/.circleci/load-nvm.sh && ~/project/.circleci/load-nvm.sh
-            nvm install v12.18.1
-            nvm alias default v12.18.1
-
-      - run: yarn test
+            export NVM_DIR="/opt/circleci/.nvm"
+            [ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"
+            nvm install v12.18.1 && nvm use v12.18.1 && nvm alias default v12.18.1
+            node -v
+      - run: 
+          command: |
+            export NVM_DIR="/opt/circleci/.nvm"
+            [ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"
+            nvm use v12.18.1 && nvm alias default v12.18.1
+            yarn test
 
 workflows:
   version: 2
