@@ -12,14 +12,15 @@ jobs:
       - run: cd src/<< parameters.servicename >>
       - restore_cache:
           keys:
-          - v1-dependencies-{{ checksum "package.json" }}
+          - v1-dependencies-{{ checksum "./src/<< parameters.servicename >>/package.json" }}
           - v1-dependencies-
-      - run: yarn install
+      - run: cd src/<< parameters.servicename >> && yarn install
       - save_cache:
           paths:
             - node_modules
-          key: v1-dependencies-{{ checksum "package.json" }}
-      - run: yarn test
+          key: v1-dependencies-{{ checksum "./src/<< parameters.servicename >>/package.json" }}
+      - run: cd src/<< parameters.servicename >> && yarn build
+      - run: cd src/<< parameters.servicename >> && yarn test
 
 workflows:
   log_processing:
