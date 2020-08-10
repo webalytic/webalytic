@@ -60,4 +60,4 @@ workflows:
     when: << pipeline.parameters.log-processing >>
     jobs:
       - test:
-          package_path: "~/project/src/log-processing"
+          package_path: "src/log-processing"
