@@ -49,6 +49,7 @@ jobs:
       - save_cache:
           paths:
             - ~/project/src/<< parameters.package_name >>/node_modules
+            - ~/project/node_modules
           key: v1-dependencies-{{ checksum "./package.json" }}
       - run: yarn build
       - persist_to_workspace:
@@ -76,6 +77,13 @@ jobs:
     steps:
       - attach_workspace:
           at: ~/
+      - run:
+          name: Install dependencies
+          command: |
+            wget -qO- https://deb.nodesource.com/setup_12.x | sudo -E bash && \
+            sudo apt-get install -y nodejs && \
+            node -v && \
+            sudo npm install -g yarn
       - run: yarn test
 
 workflows:
