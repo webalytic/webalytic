@@ -11,10 +11,18 @@ parameters:
     type: boolean
     default: false
 
+  log-collector:
+    type: boolean
+    default: false
+
 executors:
   node:
     docker:
       - image: circleci/node:12
+
+  node-machine: 
+    machine:
+      image: default
 
 jobs:
   trigger-workflows:
@@ -42,6 +50,7 @@ jobs:
       - save_cache:
           paths:
             - ~/project/src/<< parameters.package_name >>/node_modules
+            - ~/project/node_modules
           key: v1-dependencies-{{ checksum "./package.json" }}
       - run: yarn build
       - persist_to_workspace:
@@ -61,7 +70,7 @@ jobs:
       - run: yarn lint
 
   test:
-    executor: node
+    executor: node-machine
     parameters:
       package_name:
         type: string
@@ -69,8 +78,13 @@ jobs:
     steps:
       - attach_workspace:
           at: ~/
-      - run: yarn test
-
+      - run:
+          command: |
+            export NVM_DIR="/opt/circleci/.nvm"
+            [ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"
+            nvm install v12.18.1 && nvm use v12.18.1 && nvm alias default v12.18.1
+            npm run test
+            
 workflows:
   version: 2
 
@@ -98,3 +112,18 @@ workflows:
           package_name: log-processing
           requires:
             - log-processing-build
+
+  log-collector:
+    when: << pipeline.parameters.log-collector >>
+    jobs:
+      - build:
+          name: log-collector-build
+          package_name: log-collector
+      - lint:
+          package_name: log-collector
+          requires:
+            - log-collector-build
+      - test:
+          package_name: log-collector
+          requires:
+            - log-collector-build
