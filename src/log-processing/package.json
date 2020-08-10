@@ -51,11 +51,11 @@
   "scripts": {
     "start": "ts-node --transpile-only -r tsconfig-paths/register --project ./tsconfig.json ./src/index.ts",
     "build": "ts-node --transpile-only -r tsconfig-paths/register --project ./tsconfig.json ./bin/proto.ts",
+    "lint": "eslint --ext .js,.ts ./",
+    "ts-check": "tsc -p ./tsconfig.json --noEmit",
     "test": "yarn test:unit && yarn test:integration",
     "test:unit": "mocha -r ts-node/register/transpile-only -r tsconfig-paths/register --timeout 15000 ./src/**/*.test.ts",
     "test:integration": "mocha -r ts-node/register/transpile-only -r tsconfig-paths/register --timeout 15000 -b ./test/index.ts",
-    "coverage": "nyc yarn test:unit",
-    "lint": "eslint --ext .js,.ts ./",
-    "ts-check": "tsc -p ./tsconfig.json --noEmit"
+    "coverage": "nyc yarn test:unit"
   }
 }

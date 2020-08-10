@@ -1,29 +1,100 @@
 version: 2.1
 
-jobs:
-  test:
+parameters:
+  # This parameter is used to trigger the main workflow
+  trigger:
+    type: boolean
+    default: true
+
+  # A parameter per package
+  log-processing:
+    type: boolean
+    default: false
+
+executors:
+  node:
     docker:
       - image: circleci/node:12
-    parameters:
-      servicename:
-        type: string
+
+jobs:
+  trigger-workflows:
+    executor: node
     steps:
       - checkout
-      - run: cd src/<< parameters.servicename >>
+      - run:
+          name: Trigger workflows
+          command: chmod +x .circleci/circle_trigger.sh && .circleci/circle_trigger.sh
+
+  build:
+    executor: node
+    parameters:
+      package_name:
+        type: string
+    working_directory: ~/project/src/<< parameters.package_name >>
+    steps:
+      - checkout:
+          path: ~/project
       - restore_cache:
           keys:
-          - v1-dependencies-{{ checksum "./src/<< parameters.servicename >>/package.json" }}
+          - v1-dependencies-{{ checksum "./package.json" }}
           - v1-dependencies-
-      - run: cd src/<< parameters.servicename >> && yarn install
+      - run: yarn install
       - save_cache:
           paths:
-            - node_modules
-          key: v1-dependencies-{{ checksum "./src/<< parameters.servicename >>/package.json" }}
-      - run: cd src/<< parameters.servicename >> && yarn build
-      - run: cd src/<< parameters.servicename >> && yarn test
+            - ~/project/src/<< parameters.package_name >>/node_modules
+          key: v1-dependencies-{{ checksum "./package.json" }}
+      - run: yarn build
+      - persist_to_workspace:
+          root: ~/
+          paths:
+            - project
+
+  lint:
+    executor: node
+    parameters:
+      package_name:
+        type: string
+    working_directory: ~/project/src/<< parameters.package_name >>
+    steps:
+      - attach_workspace:
+          at: ~/
+      - run: yarn lint
+
+  test:
+    executor: node
+    parameters:
+      package_name:
+        type: string
+    working_directory: ~/project/src/<< parameters.package_name >>
+    steps:
+      - attach_workspace:
+          at: ~/
+      - run: yarn test
 
 workflows:
-  log_processing:
+  version: 2
+
+  # The main workflow responsible for triggering all other workflows
+  # in which changes are detected.
+  ci:
+    when: << pipeline.parameters.trigger >>
     jobs:
+      - trigger-workflows
+
+
+  # Workflows defined for each package.
+
+  log-processing:
+    when: << pipeline.parameters.log-processing >>
+    jobs:
+      - build:
+          name: log-processing-build
+          package_name: log-processing
+      - lint:
+          package_name: log-processing
+          requires:
+            - log-processing-build
       - test:
-          servicename: log-processing
+          package_name: log-processing
+          requires:
+            - log-processing-build
