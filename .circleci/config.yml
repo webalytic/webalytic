@@ -45,9 +45,9 @@ jobs:
           key: v1-dependencies-{{ checksum "./package.json" }}
       - run: yarn build
       - persist_to_workspace:
-          root: ~/project
+          root: ~/
           paths:
-            - src/<< parameters.package_name >>
+            - ~/project
 
   lint:
     executor: node
@@ -57,7 +57,7 @@ jobs:
     working_directory: ~/project/src/<< parameters.package_name >>
     steps:
       - attach_workspace:
-          at: ~/project
+          at: ~/
       - run: yarn lint
 
   test:
@@ -68,7 +68,7 @@ jobs:
     working_directory: ~/project/src/<< parameters.package_name >>
     steps:
       - attach_workspace:
-          at: ~/project
+          at: ~/
       - run: yarn test
 
 workflows:
