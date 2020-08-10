@@ -3,7 +3,7 @@ set -e
 
 # The root directory of packages.
 # Use `.` if your packages are located in root.
-ROOT="./packages" 
+ROOT="./src" 
 REPOSITORY_TYPE="github"
 CIRCLE_API="https://circleci.com/api"
 
