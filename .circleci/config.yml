@@ -28,22 +28,20 @@ jobs:
   test:
     executor: node
     parameters:
-      package_name:
+      package_path:
         type: string
-    working_directory: ~/project/src/<< parameters.package_name >>
     steps:
-      - checkout
       - restore_cache:
           keys:
-          - v1-dependencies-{{ checksum "./package.json" }}
+          - v1-dependencies-{{ checksum "<< parameters.package_path >>/package.json" }}
           - v1-dependencies-
-      - run: yarn install
+      - run: cd << parameters.package_path >> && yarn install
       - save_cache:
           paths:
             - node_modules
-          key: v1-dependencies-{{ checksum "./package.json" }}
-      - run: yarn build
-      - run: yarn test
+          key: v1-dependencies-{{ checksum "<< parameters.package_path >>/package.json" }}
+      - run: cd << parameters.package_path >> && yarn build
+      - run: cd << parameters.package_path >> && yarn test
 
 workflows:
   version: 2
@@ -62,4 +60,4 @@ workflows:
     when: << pipeline.parameters.log-processing >>
     jobs:
       - test:
-          package_name: log-processing
+          package_path: ./src/log-processing
