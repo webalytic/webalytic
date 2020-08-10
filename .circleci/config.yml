@@ -61,4 +61,5 @@ workflows:
   log-processing:
     when: << pipeline.parameters.log-processing >>
     jobs:
-      - test
+      - test:
+          package_name: log-processing
