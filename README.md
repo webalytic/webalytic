@@ -29,7 +29,7 @@ Microservice architecture, project include next service:
   - Log-collector & Web SDK
   - Log-processing
   - Geoip
-  - Data-storage & Cube.JS API 
+  - Data-storage & [Cube.JS](https://cube.dev/) API 
 
   <img src="./docs/WebAlyticMicroservices.jpg" width="800">
 
