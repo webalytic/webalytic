@@ -31,17 +31,18 @@ jobs:
       package_path:
         type: string
     steps:
-      - restore_cache:
-          keys:
-          - v1-dependencies-{{ checksum "<< parameters.package_path >>/package.json" }}
-          - v1-dependencies-
-      - run: cd << parameters.package_path >> && yarn install
-      - save_cache:
-          paths:
-            - node_modules
-          key: v1-dependencies-{{ checksum "<< parameters.package_path >>/package.json" }}
-      - run: cd << parameters.package_path >> && yarn build
-      - run: cd << parameters.package_path >> && yarn test
+      - run: pwd
+      # - restore_cache:
+      #     keys:
+      #     - v1-dependencies-{{ checksum "<< parameters.package_path >>/package.json" }}
+      #     - v1-dependencies-
+      # - run: cd << parameters.package_path >> && yarn install
+      # - save_cache:
+      #     paths:
+      #       - node_modules
+      #     key: v1-dependencies-{{ checksum "<< parameters.package_path >>/package.json" }}
+      # - run: cd << parameters.package_path >> && yarn build
+      # - run: cd << parameters.package_path >> && yarn test
 
 workflows:
   version: 2
