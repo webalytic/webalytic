@@ -46,11 +46,13 @@ jobs:
           keys:
           - v1-dependencies-{{ checksum "./package.json" }}
           - v1-dependencies-
+      - run: rm ../../package.json
+      - run: yarn generate-lock-entry >> yarn.lock
       - run: yarn install
       - save_cache:
           paths:
             - ~/project/src/<< parameters.package_name >>/node_modules
-            - ~/project/node_modules
+            - ~/.cache/yarn
           key: v1-dependencies-{{ checksum "./package.json" }}
       - run: yarn build
       - persist_to_workspace:
@@ -68,6 +70,17 @@ jobs:
       - attach_workspace:
           at: ~/
       - run: yarn lint
+
+  typescript:
+    executor: node
+    parameters:
+      package_name:
+        type: string
+    working_directory: ~/project/src/<< parameters.package_name >>
+    steps:
+      - attach_workspace:
+          at: ~/
+      - run: yarn ts-check
 
   test:
     executor: node-machine
@@ -105,13 +118,21 @@ workflows:
           name: log-processing-build
           package_name: log-processing
       - lint:
+          name: log-processing-lint
+          package_name: log-processing
+          requires:
+            - log-processing-build
+      - typescript:
+          name: log-processing-typescript
           package_name: log-processing
           requires:
             - log-processing-build
       - test:
+          name: log-processing-test
           package_name: log-processing
           requires:
-            - log-processing-build
+            - log-processing-typescript
+            - log-processing-lint
 
   log-collector:
     when: << pipeline.parameters.log-collector >>
@@ -120,10 +141,18 @@ workflows:
           name: log-collector-build
           package_name: log-collector
       - lint:
+          name: log-collector-lint
+          package_name: log-collector
+          requires:
+            - log-collector-build
+      - typescript:  
+          name: log-collector-typescript
           package_name: log-collector
           requires:
             - log-collector-build
       - test:
+          name: log-collector-test
           package_name: log-collector
           requires:
-            - log-collector-build
+            - log-collector-typescript
+            - log-collector-lint

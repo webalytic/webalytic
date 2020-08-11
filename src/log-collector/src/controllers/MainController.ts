@@ -1,5 +1,5 @@
 import { getClientIp } from 'request-ip'
-import * as moment from 'moment'
+import moment from 'moment'
 
 import LogCollectorService from 'services/LogCollectorService'
 import { LogCollectedEventPayload, ILogCollectedEventPayload } from '@shared/events/log-collector-events'

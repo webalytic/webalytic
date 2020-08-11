@@ -3,12 +3,19 @@ import { credentials, Metadata, ServiceError } from 'grpc'
 
 import { GeoipClient } from '@shared/services/geoip/geoip_grpc_pb'
 import { LookUpRequest, LookUpResponse } from '@shared/services/geoip/geoip_pb'
-import GeoNetwork from '../entities/Session/valueObjects/GeoNetwork'
+import { session } from '@shared/value-objects/session'
 
 export default class GeoipServiceClient {
-  private readonly client: GeoipClient = new GeoipClient('localhost:50051', credentials.createInsecure());
+  private readonly client: GeoipClient
 
-  public async lookup(ipAdress: string): Promise<GeoNetwork> {
+  constructor() {
+    const host: string = process.env.GEOIP_HOST || 'localhost'
+    const port: number = +(process.env.GEOIP_PORT || 50051)
+
+    this.client = new GeoipClient(`${host}:${port}`, credentials.createInsecure())
+  }
+
+  public async lookup(ipAdress: string): Promise<session.GeoNetwork> {
     const param: LookUpRequest = new LookUpRequest()
     param.setIp(ipAdress)
 
@@ -18,11 +25,11 @@ export default class GeoipServiceClient {
           return reject(err)
         }
 
-        resolve({
+        resolve(new session.GeoNetwork({
           country: res.getCountry(),
           region: '',
           city: res.getCity()
-        })
+        }))
       })
     })
   }

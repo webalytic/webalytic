@@ -1,4 +1,4 @@
-import * as moment from 'moment'
+import moment from 'moment'
 import { v4 as uuidV4 } from 'uuid'
 import { session } from '@shared/value-objects/session'
 
