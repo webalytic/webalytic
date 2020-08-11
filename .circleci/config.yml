@@ -31,6 +31,10 @@ parameters:
     type: boolean
     default: false
 
+  configuration:
+    type: boolean
+    default: false
+
 executors:
   node:
     docker:
