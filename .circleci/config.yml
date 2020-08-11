@@ -19,6 +19,18 @@ parameters:
     type: boolean
     default: false
 
+  data-storage:
+    type: boolean
+    default: false
+
+  geoip:
+    type: boolean
+    default: false
+
+  dashboard:
+    type: boolean
+    default: false
+
 executors:
   node:
     docker:
