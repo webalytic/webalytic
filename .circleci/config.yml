@@ -15,6 +15,10 @@ parameters:
     type: boolean
     default: false
 
+  api-gateway:
+    type: boolean
+    default: false
+
 executors:
   node:
     docker:
@@ -156,3 +160,26 @@ workflows:
           requires:
             - log-collector-typescript
             - log-collector-lint
+
+  api-gateway:
+    when: << pipeline.parameters.api-gateway >>
+    jobs:
+      - build:
+          name: api-gateway-build
+          package_name: api-gateway
+      - lint:
+          name: api-gateway-lint
+          package_name: api-gateway
+          requires:
+            - api-gateway-build
+      - typescript:  
+          name: api-gateway-typescript
+          package_name: api-gateway
+          requires:
+            - api-gateway-build
+      - test:
+          name: api-gateway-test
+          package_name: api-gateway
+          requires:
+            - api-gateway-typescript
+            - api-gateway-lint

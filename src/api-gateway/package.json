@@ -4,9 +4,10 @@
   "main": "./src/index.ts",
   "license": "MIT",
   "dependencies": {
-    "@webalytic/ms-tools": "^0.0.5",
+    "@webalytic/ms-tools": "^0.0.8",
     "apollo-server": "^2.16.1",
     "apollo-server-express": "^2.16.1",
+    "apollo-server-testing": "^2.16.1",
     "awilix": "^4.2.6",
     "axios": "^0.19.2",
     "body-parser": "^1.19.0",
@@ -15,17 +16,18 @@
     "graphql-type-json": "^0.3.2",
     "lodash": "^4.17.19",
     "moment": "^2.27.0",
+    "nock": "^13.0.3",
     "request-ip": "^2.1.3",
     "ts-node": "^8.10.2",
     "typescript": "^3.9.6",
     "uuid": "^8.3.0"
   },
   "devDependencies": {
-    "@types/request-ip": "^0.0.35",
     "@istanbuljs/nyc-config-typescript": "^1.0.1",
     "@types/chai": "^4.2.12",
     "@types/faker": "^4.1.12",
     "@types/mocha": "^7.0.2",
+    "@types/request-ip": "^0.0.35",
     "@types/supertest": "^2.0.10",
     "@typescript-eslint/eslint-plugin": "^3.5.0",
     "@typescript-eslint/parser": "^3.5.0",
@@ -41,6 +43,9 @@
   },
   "scripts": {
     "start": "ts-node --transpile-only -r tsconfig-paths/register --project ./tsconfig.json ./src/index.ts",
+    "build": "echo 'build'",
+    "test": "npm run test:integration",
+    "test:integration": "mocha -r ts-node/register/transpile-only -r tsconfig-paths/register --timeout 120000 -b ./test/index.ts",
     "lint": "eslint --ext .js,.ts ./",
     "ts-check": "tsc -p ./tsconfig.json --noEmit"
   }

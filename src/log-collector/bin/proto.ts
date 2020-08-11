@@ -27,7 +27,7 @@ const PROTO_EVENTS = [
     ts: `${EVENTS_DIR}/log-collector-events.d.ts`,
     proto: [
       `${PROTO_DIR}/shared/session.proto`,
-      `${PROTO_DIR}/log-collector/log-collector-events.proto`
+      `${PROTO_DIR}/log-collector/log_collector_events.proto`
     ].join(' ')
   },
   {
@@ -35,7 +35,7 @@ const PROTO_EVENTS = [
     ts: `${EVENTS_DIR}/log-processing-events.d.ts`,
     proto: [
       `${PROTO_DIR}/shared/session.proto`,
-      `${PROTO_DIR}/log-processing/log-processing-events.proto`
+      `${PROTO_DIR}/log-processing/log_processing_events.proto`
     ].join(' ')
   }
 ]

@@ -20,7 +20,7 @@ export default class GeoipServiceClient {
     param.setIp(ipAdress)
 
     return new Promise((resolve, reject): void => {
-      this.client.lookup(param, new Metadata(), (err: ServiceError | null, res: LookUpResponse) => {
+      this.client.lookUp(param, new Metadata(), (err: ServiceError | null, res: LookUpResponse) => {
         if (err) {
           return reject(err)
         }
