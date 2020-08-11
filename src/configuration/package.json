@@ -1,5 +1,5 @@
 {
-  "name": "geoip",
+  "name": "configuration",
   "version": "0.0.1",
   "main": "./src/index.ts",
   "license": "MIT",
@@ -10,16 +10,17 @@
     "google-protobuf": "^3.12.4",
     "grpc": "^1.24.3",
     "grpc-tools": "^1.9.1",
-    "maxmind": "^4.1.4",
     "rimraf": "^3.0.2",
     "shelljs": "^0.8.4",
     "ts-node": "^8.10.2",
-    "typescript": "^3.9.6"
+    "typescript": "^3.9.6",
+    "umzug": "^2.3.0"
   },
   "devDependencies": {
     "@types/google-protobuf": "^3.7.2",
     "@types/rimraf": "^3.0.0",
     "@types/shelljs": "^0.8.8",
+    "@types/umzug": "^2.2.3",
     "@typescript-eslint/eslint-plugin": "^3.5.0",
     "@typescript-eslint/parser": "^3.5.0",
     "eslint": "^7.4.0",
@@ -27,12 +28,15 @@
     "eslint-plugin-es5": "^1.5.0",
     "eslint-plugin-import": "^2.22.0",
     "grpc-tools": "^1.9.1",
-    "grpc_tools_node_protoc_ts": "^4.1.2"
+    "grpc_tools_node_protoc_ts": "^4.1.2",
+    "protobufjs": "^6.10.1"
   },
   "scripts": {
     "start": "ts-node --transpile-only -r tsconfig-paths/register --project ./tsconfig.json ./src/index.ts",
     "build": "ts-node --transpile-only -r tsconfig-paths/register --project ./tsconfig.json ./bin/proto.ts",
     "lint": "eslint --ext .js,.ts ./",
-    "ts-check": "tsc -p ./tsconfig.json --noEmit"
+    "ts-check": "tsc -p ./tsconfig.json --noEmit",
+    "migration": "ts-node --transpile-only -r tsconfig-paths/register --project ./tsconfig.json ./migrations",
+    "migration:down": "ts-node --transpile-only -r tsconfig-paths/register --project ./tsconfig.json ./migrations down"
   }
 }

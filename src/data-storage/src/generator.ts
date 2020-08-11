@@ -1,7 +1,7 @@
 /* eslint-disable no-await-in-loop */
-import * as dotenv from 'dotenv'
-import * as faker from 'faker'
-import * as moment from 'moment'
+import dotenv from 'dotenv'
+import faker from 'faker'
+import moment from 'moment'
 
 import EventProducer from '@webalytic/ms-tools/lib/infra/EventProducer'
 import { session } from '@shared/value-objects/session'
