@@ -128,6 +128,7 @@ workflows:
           requires:
             - log-processing-build
       - test:
+          name: log-processing-test
           package_name: log-processing
           requires:
             - log-processing-typescript
@@ -150,6 +151,7 @@ workflows:
           requires:
             - log-collector-build
       - test:
+          name: log-collector-test
           package_name: log-collector
           requires:
             - log-collector-typescript
