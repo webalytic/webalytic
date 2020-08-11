@@ -71,6 +71,17 @@ jobs:
           at: ~/
       - run: yarn lint
 
+  typescript:
+    executor: node
+    parameters:
+      package_name:
+        type: string
+    working_directory: ~/project/src/<< parameters.package_name >>
+    steps:
+      - attach_workspace:
+          at: ~/
+      - run: yarn ts-check
+
   test:
     executor: node-machine
     parameters:
@@ -107,13 +118,20 @@ workflows:
           name: log-processing-build
           package_name: log-processing
       - lint:
+          name: log-processing-lint
+          package_name: log-processing
+          requires:
+            - log-processing-build
+      - typescript:
+          name: log-processing-typescript
           package_name: log-processing
           requires:
             - log-processing-build
       - test:
           package_name: log-processing
           requires:
-            - log-processing-build
+            - log-processing-typescript
+            - log-processing-lint
 
   log-collector:
     when: << pipeline.parameters.log-collector >>
@@ -122,10 +140,17 @@ workflows:
           name: log-collector-build
           package_name: log-collector
       - lint:
+          name: log-collector-lint
+          package_name: log-collector
+          requires:
+            - log-collector-build
+      - typescript:  
+          name: log-collector-typescript
           package_name: log-collector
           requires:
             - log-collector-build
       - test:
           package_name: log-collector
           requires:
-            - log-collector-build
+            - log-collector-typescript
+            - log-collector-lint

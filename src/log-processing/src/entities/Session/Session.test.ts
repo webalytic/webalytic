@@ -2,7 +2,7 @@
 import { expect } from 'chai'
 import * as faker from 'faker'
 import { session } from '@shared/value-objects/session'
-import * as moment from 'moment'
+import moment from 'moment'
 import Session, { SessionCreateProps } from './Session'
 import { HitType, HitSessionControl, HitDataSource } from '../../constants'
 import SessionCreatedEvent from './events/SessionCreatedEvent'

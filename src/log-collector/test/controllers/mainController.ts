@@ -1,7 +1,7 @@
 import * as express from 'express'
 import { AwilixContainer } from 'awilix'
 import { expect } from 'chai'
-import * as request from 'supertest'
+import request from 'supertest'
 import * as faker from 'faker'
 
 import EventConsumer from '@webalytic/ms-tools/lib/infra/EventConsumer'

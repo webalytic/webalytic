@@ -1,7 +1,7 @@
 import * as express from 'express'
 import { AwilixContainer } from 'awilix'
 import { expect } from 'chai'
-import * as request from 'supertest'
+import request from 'supertest'
 
 import createApp from '../before/createApp'
 import { Dependencies } from '../../src/container'
