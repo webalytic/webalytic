@@ -4,6 +4,7 @@
   "main": "./src/index.ts",
   "license": "MIT",
   "dependencies": {
+    "@types/mocha": "^8.0.2",
     "@webalytic/ms-tools": "^0.0.10",
     "@webalytic/protorepo": "webalytic/protorepo#0.2.3",
     "chai": "^4.2.0",

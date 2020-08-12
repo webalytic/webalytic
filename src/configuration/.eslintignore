@@ -1,11 +1,3 @@
 package.json
 .eslintrc.js
-
-src/api/sdk/sdk.js
-helm
-models/
-shared/events/*
-shared/services/*
-shared/value-objects/*
-
-src/api/cubejs/schema/*
+shared
