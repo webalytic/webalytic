@@ -4,8 +4,8 @@
   "main": "./src/index.ts",
   "license": "MIT",
   "dependencies": {
-    "@webalytic/ms-tools": "^0.0.8",
-    "@webalytic/protorepo": "webalytic/protorepo#0.1.4",
+    "@webalytic/ms-tools": "^0.0.10",
+    "@webalytic/protorepo": "webalytic/protorepo#0.2.1",
     "awilix": "^4.2.6",
     "dotenv": "^8.2.0",
     "express": "^4.17.1",
@@ -21,6 +21,7 @@
   },
   "devDependencies": {
     "@istanbuljs/nyc-config-typescript": "^1.0.1",
+    "@types/uglify-js": "^3.9.3",
     "@types/chai": "^4.2.12",
     "@types/faker": "^4.1.12",
     "@types/mocha": "^7.0.2",
@@ -35,12 +36,12 @@
     "eslint-config-airbnb-base": "^14.2.0",
     "eslint-plugin-es5": "^1.5.0",
     "eslint-plugin-import": "^2.22.0",
-    "supertest": "^4.0.2",
     "faker": "^4.1.0",
     "grpc-tools": "^1.9.1",
     "grpc_tools_node_protoc_ts": "^4.1.2",
-    "nyc": "^15.1.0",
     "mocha": "^8.0.1",
+    "nyc": "^15.1.0",
+    "supertest": "^4.0.2",
     "testcontainers": "^3.3.0"
   },
   "scripts": {
@@ -49,6 +50,7 @@
     "lint": "eslint --ext .js,.ts ./",
     "ts-check": "tsc --project ./tsconfig.json --noEmit",
     "test": "npm run test:integration",
-    "test:integration": "mocha -r ts-node/register/transpile-only -r tsconfig-paths/register --timeout 120000 -b ./test/index.ts"
+    "test:integration": "mocha -r ts-node/register/transpile-only -r tsconfig-paths/register --timeout 120000 -b ./test/index.ts",
+    "postinstall": "npm run build"
   }
 }

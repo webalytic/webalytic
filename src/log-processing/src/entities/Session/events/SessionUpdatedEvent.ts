@@ -1,5 +1,5 @@
-import { SessionUpdatedEventPayload } from '@shared/events/log-processing-events'
-import { session } from '@shared/value-objects/session'
+import { SessionUpdatedEventPayload } from '@shared/log-processing/log_processing_events'
+import { session } from '@shared/log-processing/seesion'
 import BaseEvent from './BaseEvent'
 
 export default class SessionUpdatedEvent extends BaseEvent {

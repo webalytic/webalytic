@@ -1,6 +1,6 @@
 import { clickhouse } from '@webalytic/ms-tools/lib/datasources'
 
-import { session } from '@shared/value-objects/session'
+import { session } from '@shared/log-processing/session'
 
 export default class SessionStorage {
   async insert(hit: session.Hit, props: session.SessionProps): Promise<void> {

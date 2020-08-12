@@ -1,5 +1,5 @@
 import { createFastesValidationError } from '@webalytic/ms-tools/lib/errors'
-import { session } from '@shared/value-objects/session'
+import { session } from '@shared/log-processing/seesion'
 
 import { HitType, HitDataSource } from '../constants'
 

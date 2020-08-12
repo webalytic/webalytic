@@ -1,6 +1,6 @@
 import Subscriber from '@webalytic/ms-tools/lib/ddd/Subscriber'
 import Logger from '@webalytic/ms-tools/lib/logger'
-import { ILogCollectedEventPayload } from '@shared/events/log-collector-events'
+import { ILogCollectedEventPayload } from '@shared/log-collector/log_collector_events'
 
 import { Dependencies } from '../container'
 import AddHitInput from '../inputs/AddHitInput'

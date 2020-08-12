@@ -1,7 +1,7 @@
 /* eslint-disable no-underscore-dangle */
 import { UAParser } from 'ua-parser-js'
 
-import { session } from '@shared/value-objects/session'
+import { session } from '@shared/log-processing/seesion'
 import SearchEngines from './SearchEngines'
 
 import { TrafficSourceSystemValues } from '../../constants'

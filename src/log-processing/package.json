@@ -9,8 +9,8 @@
     "@types/protobufjs": "^6.0.0",
     "@types/ua-parser-js": "^0.7.33",
     "@types/uuid": "^8.0.0",
-    "@webalytic/ms-tools": "^0.0.8",
-    "@webalytic/protorepo": "webalytic/protorepo#0.1.4",
+    "@webalytic/ms-tools": "^0.0.10",
+    "@webalytic/protorepo": "webalytic/protorepo#0.2.1",
     "awilix": "^4.2.6",
     "axios": "^0.19.2",
     "dotenv": "^8.2.0",
@@ -56,6 +56,7 @@
     "test": "npm run test:unit && npm run test:integration",
     "test:unit": "mocha -r ts-node/register/transpile-only -r tsconfig-paths/register --timeout 15000 ./src/**/*.test.ts",
     "test:integration": "mocha -r ts-node/register/transpile-only -r tsconfig-paths/register --timeout 15000 -b ./test/index.ts",
-    "coverage": "nyc npm run test:unit"
+    "coverage": "nyc npm run test:unit",
+    "postinstall": "npm run build"
   }
 }

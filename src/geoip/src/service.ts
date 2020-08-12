@@ -2,8 +2,8 @@ import {
   sendUnaryData, ServerUnaryCall
 } from 'grpc'
 
-import { GeoipService, IGeoipServer } from '@shared/services/geoip/geoip_grpc_pb'
-import { LookUpRequest, LookUpResponse } from '@shared/services/geoip/geoip_pb'
+import { GeoipService, IGeoipServer } from '@shared/geoip/geoip_grpc_pb'
+import { LookUpRequest, LookUpResponse } from '@shared/geoip/geoip_pb'
 
 import maxmind from './maxmindReader'
 

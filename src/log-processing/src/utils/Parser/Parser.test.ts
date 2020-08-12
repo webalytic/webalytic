@@ -2,7 +2,7 @@
 import { createServer, Server } from 'http'
 import { expect } from 'chai'
 import * as faker from 'faker'
-import { session } from '@shared/value-objects/session'
+import { session } from '@shared/log-processing/seesion'
 import Parser from './Parser'
 
 let servers: Server[]

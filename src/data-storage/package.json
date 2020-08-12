@@ -4,8 +4,8 @@
   "main": "./src/index.ts",
   "license": "MIT",
   "dependencies": {
-    "@webalytic/ms-tools": "^0.0.8",
-    "@webalytic/protorepo": "webalytic/protorepo#0.1.4",
+    "@webalytic/ms-tools": "^0.0.10",
+    "@webalytic/protorepo": "webalytic/protorepo#0.2.1",
     "@cubejs-backend/server-core": "^0.19.56",
     "@cubejs-backend/clickhouse-driver": "^0.19.56",
     "@types/protobufjs": "^6.0.0",
@@ -38,6 +38,7 @@
     "lint": "eslint --ext .js,.ts ./",
     "ts-check": "tsc -p ./tsconfig.json --noEmit",
     "migration": "ts-node --transpile-only -r tsconfig-paths/register --project ./tsconfig.json ./migrations",
-    "migration:down": "ts-node --transpile-only -r tsconfig-paths/register --project ./tsconfig.json ./migrations down"
+    "migration:down": "ts-node --transpile-only -r tsconfig-paths/register --project ./tsconfig.json ./migrations down",
+    "postinstall": "npm run build"
   }
 }

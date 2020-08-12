@@ -2,7 +2,11 @@ import {
   sendUnaryData, ServerUnaryCall
 } from 'grpc'
 
-import { ConfigurationService, IConfigurationServer } from '@shared/services/configuration/configuration_grpc_pb'
+import {
+  ResourceServiceService as IResourceService,
+  IResourceServiceServer
+} from '@shared/configuration/resource_service_grpc_pb'
+
 import {
   ListResourcesRequest,
   ListResourcesResponse,
@@ -10,9 +14,9 @@ import {
   CreateResourceResponse,
   UpdateResourceRequest,
   UpdateResourceResponse
-} from '@shared/services/configuration/configuration_pb'
+} from '@shared/configuration/resource_service_pb'
 
-class Configuration implements IConfigurationServer {
+class ResourceService implements IResourceServiceServer {
   public listResources(
     call: ServerUnaryCall<ListResourcesRequest>,
     callback: sendUnaryData<ListResourcesResponse>
@@ -45,6 +49,6 @@ class Configuration implements IConfigurationServer {
 }
 
 export {
-  Configuration,
-  ConfigurationService
+  ResourceService,
+  IResourceService
 }

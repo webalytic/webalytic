@@ -1,5 +1,5 @@
 import { credentials } from 'grpc'
-import { GeoipClient } from '@shared/services/geoip/geoip_grpc_pb'
+import { GeoipClient } from '@shared/geoip/geoip_grpc_pb'
 
 export default (): GeoipClient =>
   new GeoipClient('localhost:50051', credentials.createInsecure(), {

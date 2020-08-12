@@ -1,7 +1,7 @@
 /* eslint-disable no-underscore-dangle */
 import { redis } from '@webalytic/ms-tools/lib/datasources'
 import EventProducer from '@webalytic/ms-tools/lib/infra/EventProducer'
-import { session } from '@shared/value-objects/session'
+import { session } from '@shared/log-processing/seesion'
 import Session from '../entities/Session/Session'
 import { Dependencies } from '../container'
 

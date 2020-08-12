@@ -4,8 +4,8 @@ import faker from 'faker'
 import moment from 'moment'
 
 import EventProducer from '@webalytic/ms-tools/lib/infra/EventProducer'
-import { session } from '@shared/value-objects/session'
-import { SessionCreatedEventPayload } from '@shared/events/log-processing-events'
+import { session } from '@shared/log-processing/session'
+import { SessionCreatedEventPayload } from '@shared/log-processing/log_processing_events'
 
 import { HitType, HitDataSource } from './constants'
 

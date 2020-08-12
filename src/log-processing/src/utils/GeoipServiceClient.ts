@@ -1,9 +1,9 @@
 /* eslint-disable consistent-return */
 import { credentials, Metadata, ServiceError } from 'grpc'
 
-import { GeoipClient } from '@shared/services/geoip/geoip_grpc_pb'
-import { LookUpRequest, LookUpResponse } from '@shared/services/geoip/geoip_pb'
-import { session } from '@shared/value-objects/session'
+import { GeoipClient } from '@shared/geoip/geoip_grpc_pb'
+import { LookUpRequest, LookUpResponse } from '@shared/geoip/geoip_pb'
+import { session } from '@shared/log-processing/seesion'
 
 export default class GeoipServiceClient {
   private readonly client: GeoipClient
