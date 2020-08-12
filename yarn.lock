@@ -2356,7 +2356,7 @@
     "@types/glob" "*"
     "@types/node" "*"
 
-"@types/sequelize@*":
+"@types/sequelize@*", "@types/sequelize@^4.28.9":
   version "4.28.9"
   resolved "https://registry.yarnpkg.com/@types/sequelize/-/sequelize-4.28.9.tgz#64d0fad07de2f30ef11003a8c2ef5ac0321de115"
   integrity sha512-QqYgkw/2fEc0FyEQejnxM7cHKB8XBV3Y69k7GSFOToQBOXos0PJVqNpgROXZddXIkl2d6zicYssHuy75ws84sw==
@@ -2421,6 +2421,11 @@
   version "8.0.0"
   resolved "https://registry.yarnpkg.com/@types/uuid/-/uuid-8.0.0.tgz#165aae4819ad2174a17476dbe66feebd549556c0"
   integrity sha512-xSQfNcvOiE5f9dyd4Kzxbof1aTrLobL278pGLKOZI6esGfZ7ts9Ka16CzIN6Y8hFHE1C7jIBZokULhK1bOgjRw==
+
+"@types/uuid@^8.3.0":
+  version "8.3.0"
+  resolved "https://registry.yarnpkg.com/@types/uuid/-/uuid-8.3.0.tgz#215c231dff736d5ba92410e6d602050cce7e273f"
+  integrity sha512-eQ9qFW/fhfGJF8WKHGEHZEyVWfZxrT+6CLIJGBcZPfxUh/+BnEj+UCGYMlr9qZuX/2AltsvwrGqp0LhEW8D0zQ==
 
 "@types/validator@*":
   version "13.1.0"
@@ -2499,10 +2504,10 @@
   dependencies:
     eslint-visitor-keys "^1.1.0"
 
-"@webalytic/ms-tools@^0.0.10":
-  version "0.0.10"
-  resolved "https://registry.yarnpkg.com/@webalytic/ms-tools/-/ms-tools-0.0.10.tgz#534ee46f3e0e91ab825c116acf76c51f712a9adc"
-  integrity sha512-MCJJT96UrqWkeO+bKu5SzdE6xTvBv/Ua6DNdi5KrtD4QZvYtSBFDNjKwBrY7GWhiNH+fI5UL7Y+BkU1LKGTdIg==
+"@webalytic/ms-tools@^0.0.12":
+  version "0.0.12"
+  resolved "https://registry.yarnpkg.com/@webalytic/ms-tools/-/ms-tools-0.0.12.tgz#c387e8048f79960c683f61eff4dccea690f11119"
+  integrity sha512-SuOof519iTKeFsWWl11avMFAzG7N50Nl6oxUaJUl7gKlvby0H9xiwZPWlwAKSn0cWMy8a+0ANtEffIuAndZNKA==
   dependencies:
     "@apla/clickhouse" "^1.6.3"
     "@webalytic/protorepo" webalytic/protorepo#0.2.0
@@ -2525,9 +2530,9 @@
   version "0.2.0"
   resolved "https://codeload.github.com/webalytic/protorepo/tar.gz/a884664378ed1af0ed574ce677c72d134599c159"
 
-"@webalytic/protorepo@webalytic/protorepo#0.2.3":
-  version "0.2.3"
-  resolved "https://codeload.github.com/webalytic/protorepo/tar.gz/157c0171cdd225d2db1d5627f30f89d56d7adcb3"
+"@webalytic/protorepo@webalytic/protorepo#0.2.5":
+  version "0.2.5"
+  resolved "https://codeload.github.com/webalytic/protorepo/tar.gz/c7dab5f41916ba02b8aecce27a4eda867b78e9c7"
 
 "@wry/context@^0.4.0":
   version "0.4.4"
@@ -6720,6 +6725,11 @@ fastest-validator@^1.6.0:
   version "1.6.0"
   resolved "https://registry.yarnpkg.com/fastest-validator/-/fastest-validator-1.6.0.tgz#6ecb4e16be5b213cf2f3e5902ce666561cdd1f1b"
   integrity sha512-Hj3Sf02Q1PVnFDgTaB/q0iF5BokJclLm5Q0uc04WaGoPciQE7UMfAB5gC8Mp9lto9OIgfjhQlBG0BxhW6LmVHQ==
+
+fastest-validator@^1.6.1:
+  version "1.6.1"
+  resolved "https://registry.yarnpkg.com/fastest-validator/-/fastest-validator-1.6.1.tgz#3ec0098dac23c5d3276402d3a951c60b64947c85"
+  integrity sha512-ZERqtib8U+wWyCeu+JfrxwLe4W1iZLYqMzeguNmNQ10oobkgI2/1UiDBp/64es8q51speTE4JeUNUemKkjY7Yg==
 
 fastparse@^1.1.2:
   version "1.1.2"
@@ -12981,6 +12991,22 @@ testcontainers@^3.3.0:
   version "3.3.0"
   resolved "https://registry.yarnpkg.com/testcontainers/-/testcontainers-3.3.0.tgz#5b52f87437d0e5a97972da126cdd7895fbcf40ad"
   integrity sha512-0wvzhrRaZMkMP5C2sHETH4f3RbqXEqYIpuskssv9VrQ2TP+RWg0xaWW30ZioL8Pk6CD06ifiZZSgdYTiY336wQ==
+  dependencies:
+    "@types/dockerode" "^2.5.34"
+    byline "^5.0.0"
+    debug "^4.1.1"
+    docker-compose "^0.23.5"
+    dockerode "^3.2.0"
+    get-port "^5.1.1"
+    glob "^7.1.6"
+    node-duration "^1.0.4"
+    stream-to-array "^2.3.0"
+    tar-fs "^2.1.0"
+
+testcontainers@^3.3.1:
+  version "3.3.1"
+  resolved "https://registry.yarnpkg.com/testcontainers/-/testcontainers-3.3.1.tgz#89e1a77135369ec0536deb91f8b21157058def87"
+  integrity sha512-PSKdRFKQEfyDmGP5ZTgRSEUEIcbA8HbtohZaZuw8vJ4F/t/tDWlSLr9Wmlx324O0PNn+i3ozzYAujK+5UOr2KA==
   dependencies:
     "@types/dockerode" "^2.5.34"
     byline "^5.0.0"

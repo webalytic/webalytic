@@ -23,7 +23,7 @@ function buildClasess() {
   const PROTO_DIR = getProtoDir()
   const PROTO_FILES = [
     {
-      filePrefix: '/log-processing/seesion',
+      filePrefix: '/log-processing/session',
       protos: [
         '/log-processing/session.proto'
       ]

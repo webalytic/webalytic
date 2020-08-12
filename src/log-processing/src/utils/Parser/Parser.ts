@@ -1,11 +1,12 @@
 /* eslint-disable no-underscore-dangle */
 import { UAParser } from 'ua-parser-js'
 
-import { session } from '@shared/log-processing/seesion'
+import { session } from '@shared/log-processing/session'
+import { LookUpRequest, LookUpResponse } from '@shared/geoip/geoip'
 import SearchEngines from './SearchEngines'
 
 import { TrafficSourceSystemValues } from '../../constants'
-import GeoipServiceClient from '../GeoipServiceClient'
+import createGeoipServiceClient from '../GeoipServiceClient'
 
 interface SearchEngineData {
   name: string
@@ -22,11 +23,7 @@ interface CampaignSource {
 }
 
 export default class Parser {
-  private geoipServiceClient: GeoipServiceClient
-
-  constructor() {
-    this.geoipServiceClient = new GeoipServiceClient()
-  }
+  private geoipServiceClient = createGeoipServiceClient()
 
   getDevice(userAgent: string): session.Device {
     const result = new UAParser(userAgent).getResult()
@@ -41,15 +38,17 @@ export default class Parser {
   }
 
   async getGeoNetwork(ipAdress: string): Promise<session.GeoNetwork> {
-    let result: session.IGeoNetwork = {
+    const result: session.IGeoNetwork = {
       country: '',
       city: ''
     }
 
     try {
-      result = await this.geoipServiceClient.lookup(ipAdress)
+      const resp: LookUpResponse = await this.geoipServiceClient.lookUp(new LookUpRequest({ ip: ipAdress }))
+      result.country = resp.country
+      result.city = resp.city
     } catch (err) {
-      // Todo: необходимо реализовать сбор ошибок, например через sentry.io
+      // Todo: Collect error (sentry.io ?)
     }
 
     return new session.GeoNetwork(result)

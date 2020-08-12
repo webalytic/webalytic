@@ -4,8 +4,8 @@
   "main": "./src/index.ts",
   "license": "MIT",
   "dependencies": {
-    "@webalytic/ms-tools": "^0.0.10",
-    "@webalytic/protorepo": "webalytic/protorepo#0.2.3",
+    "@webalytic/ms-tools": "^0.0.12",
+    "@webalytic/protorepo": "webalytic/protorepo#0.2.5",
     "dotenv": "^8.2.0",
     "google-protobuf": "^3.12.4",
     "grpc": "^1.24.3",

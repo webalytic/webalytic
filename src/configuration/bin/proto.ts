@@ -11,7 +11,6 @@ process.env.PATH += (path.delimiter + path.join(process.cwd(), 'node_modules', '
 const SHARED_DIR = path.join(__dirname, '../shared')
 
 clearSharedDir()
-buildService()
 buildClasess()
 
 // **
@@ -19,26 +18,16 @@ function clearSharedDir() {
   rimraf.sync(`${SHARED_DIR}/configuration/*`)
 }
 
-function buildService() {
-  const PROTO_DIR = getProtoDir()
-  const PROTOC_GEN_TS_PATH = path.join(__dirname, '../node_modules/.bin/protoc-gen-ts')
-  const PROTO_FILES = [
-    `${PROTO_DIR}/configuration/resource.proto`,
-    `${PROTO_DIR}/configuration/resource_service.proto`
-  ].join(' ')
-
-  // https://github.com/agreatfool/grpc_tools_node_protoc_ts/tree/master/examples
-  shell.exec('grpc_tools_node_protoc '
-+ `--plugin="protoc-gen-ts=${PROTOC_GEN_TS_PATH}" `
-+ `--grpc_out="${SHARED_DIR}" `
-+ `--js_out="import_style=commonjs,binary:${SHARED_DIR}" `
-+ `--ts_out="${SHARED_DIR}" `
-+ `--proto_path ${PROTO_DIR} ${PROTO_FILES}`)
-}
-
 function buildClasess() {
   const PROTO_DIR = getProtoDir()
   const PROTO_FILES = [
+    {
+      filePrefix: '/configuration/resource_service',
+      protos: [
+        '/configuration/resource.proto',
+        '/configuration/resource_service.proto'
+      ]
+    },
     {
       filePrefix: '/configuration/resource',
       protos: [
@@ -52,8 +41,10 @@ function buildClasess() {
     const { filePrefix, protos } = fileObj
     const js = `${SHARED_DIR}${filePrefix}.js`
     const ts = `${SHARED_DIR}${filePrefix}.d.ts`
-    const proto = protos.map((x) =>
-      `${PROTO_DIR}${x}`).join(' ')
+    const proto = protos.map((x) => {
+      shell.exec(`cp ${PROTO_DIR}${x} ${SHARED_DIR}${x}`)
+      return `${PROTO_DIR}${x}`
+    }).join(' ')
 
     shell.exec('pbjs '
     + '-t static-module '

@@ -1,71 +1,92 @@
+import { ServerUnaryCall, Metadata } from 'grpc'
 import {
-  sendUnaryData, ServerUnaryCall
-} from 'grpc'
-
-import {
-  ResourceServiceService as IResourceService,
-  IResourceServiceServer
-} from '@shared/configuration/resource_service_grpc_pb'
-
-import {
+  ResourceService,
   ListResourcesRequest,
   ListResourcesResponse,
   CreateResourceRequest,
   CreateResourceResponse,
   UpdateResourceRequest,
   UpdateResourceResponse
-} from '@shared/configuration/resource_service_pb'
+} from '@shared/configuration/resource_service'
 
-import { ResourceProps } from '@shared/configuration/resource_pb'
+import { Dependencies } from '../container'
+import Resource from '../entities/Resource/Resource'
+import ResourceRepository from '../infra/ResourceRepository'
+
+type CreateResourceCall = ServerUnaryCall<CreateResourceRequest>
+type CreateResourceCallback = ResourceService.CreateResourceCallback
 
 type ListResourcesCall = ServerUnaryCall<ListResourcesRequest>
-type ListResourcesCallback = sendUnaryData<ListResourcesResponse>
+type ListResourcesCallback = ResourceService.ListResourcesCallback
 
-class ResourceService implements IResourceServiceServer {
-  // *
-  // * ListResources
-  // *
-  public listResources(call: ListResourcesCall, callback: ListResourcesCallback): void {
-    // const req: ListResourcesRequest = call.request
-    const res: ListResourcesResponse = new ListResourcesResponse()
-    res.setCount(0)
-    // Todo: implement listResources
+type UpdateResourceCall = ServerUnaryCall<UpdateResourceRequest>
+type UpdateResourceCallback = ResourceService.UpdateResourceCallback
+
+export default class {
+  private resourceRepository: ResourceRepository
+
+  constructor(deps: Dependencies) {
+    this.resourceRepository = deps.resourceRepository
+  }
+
+  public async ListResources(
+    call: ListResourcesCall,
+    callback: ListResourcesCallback
+  ): Promise<void> {
+    const res = new ListResourcesResponse({
+      count: 0,
+      cursor: '',
+      resources: []
+    })
 
     callback(null, res)
   }
 
-  // *
-  // * CreateResources
-  // *
-  public createResource(
-    call: ServerUnaryCall<CreateResourceRequest>,
-    callback: sendUnaryData<CreateResourceResponse>
-  ): void {
-    // const req: ListResourcesRequest = call.request
-    const res: CreateResourceResponse = new CreateResourceResponse()
+  private handleError(error: any): any {
+    const metadata = new Metadata()
+    if (error.details) metadata.set('details', JSON.stringify(error.details))
 
-    // Todo: implement createResource
-
-    callback(null, res)
+    return {
+      code: error.code,
+      message: error.message,
+      status: error.status,
+      metadata
+    } as any
   }
 
-  // *
-  // * UpdateResource
-  // *
-  public updateResource(
-    call: ServerUnaryCall<UpdateResourceRequest>,
-    callback: sendUnaryData<UpdateResourceResponse>
-  ): void {
-    // const req: ListResourcesRequest = call.request
-    const res: UpdateResourceResponse = new UpdateResourceResponse()
+  async CreateResource(call: CreateResourceCall, callback: CreateResourceCallback): Promise<void> {
+    let res: CreateResourceResponse = null
+    let err = null
 
-    // Todo: implement createResource
+    try {
+      const instance = Resource.create(call.request.data)
+      await this.resourceRepository.save(instance)
 
-    callback(null, res)
+      res = new CreateResourceResponse({ instance: instance.props })
+    } catch (error) {
+      err = this.handleError(error)
+    }
+
+    callback(err, res)
   }
-}
 
-export {
-  ResourceService,
-  IResourceService
+  async UpdateResource(
+    call: UpdateResourceCall,
+    callback: UpdateResourceCallback
+  ): Promise<void> {
+    let res: UpdateResourceResponse = null
+    let err = null
+    try {
+      const instance = await this.resourceRepository.findOne({ id: call.request.id })
+      if (!instance) throw new Error('NotFoundError')
+
+      // Todo: implement resource update logic
+
+      res = new UpdateResourceResponse({ instance: instance.props })
+    } catch (error) {
+      err = this.handleError(error)
+    }
+
+    callback(err, res)
+  }
 }
