@@ -67,7 +67,7 @@ jobs:
           - v1-dependencies-{{ checksum "./package.json" }}
           - v1-dependencies-
       - run: rm ../../package.json
-      - run: yarn generate-lock-entry >> yarn.lock
+      - run: cp ../../yarn.lock ./yarn.lock
       - run: yarn install
       - save_cache:
           paths:
@@ -198,3 +198,26 @@ workflows:
           requires:
             - api-gateway-typescript
             - api-gateway-lint
+
+  configuration:
+    when: << pipeline.parameters.configuration >>
+    jobs:
+      - build:
+          name: configuration-build
+          package_name: configuration
+      - lint:
+          name: configuration-lint
+          package_name: configuration
+          requires:
+            - configuration-build
+      - typescript:  
+          name: configuration-typescript
+          package_name: configuration
+          requires:
+            - configuration-build
+      - test:
+          name: configuration-test
+          package_name: configuration
+          requires:
+            - configuration-typescript
+            - configuration-lint

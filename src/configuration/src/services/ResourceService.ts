@@ -16,17 +16,27 @@ import {
   UpdateResourceResponse
 } from '@shared/configuration/resource_service_pb'
 
+import { ResourceProps } from '@shared/configuration/resource_pb'
+
+type ListResourcesCall = ServerUnaryCall<ListResourcesRequest>
+type ListResourcesCallback = sendUnaryData<ListResourcesResponse>
+
 class ResourceService implements IResourceServiceServer {
-  public listResources(
-    call: ServerUnaryCall<ListResourcesRequest>,
-    callback: sendUnaryData<ListResourcesResponse>
-  ): void {
+  // *
+  // * ListResources
+  // *
+  public listResources(call: ListResourcesCall, callback: ListResourcesCallback): void {
     // const req: ListResourcesRequest = call.request
     const res: ListResourcesResponse = new ListResourcesResponse()
+    res.setCount(0)
+    // Todo: implement listResources
 
     callback(null, res)
   }
 
+  // *
+  // * CreateResources
+  // *
   public createResource(
     call: ServerUnaryCall<CreateResourceRequest>,
     callback: sendUnaryData<CreateResourceResponse>
@@ -34,15 +44,22 @@ class ResourceService implements IResourceServiceServer {
     // const req: ListResourcesRequest = call.request
     const res: CreateResourceResponse = new CreateResourceResponse()
 
+    // Todo: implement createResource
+
     callback(null, res)
   }
 
+  // *
+  // * UpdateResource
+  // *
   public updateResource(
     call: ServerUnaryCall<UpdateResourceRequest>,
     callback: sendUnaryData<UpdateResourceResponse>
   ): void {
     // const req: ListResourcesRequest = call.request
     const res: UpdateResourceResponse = new UpdateResourceResponse()
+
+    // Todo: implement createResource
 
     callback(null, res)
   }

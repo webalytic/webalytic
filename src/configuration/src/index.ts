@@ -2,7 +2,7 @@ import { ServerCredentials } from 'grpc'
 import * as dotenv from 'dotenv'
 import createLogger from '@webalytic/ms-tools/lib/logger'
 
-import createServer from './server'
+import createServer, { getAddress } from './server'
 
 function main() {
   dotenv.config()
@@ -10,9 +10,7 @@ function main() {
   const logger = createLogger('geoip')
   const server = createServer()
 
-  const port = +(process.env.CONFIGURATION_PORT || 50051)
-  const address = `0.0.0.0:${port}`
-
+  const address = getAddress()
   server.bind(address, ServerCredentials.createInsecure())
   server.start()
 
