@@ -1,5 +1,5 @@
 import {
-  QueryInterface, UUID, STRING, SMALLINT
+  QueryInterface, UUID, STRING, SMALLINT, DATE
 } from 'sequelize'
 
 const resourcesTable = {
@@ -29,11 +29,11 @@ module.exports = {
           allowNull: false
         },
         createTime: {
-          type: 'TIMESTAMP',
+          type: DATE,
           allowNull: false
         },
         updateTime: {
-          type: 'TIMESTAMP',
+          type: DATE,
           allowNull: true
         }
       }

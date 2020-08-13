@@ -33,25 +33,25 @@ export default class {
     call: ListResourcesCall,
     callback: ListResourcesCallback
   ): Promise<void> {
-    const res = new ListResourcesResponse({
-      count: 0,
-      cursor: '',
-      resources: []
-    })
+    let res: ListResourcesResponse = null
+    let err = null
 
-    callback(null, res)
-  }
+    try {
+      const [data, count] = await Promise.all([
+        this.resourceRepository.findAll(call.request),
+        this.resourceRepository.count(call.request.filter)
+      ])
 
-  private handleError(error: any): any {
-    const metadata = new Metadata()
-    if (error.details) metadata.set('details', JSON.stringify(error.details))
+      res = new ListResourcesResponse({
+        count,
+        resources: data.map((x) =>
+          x.props)
+      })
+    } catch (error) {
+      err = this.handleError(error)
+    }
 
-    return {
-      code: error.code,
-      message: error.message,
-      status: error.status,
-      metadata
-    } as any
+    callback(err, res)
   }
 
   async CreateResource(call: CreateResourceCall, callback: CreateResourceCallback): Promise<void> {
@@ -80,7 +80,7 @@ export default class {
       const instance = await this.resourceRepository.findOne({ id: call.request.id })
       if (!instance) throw new Error('NotFoundError')
 
-      // Todo: implement resource update logic
+      instance.update(call.request.data)
 
       res = new UpdateResourceResponse({ instance: instance.props })
     } catch (error) {
@@ -88,5 +88,17 @@ export default class {
     }
 
     callback(err, res)
+  }
+
+  private handleError(error: any): any {
+    const metadata = new Metadata()
+    if (error.details) metadata.set('details', JSON.stringify(error.details))
+
+    return {
+      code: error.code,
+      message: error.message,
+      status: error.status,
+      metadata
+    } as any
   }
 }

@@ -2,7 +2,7 @@ import { resource } from '@shared/configuration/resource'
 import { v4 as uuidV4 } from 'uuid'
 import moment from 'moment'
 
-import { createInputValidate } from './Validator'
+import { createInputValidate, updateInputValidate } from './Validator'
 
 export default class Resource {
   id: string
@@ -26,5 +26,15 @@ export default class Resource {
     })
 
     return new Resource(id, props)
+  }
+
+  update(data: resource.IUpdateResourceInput): void {
+    updateInputValidate(data)
+
+    this.props = new resource.ResourceProps({
+      ...this.props.toJSON(),
+      ...data,
+      updateTime: moment().unix()
+    })
   }
 }

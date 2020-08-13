@@ -5,7 +5,7 @@
   "license": "MIT",
   "dependencies": {
     "@webalytic/ms-tools": "^0.0.12",
-    "@webalytic/protorepo": "webalytic/protorepo#0.2.5",
+    "@webalytic/protorepo": "webalytic/protorepo#0.2.6",
     "@cubejs-backend/server-core": "^0.19.56",
     "@cubejs-backend/clickhouse-driver": "^0.19.56",
     "@types/protobufjs": "^6.0.0",

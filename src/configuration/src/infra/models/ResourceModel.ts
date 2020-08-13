@@ -1,11 +1,12 @@
 /* eslint-disable @typescript-eslint/ban-types */
 import {
-  UUID, STRING, Model, BuildOptions, SMALLINT
+  UUID, STRING, Model, BuildOptions, SMALLINT, DATE
 } from 'sequelize'
 
 import { Dependencies } from '../../container'
 
 export interface IResourceModel extends Model {
+  readonly rowNumber: number
   readonly id: string
   name: string
   category: string
@@ -21,8 +22,8 @@ export type ResourceModelStatic = typeof Model & {
   build(data?: object): IResourceModel
 }
 
-export default ({ sequelize }: Dependencies): ResourceModelStatic =>
-  sequelize.define(
+export default ({ sequelize }: Dependencies): ResourceModelStatic => {
+  const ResourceModel = sequelize.define(
     'ResourceModel',
     {
       id: {
@@ -42,11 +43,11 @@ export default ({ sequelize }: Dependencies): ResourceModelStatic =>
         allowNull: false
       },
       createTime: {
-        type: 'TIMESTAMP',
+        type: DATE,
         allowNull: false
       },
       updateTime: {
-        type: 'TIMESTAMP',
+        type: DATE,
         allowNull: true
       }
     },
@@ -56,3 +57,6 @@ export default ({ sequelize }: Dependencies): ResourceModelStatic =>
       schema: 'configuration'
     }
   ) as ResourceModelStatic
+
+  return ResourceModel
+}

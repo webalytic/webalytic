@@ -1,13 +1,16 @@
 import {
-  FindOptions, WhereOptions, Op
+  FindOptions, WhereOptions, Op, Order
 } from 'sequelize'
 
 import { resource } from '@shared/configuration/resource'
+import { IListResourcesRequest } from '@shared/configuration/resource_service'
 
 import { Dependencies } from '../container'
 import { ResourceModelStatic } from './models/ResourceModel'
 import ResourceMapper from './ResourceMapper'
 import Resource from '../entities/Resource/Resource'
+
+type FindAllParams = IListResourcesRequest
 
 export default class ResourceRepository {
   private ResourceModel: ResourceModelStatic
@@ -19,37 +22,43 @@ export default class ResourceRepository {
     this.resourceMapper = deps.resourceMapper
   }
 
-  private prepareFindOptions(where: resource.IResourceFilter): FindOptions {
-    const whereForSequelize: WhereOptions = {}
+  private prepareFindOptions(params: FindAllParams): FindOptions {
+    const {
+      filter = {}, limit = 10, offset = 0, orderBy
+    } = params
 
-    if (where.id) {
-      if (Array.isArray(where.id)) whereForSequelize.id = { [Op.in]: where.id }
-      else whereForSequelize.id = where.id
+    // Prepare WhereOptions
+    const where: WhereOptions = {}
+    if (filter.id) {
+      if (Array.isArray(filter.id)) where.id = { [Op.in]: filter.id }
+      else where.id = filter.id
     }
+    if (filter.name) where.name = { [Op.like]: `%${filter.name}%` }
 
-    if (where.name) whereForSequelize.name = { [Op.like]: `%${where.name}%` }
+    // Prepare order
+    const order: string[][] = orderBy && orderBy.split(',').map((x:string) =>
+      x.split(':'))
 
     return {
-      where: whereForSequelize,
+      where,
+      order: order as Order,
+      limit,
+      offset,
       raw: true
     }
   }
 
   async findOne(filter: resource.IResourceFilter): Promise<Resource> {
-    const options: FindOptions = this.prepareFindOptions(filter)
+    const options: FindOptions = this.prepareFindOptions({ filter })
     const row = await this.ResourceModel.findOne(options)
 
     return row ? this.resourceMapper.toEntity(row) : null
   }
 
   // Todo: implement cursor and orderBy logic
-  async findAll(filter: resource.IResourceFilter, limit: number, cursor: string, orderBy: any): Promise<Resource[]> {
-    const options: FindOptions = {
-      ...this.prepareFindOptions(filter),
-      limit
-    }
+  async findAll(params: FindAllParams): Promise<Resource[]> {
+    const data = await this.ResourceModel.findAll(this.prepareFindOptions(params))
 
-    const data = await this.ResourceModel.findAll(options)
     return data.map((row) =>
       this.resourceMapper.toEntity(row))
   }
@@ -61,5 +70,10 @@ export default class ResourceRepository {
 
     await activeRecord.save()
     return true
+  }
+
+  async count(filter: resource.IResourceFilter): Promise<number> {
+    const count = await this.ResourceModel.count(this.prepareFindOptions({ filter }))
+    return count
   }
 }

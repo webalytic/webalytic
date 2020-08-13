@@ -2530,9 +2530,9 @@
   version "0.2.0"
   resolved "https://codeload.github.com/webalytic/protorepo/tar.gz/a884664378ed1af0ed574ce677c72d134599c159"
 
-"@webalytic/protorepo@webalytic/protorepo#0.2.5":
-  version "0.2.5"
-  resolved "https://codeload.github.com/webalytic/protorepo/tar.gz/c7dab5f41916ba02b8aecce27a4eda867b78e9c7"
+"@webalytic/protorepo@webalytic/protorepo#0.2.6":
+  version "0.2.6"
+  resolved "https://codeload.github.com/webalytic/protorepo/tar.gz/6fe36592f711b09c2be898594f2833ac742d14ca"
 
 "@wry/context@^0.4.0":
   version "0.4.4"

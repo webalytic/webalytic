@@ -15,8 +15,8 @@ export default class ResourceMapper {
   toModel(instance: Resource): IResourceModel {
     return this.ResourceModel.build({
       ...instance.props,
-      createTime: new Date(+instance.props.createTime * 1000).toISOString(),
-      updateTime: new Date(+instance.props.updateTime * 1000).toISOString()
+      createTime: new Date(+instance.props.createTime * 1000),
+      updateTime: new Date(+instance.props.updateTime * 1000)
     })
   }
 

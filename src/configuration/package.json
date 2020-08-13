@@ -6,7 +6,7 @@
   "dependencies": {
     "@grpc/proto-loader": "^0.5.5",
     "@webalytic/ms-tools": "^0.0.12",
-    "@webalytic/protorepo": "webalytic/protorepo#0.2.5",
+    "@webalytic/protorepo": "webalytic/protorepo#0.2.6",
     "awilix": "^4.2.6",
     "chai": "^4.2.0",
     "dotenv": "^8.2.0",
