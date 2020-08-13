@@ -1,6 +1,6 @@
 /* eslint-disable import/prefer-default-export */
 import { createFastesValidationError } from '@webalytic/ms-tools/lib/errors'
-import { session } from '@shared/value-objects/session'
+import { session } from '@shared/log-processing/session'
 import { SessionCreateProps } from './Session'
 import { HitType, HitDataSource } from '../../constants'
 

@@ -1,13 +1,24 @@
 /* eslint-disable @typescript-eslint/no-var-requires */
-import * as dotenv from 'dotenv'
-import * as path from 'path'
-import { sequelize } from '@webalytic/ms-tools/lib/datasources'
+/* eslint-disable import/first */
+import dotenv from 'dotenv'
+import path from 'path'
 
 dotenv.config()
 
-const Umzug = require('umzug')
+import { sequelize } from '@webalytic/ms-tools/lib/datasources'
+
+import Umzug from 'umzug'
+import SequelizeStorage from 'umzug/lib/storages/SequelizeStorage'
+
+const SCHEMA = 'data-storage'
 
 async function main() {
+  try {
+    await sequelize.query(`CREATE SCHEMA ${SCHEMA}`)
+  } catch (error) {
+    // schema already exists
+  }
+
   const umzug = new Umzug({
     migrations: {
       pattern: /\.ts$/,
@@ -16,10 +27,7 @@ async function main() {
         sequelize.getQueryInterface()
       ]
     },
-    storage: 'sequelize',
-    storageOptions: {
-      sequelize
-    }
+    storage: new SequelizeStorage({ sequelize, schema: SCHEMA })
   })
 
   const METHOD_UP = 'up'

@@ -1,6 +1,6 @@
 import { Application } from 'express'
-import * as path from 'path'
-import * as CubejsServerCore from '@cubejs-backend/server-core/core'
+import path from 'path'
+import CubejsServerCore from '@cubejs-backend/server-core/core'
 
 import createLogger from '@webalytic/ms-tools/lib/logger'
 

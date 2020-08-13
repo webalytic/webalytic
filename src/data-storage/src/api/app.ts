@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/ban-types */
 
-import * as express from 'express'
+import express from 'express'
 import addCubeJs from './cubejs'
 
 export default function createApp(): express.Application {

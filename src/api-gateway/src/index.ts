@@ -28,7 +28,9 @@ if (cluster.isMaster) {
   const port = +(process.env.API_GATEWAY_PORT || 3000)
   const host = process.env.API_GATEWAY_HOST || '0.0.0.0'
 
-  createServer(host, port, app).then(() => {
+  createServer(app)
+
+  const server = app.listen(port, host, () => {
     logger.info(`Start server on http://${host}:${port}, worker ${process.pid} started`)
   })
 }

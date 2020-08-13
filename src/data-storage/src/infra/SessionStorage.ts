@@ -1,8 +1,9 @@
-import { clickhouse } from '@webalytic/ms-tools/lib/datasources'
-
-import { session } from '@shared/value-objects/session'
+import { createClickhouse } from '@webalytic/ms-tools/lib/datasources'
+import { session } from '@shared/log-processing/session'
 
 export default class SessionStorage {
+  private clickhouse = createClickhouse()
+
   async insert(hit: session.Hit, props: session.SessionProps): Promise<void> {
     await this.writeSession([
       this.sessionToTabSeparated(props)
@@ -20,7 +21,7 @@ export default class SessionStorage {
 
   private async writeSession(rows: any): Promise<void> {
     await new Promise((resolve, reject) => {
-      const writableStream = clickhouse.query('INSERT INTO tracker.sessions FORMAT TabSeparated', (err) => {
+      const writableStream = this.clickhouse.query('INSERT INTO tracker.sessions FORMAT TabSeparated', (err) => {
         if (err) { reject(err) } else { resolve() }
       })
       writableStream.write(rows.join('\n'))
@@ -30,7 +31,7 @@ export default class SessionStorage {
 
   private async writeHit(row: any[]): Promise<void> {
     await new Promise((resolve, reject) => {
-      const writableStream = clickhouse.query('INSERT INTO tracker.hits FORMAT TabSeparated', (err) => {
+      const writableStream = this.clickhouse.query('INSERT INTO tracker.hits FORMAT TabSeparated', (err) => {
         if (err) { reject(err) } else { resolve() }
       })
       writableStream.write(row)

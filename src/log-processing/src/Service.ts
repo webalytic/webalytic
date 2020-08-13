@@ -19,7 +19,6 @@ export default class Service {
   async addHitToSession(data: AddHitInput):Promise<void> {
     addHitInputValidate(data)
 
-    // Парсим traffic source
     const trafficSource = this.parser.getTrafficSource(
       {
         campaignSource: data.campaignSource,
@@ -33,14 +32,12 @@ export default class Service {
       data.documentReferrer
     )
 
-    // Ищем активную сессию
     let session = await this.sessionRepository.get(data.resourceId, data.clientId)
-
     if (session && !session.shouldBeEnd(trafficSource, data.sessionControl, data.hit.type)) {
-      // Проверяем, что рестарт сессии не нужен, добавляем Hit в сессию
+      // ** Update current session
       session.addHit(data.hit)
     } else {
-      // Или создаем новую сессию
+      // ** Create new session
       session = Session.create({
         resourceId: data.resourceId,
         clientId: data.clientId,

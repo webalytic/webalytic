@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/ban-types */
-import * as express from 'express'
+import express from 'express'
 
 import createRouter from './router'
 import { Dependencies } from './container'

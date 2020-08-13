@@ -2,8 +2,8 @@ import EventConsumer from '@webalytic/ms-tools/lib/infra/EventConsumer'
 import Subscriber from '@webalytic/ms-tools/lib/ddd/Subscriber'
 import Logger from '@webalytic/ms-tools/lib/logger'
 
-import { ISessionCreatedEventPayload } from '@shared/events/log-processing-events'
-import { session } from '@shared/value-objects/session'
+import { ISessionCreatedEventPayload } from '@shared/log-processing/log_processing_events'
+import { session } from '@shared/log-processing/session'
 
 import SessionStorage from '../infra/SessionStorage'
 

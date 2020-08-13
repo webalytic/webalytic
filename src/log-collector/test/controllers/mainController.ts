@@ -5,7 +5,7 @@ import request from 'supertest'
 import * as faker from 'faker'
 
 import EventConsumer from '@webalytic/ms-tools/lib/infra/EventConsumer'
-import { ILogCollectedEventPayload } from '@shared/events/log-collector-events'
+import { ILogCollectedEventPayload } from '@shared/log-collector/log_collector_events'
 import createApp from '../before/createApp'
 import createConsumer from '../before/createConsumer'
 import { Dependencies } from '../../src/container'

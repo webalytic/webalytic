@@ -13,7 +13,8 @@
     "log-collector": "lerna run start --stream --scope log-collector",
     "log-processing": "lerna run start --stream --scope log-processing",
     "test": "lerna run test",
-    "migration": "lerna run migration"
+    "migration": "lerna run migration",
+    "postinstall": "lerna run postinstall"
   },
   "dependencies": {
     "lerna": "^3.22.1"

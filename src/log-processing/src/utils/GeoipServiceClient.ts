@@ -1,36 +1,33 @@
-/* eslint-disable consistent-return */
-import { credentials, Metadata, ServiceError } from 'grpc'
+import { credentials, loadPackageDefinition, Client } from 'grpc'
+import * as protoLoader from '@grpc/proto-loader'
 
-import { GeoipClient } from '@shared/services/geoip/geoip_grpc_pb'
-import { LookUpRequest, LookUpResponse } from '@shared/services/geoip/geoip_pb'
-import { session } from '@shared/value-objects/session'
+import { Geoip } from '@shared/geoip/geoip'
 
-export default class GeoipServiceClient {
-  private readonly client: GeoipClient
+const packageDefinition = protoLoader.loadSync([
+  `${__dirname}/../../shared/geoip/geoip.proto`
+])
 
-  constructor() {
-    const host: string = process.env.GEOIP_HOST || 'localhost'
-    const port: number = +(process.env.GEOIP_PORT || 50051)
+const protoDescriptor: any = loadPackageDefinition(packageDefinition)
 
-    this.client = new GeoipClient(`${host}:${port}`, credentials.createInsecure())
+export default (): Geoip => {
+  const host: string = process.env.GEOIP_HOST || 'localhost'
+  const port: number = +(process.env.GEOIP_PORT || 50051)
+
+  const client: Client = new protoDescriptor.Geoip(`${host}:${port}`, credentials.createInsecure())
+
+  const rpcImpl = (method, requestData, callback) => {
+    client.makeUnaryRequest(
+      `/Geoip/${method.name}`,
+      (arg) =>
+        arg,
+      (arg) =>
+        arg,
+      requestData,
+      null,
+      {},
+      callback
+    )
   }
 
-  public async lookup(ipAdress: string): Promise<session.GeoNetwork> {
-    const param: LookUpRequest = new LookUpRequest()
-    param.setIp(ipAdress)
-
-    return new Promise((resolve, reject): void => {
-      this.client.lookup(param, new Metadata(), (err: ServiceError | null, res: LookUpResponse) => {
-        if (err) {
-          return reject(err)
-        }
-
-        resolve(new session.GeoNetwork({
-          country: res.getCountry(),
-          region: '',
-          city: res.getCity()
-        }))
-      })
-    })
-  }
+  return Geoip.create(rpcImpl, false, false)
 }

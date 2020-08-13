@@ -12,7 +12,8 @@
     "./src/log-collector",
     "./src/geoip",
     "./src/dashboard",
-    "./src/data-storage"
+    "./src/data-storage",
+    "./src/configuration"
   ],
   "editor.codeActionsOnSave": {
     "source.fixAll.eslint": true

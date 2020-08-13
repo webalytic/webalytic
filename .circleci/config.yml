@@ -15,6 +15,26 @@ parameters:
     type: boolean
     default: false
 
+  api-gateway:
+    type: boolean
+    default: false
+
+  data-storage:
+    type: boolean
+    default: false
+
+  geoip:
+    type: boolean
+    default: false
+
+  dashboard:
+    type: boolean
+    default: false
+
+  configuration:
+    type: boolean
+    default: false
+
 executors:
   node:
     docker:
@@ -47,14 +67,13 @@ jobs:
           - v1-dependencies-{{ checksum "./package.json" }}
           - v1-dependencies-
       - run: rm ../../package.json
-      - run: yarn generate-lock-entry >> yarn.lock
+      - run: cp ../../yarn.lock ./yarn.lock
       - run: yarn install
       - save_cache:
           paths:
             - ~/project/src/<< parameters.package_name >>/node_modules
             - ~/.cache/yarn
           key: v1-dependencies-{{ checksum "./package.json" }}
-      - run: yarn build
       - persist_to_workspace:
           root: ~/
           paths:
@@ -156,3 +175,49 @@ workflows:
           requires:
             - log-collector-typescript
             - log-collector-lint
+
+  api-gateway:
+    when: << pipeline.parameters.api-gateway >>
+    jobs:
+      - build:
+          name: api-gateway-build
+          package_name: api-gateway
+      - lint:
+          name: api-gateway-lint
+          package_name: api-gateway
+          requires:
+            - api-gateway-build
+      - typescript:  
+          name: api-gateway-typescript
+          package_name: api-gateway
+          requires:
+            - api-gateway-build
+      - test:
+          name: api-gateway-test
+          package_name: api-gateway
+          requires:
+            - api-gateway-typescript
+            - api-gateway-lint
+
+  configuration:
+    when: << pipeline.parameters.configuration >>
+    jobs:
+      - build:
+          name: configuration-build
+          package_name: configuration
+      - lint:
+          name: configuration-lint
+          package_name: configuration
+          requires:
+            - configuration-build
+      - typescript:  
+          name: configuration-typescript
+          package_name: configuration
+          requires:
+            - configuration-build
+      - test:
+          name: configuration-test
+          package_name: configuration
+          requires:
+            - configuration-typescript
+            - configuration-lint

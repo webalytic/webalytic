@@ -4,8 +4,8 @@
   "main": "./src/index.ts",
   "license": "MIT",
   "dependencies": {
-    "@webalytic/ms-tools": "^0.0.5",
-    "@webalytic/protorepo": "webalytic/protorepo#0.0.7",
+    "@webalytic/ms-tools": "^0.0.12",
+    "@webalytic/protorepo": "webalytic/protorepo#0.2.6",
     "dotenv": "^8.2.0",
     "google-protobuf": "^3.12.4",
     "grpc": "^1.24.3",
@@ -33,6 +33,7 @@
     "start": "ts-node --transpile-only -r tsconfig-paths/register --project ./tsconfig.json ./src/index.ts",
     "build": "ts-node --transpile-only -r tsconfig-paths/register --project ./tsconfig.json ./bin/proto.ts",
     "lint": "eslint --ext .js,.ts ./",
-    "ts-check": "tsc -p ./tsconfig.json --noEmit"
+    "ts-check": "tsc -p ./tsconfig.json --noEmit",
+    "postinstall": "npm run build"
   }
 }

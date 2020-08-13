@@ -1,5 +1,5 @@
 import { readFileSync } from 'fs'
-import * as UglifyJS from 'uglify-js'
+import UglifyJS from 'uglify-js'
 
 import { Request, Response } from '../types'
 

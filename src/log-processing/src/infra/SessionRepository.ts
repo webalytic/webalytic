@@ -1,7 +1,7 @@
 /* eslint-disable no-underscore-dangle */
-import { redis } from '@webalytic/ms-tools/lib/datasources'
+import { createRedis } from '@webalytic/ms-tools/lib/datasources'
 import EventProducer from '@webalytic/ms-tools/lib/infra/EventProducer'
-import { session } from '@shared/value-objects/session'
+import { session } from '@shared/log-processing/session'
 import Session from '../entities/Session/Session'
 import { Dependencies } from '../container'
 
@@ -11,6 +11,8 @@ interface ISessionPersistance {
 }
 export default class SessionRepository {
   private eventProducer: EventProducer
+
+  private redis = createRedis()
 
   constructor({ eventProducer }: Dependencies) {
     this.eventProducer = eventProducer
@@ -34,14 +36,14 @@ export default class SessionRepository {
 
   async get(resourceId: string, clientId: string): Promise<Session | null> {
     const key = this._getKey(resourceId, clientId)
-    const data = await redis.get(key)
+    const data = await this.redis.get(key)
 
     return data ? this.persistanceToDomain(JSON.parse(data)) : null
   }
 
   async save(instance: Session): Promise<void> {
     const key = this._getKey(instance.resourceId, instance.clientId)
-    const multi = await redis.multi()
+    const multi = await this.redis.multi()
 
     multi.set(key, JSON.stringify({
       props: instance.props.toJSON(),
