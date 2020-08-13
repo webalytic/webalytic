@@ -9,6 +9,3 @@ npm-debug.log
 coverage
 .nyc_output
 
-shared/events/*
-shared/services/*
-shared/value-objects/*

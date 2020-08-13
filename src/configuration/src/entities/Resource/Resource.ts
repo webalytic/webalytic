@@ -1,4 +1,4 @@
-import { resource } from '@shared/configuration/resource'
+import { resource } from '@webalytic/ms-tools/shared/configuration/resource'
 import { v4 as uuidV4 } from 'uuid'
 import moment from 'moment'
 

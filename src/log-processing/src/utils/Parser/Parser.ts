@@ -1,12 +1,14 @@
 /* eslint-disable no-underscore-dangle */
 import { UAParser } from 'ua-parser-js'
 
-import { session } from '@shared/log-processing/session'
-import { LookUpRequest, LookUpResponse } from '@shared/geoip/geoip'
-import SearchEngines from './SearchEngines'
+import { session } from '@webalytic/ms-tools/shared/log-processing/session'
+import { LookUpRequest, LookUpResponse } from '@webalytic/ms-tools/shared/geoip/geoip'
+import {
+  createClient as createGeoipServiceClient
+} from '@webalytic/ms-tools/lib/grpc-clients/geoip/GeoipService'
 
+import SearchEngines from './SearchEngines'
 import { TrafficSourceSystemValues } from '../../constants'
-import createGeoipServiceClient from '../GeoipServiceClient'
 
 interface SearchEngineData {
   name: string

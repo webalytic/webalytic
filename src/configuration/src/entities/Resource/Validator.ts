@@ -1,6 +1,6 @@
 /* eslint-disable import/prefer-default-export */
 import { createFastesValidationError } from '@webalytic/ms-tools/lib/errors'
-import { resource } from '@shared/configuration/resource'
+import { resource } from '@webalytic/ms-tools/shared/configuration/resource'
 // Todo: "import ... from ..." throw TypeError: fastest_validator_1.default is not a constructor
 // eslint-disable-next-line @typescript-eslint/no-var-requires
 const Validator = require('fastest-validator')

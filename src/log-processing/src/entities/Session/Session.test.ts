@@ -1,7 +1,7 @@
 /* eslint-disable import/no-extraneous-dependencies */
 import { expect } from 'chai'
 import * as faker from 'faker'
-import { session } from '@shared/log-processing/session'
+import { session } from '@webalytic/ms-tools/shared/log-processing/session'
 import moment from 'moment'
 import Session, { SessionCreateProps } from './Session'
 import { HitType, HitSessionControl, HitDataSource } from '../../constants'

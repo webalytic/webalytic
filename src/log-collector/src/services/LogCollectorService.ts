@@ -1,5 +1,5 @@
 import EventProducer from '@webalytic/ms-tools/lib/infra/EventProducer'
-import { LogCollectedEventPayload } from '@shared/log-collector/log_collector_events'
+import { LogCollectedEventPayload } from '@webalytic/ms-tools/shared/log-collector/log_collector_events'
 import { Dependencies } from '../container'
 
 export default class {
