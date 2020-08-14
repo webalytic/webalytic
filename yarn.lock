@@ -2476,10 +2476,10 @@
   dependencies:
     eslint-visitor-keys "^1.1.0"
 
-"@webalytic/ms-tools@^0.1.6":
-  version "0.1.6"
-  resolved "https://registry.yarnpkg.com/@webalytic/ms-tools/-/ms-tools-0.1.6.tgz#9bf68c7627e32cc5b154ca4976b89853bb434047"
-  integrity sha512-t3fVIXnq4HcB2awiYy3mQBsbDB5DJ/YGM0oW/MU3OPCuONVg+UMYxcUMx/NFHX67MDSeGx/xa1idTgFbWHwPLw==
+"@webalytic/ms-tools@^0.1.8":
+  version "0.1.8"
+  resolved "https://registry.yarnpkg.com/@webalytic/ms-tools/-/ms-tools-0.1.8.tgz#a8218a3c5c59a039bbc70a424ca974e87cc00e51"
+  integrity sha512-swrxkotaO/Jhu8FpP2C3ZblLpCYCDD4bLydkcnaMwbehFeL6cAVSG12eRD0yQ9gtWGtpYMf+b0lpRnNxF6OLKw==
   dependencies:
     "@apla/clickhouse" "^1.6.3"
     "@grpc/proto-loader" "^0.5.5"

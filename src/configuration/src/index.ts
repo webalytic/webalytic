@@ -5,7 +5,7 @@ import createLogger from '@webalytic/ms-tools/lib/logger'
 import {
   createServer,
   getAddresInfo
-} from '@webalytic/ms-tools/lib/grpc-clients/configuration/ResourceService'
+} from '@webalytic/ms-tools/lib/grpc/configuration/ResourceService'
 
 import createContainer from './container'
 

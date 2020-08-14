@@ -3,7 +3,7 @@ import faker from 'faker'
 
 import { Server } from 'grpc'
 import { AwilixContainer } from 'awilix'
-import { createClient } from '@webalytic/ms-tools/lib/grpc-clients/configuration/ResourceService'
+import { createClient } from '@webalytic/ms-tools/lib/grpc/configuration/ResourceService'
 import { resource } from '@webalytic/ms-tools/shared/configuration/resource'
 import {
   ListResourcesRequest,

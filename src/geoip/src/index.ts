@@ -1,7 +1,7 @@
 import * as dotenv from 'dotenv'
 import createLogger from '@webalytic/ms-tools/lib/logger'
 
-import { createServer } from '@webalytic/ms-tools/lib/grpc-clients/geoip/GeoipService'
+import { createServer } from '@webalytic/ms-tools/lib/grpc/geoip/GeoipService'
 import GeoipService from 'GeoipService'
 
 dotenv.config()

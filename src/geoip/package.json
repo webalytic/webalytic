@@ -4,7 +4,7 @@
   "main": "./src/index.ts",
   "license": "MIT",
   "dependencies": {
-    "@webalytic/ms-tools": "^0.1.6",
+    "@webalytic/ms-tools": "^0.1.8",
     "dotenv": "^8.2.0",
     "grpc": "^1.24.3",
     "maxmind": "^4.1.4",

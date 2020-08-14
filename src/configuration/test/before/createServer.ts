@@ -4,7 +4,7 @@ import { AwilixContainer } from 'awilix'
 import {
   createServer,
   getAddresInfo
-} from '@webalytic/ms-tools/lib/grpc-clients/configuration/ResourceService'
+} from '@webalytic/ms-tools/lib/grpc/configuration/ResourceService'
 
 import { Dependencies } from '../../src/container'
 

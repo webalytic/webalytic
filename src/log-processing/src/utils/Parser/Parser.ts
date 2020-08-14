@@ -5,7 +5,7 @@ import { session } from '@webalytic/ms-tools/shared/log-processing/session'
 import { LookUpRequest, LookUpResponse } from '@webalytic/ms-tools/shared/geoip/geoip'
 import {
   createClient as createGeoipServiceClient
-} from '@webalytic/ms-tools/lib/grpc-clients/geoip/GeoipService'
+} from '@webalytic/ms-tools/lib/grpc/geoip/GeoipService'
 
 import SearchEngines from './SearchEngines'
 import { TrafficSourceSystemValues } from '../../constants'

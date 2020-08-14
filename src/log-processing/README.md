@@ -6,9 +6,6 @@ Service subscribe on events from log-collector service, handle all hits, create 
 ## Package.json scripts
 
 ```bash
-# Build shared code from protobuf specification
-yarn build
-
 # Start main process: consumer, handler and producer 
 yarn start
 
