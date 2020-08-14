@@ -1,4 +1,4 @@
-import { resource } from '@shared/configuration/resource'
+import { resource } from '@webalytic/ms-tools/shared/configuration/resource'
 import moment from 'moment'
 
 import Resource from '../entities/Resource/Resource'

@@ -4,9 +4,6 @@
 ## Package.json scripts
 
 ```bash
-# Build shared code from protobuf specification
-yarn build
-
 # Start main process: api and producer 
 yarn start
 

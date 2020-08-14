@@ -2,8 +2,8 @@ import {
   FindOptions, WhereOptions, Op, Order
 } from 'sequelize'
 
-import { resource } from '@shared/configuration/resource'
-import { IListResourcesRequest } from '@shared/configuration/resource_service'
+import { resource } from '@webalytic/ms-tools/shared/configuration/resource'
+import { IListResourcesRequest } from '@webalytic/ms-tools/shared/configuration/resource_service'
 
 import { Dependencies } from '../container'
 import { ResourceModelStatic } from './models/ResourceModel'

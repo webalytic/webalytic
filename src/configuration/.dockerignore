@@ -8,7 +8,3 @@ npm-debug.log
 .svn
 coverage
 .nyc_output
-
-shared/events/*
-shared/services/*
-shared/value-objects/*

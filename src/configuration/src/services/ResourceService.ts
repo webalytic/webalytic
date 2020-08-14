@@ -7,7 +7,7 @@ import {
   CreateResourceResponse,
   UpdateResourceRequest,
   UpdateResourceResponse
-} from '@shared/configuration/resource_service'
+} from '@webalytic/ms-tools/shared/configuration/resource_service'
 
 import { Dependencies } from '../container'
 import Resource from '../entities/Resource/Resource'

@@ -4,5 +4,4 @@ package.json
 src/api/sdk/sdk.js
 helm
 
-shared
 src/api/cubejs/schema/*

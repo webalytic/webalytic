@@ -1,6 +1,6 @@
 import moment from 'moment'
 import { v4 as uuidV4 } from 'uuid'
-import { session } from '@shared/log-processing/session'
+import { session } from '@webalytic/ms-tools/shared/log-processing/session'
 
 import { HitSessionControl, HitType, TrafficSourceSystemValues } from '../../constants'
 

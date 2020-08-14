@@ -2,7 +2,10 @@ import { getClientIp } from 'request-ip'
 import moment from 'moment'
 
 import LogCollectorService from 'services/LogCollectorService'
-import { LogCollectedEventPayload, ILogCollectedEventPayload } from '@shared/log-collector/log_collector_events'
+import {
+  LogCollectedEventPayload,
+  ILogCollectedEventPayload
+} from '@webalytic/ms-tools/shared/log-collector/log_collector_events'
 import createLogger from '@webalytic/ms-tools/lib/logger'
 import { Request, Response } from '../types'
 import { Dependencies } from '../container'

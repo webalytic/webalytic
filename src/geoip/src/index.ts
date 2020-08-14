@@ -1,10 +1,12 @@
 import * as dotenv from 'dotenv'
 import createLogger from '@webalytic/ms-tools/lib/logger'
 
-import createServer from './server'
+import { createServer } from '@webalytic/ms-tools/lib/grpc/geoip/GeoipService'
+import GeoipService from 'GeoipService'
 
 dotenv.config()
 const logger = createLogger('geoip')
 
-const address = createServer()
+const address = createServer(new GeoipService())
+
 logger.info(`Start grpc server on ${address}`)

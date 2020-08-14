@@ -6,3 +6,4 @@ helm
 
 
 src/api/cubejs/schema/*
+graphql-types

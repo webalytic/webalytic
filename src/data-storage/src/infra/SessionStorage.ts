@@ -1,5 +1,5 @@
 import { createClickhouse } from '@webalytic/ms-tools/lib/datasources'
-import { session } from '@shared/log-processing/session'
+import { session } from '@webalytic/ms-tools/shared/log-processing/session'
 
 export default class SessionStorage {
   private clickhouse = createClickhouse()

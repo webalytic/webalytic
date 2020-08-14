@@ -3,6 +3,7 @@ import { makeExecutableSchema, gql } from 'apollo-server'
 import GraphQLJSON, { GraphQLJSONObject } from 'graphql-type-json'
 
 import { coreReportingApiTypeDefs, coreReportingApiResolvers } from './core-reporting-api'
+import { managementApiTypeDefs, managementApiResolvers } from './management-api'
 
 export default makeExecutableSchema({
   typeDefs: [
@@ -11,13 +12,19 @@ export default makeExecutableSchema({
       scalar JSONObject
       
       type Query
+      type Mutation
     `,
-    coreReportingApiTypeDefs
+    coreReportingApiTypeDefs,
+    managementApiTypeDefs
   ],
-  resolvers: merge({
-    JSON: GraphQLJSON,
-    JSONObject: GraphQLJSONObject,
-    Query: {}
-  },
-  coreReportingApiResolvers)
+  resolvers: merge(
+    {
+      JSON: GraphQLJSON,
+      JSONObject: GraphQLJSONObject,
+      Query: {},
+      Mutation: {}
+    },
+    coreReportingApiResolvers,
+    managementApiResolvers
+  )
 })

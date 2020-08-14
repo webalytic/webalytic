@@ -1,7 +1,7 @@
 /* eslint-disable import/no-extraneous-dependencies */
 import { expect } from 'chai'
 import faker from 'faker'
-import { resource } from '@shared/configuration/resource'
+import { resource } from '@webalytic/ms-tools/shared/configuration/resource'
 import Resource from './Resource'
 
 describe('Resource unit test', () => {

@@ -5,12 +5,7 @@
     "moduleResolution": "node",
     "experimentalDecorators": true,
     "noImplicitAny": false,
-    "baseUrl": "./src",
-    "paths": {
-      "@shared/*": [
-        "../shared/*"
-      ]
-    }
+    "baseUrl": "./src"
   },
   "include": [
     "src/**/*",

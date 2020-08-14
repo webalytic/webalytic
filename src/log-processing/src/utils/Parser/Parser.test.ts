@@ -2,7 +2,7 @@
 import { createServer, Server } from 'http'
 import { expect } from 'chai'
 import * as faker from 'faker'
-import { session } from '@shared/log-processing/session'
+import { session } from '@webalytic/ms-tools/shared/log-processing/session'
 import Parser from './Parser'
 
 let servers: Server[]

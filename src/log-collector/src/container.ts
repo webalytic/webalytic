@@ -3,11 +3,19 @@ import {
 } from 'awilix'
 
 import EventProducer from '@webalytic/ms-tools/lib/infra/EventProducer'
+import { ResourceService } from '@webalytic/ms-tools/shared/configuration/resource_service'
+import {
+  createClient as createResourceServiceClient
+} from '@webalytic/ms-tools/lib/grpc/configuration/ResourceService'
+
 import MainController from './controllers/MainController'
 import SdkController from './controllers/SdkController'
 import LogCollectorService from './services/LogCollectorService'
 
 export interface Dependencies {
+    // ** External services
+    resourceService: ResourceService
+
     // ** Events
     eventProducer: EventProducer
 
@@ -22,6 +30,10 @@ export interface Dependencies {
 export default (): AwilixContainer<Dependencies> => {
   // Create the container
   const container = createContainer<Dependencies>({ injectionMode: InjectionMode.PROXY })
+
+  container.register({
+    resourceService: asValue(createResourceServiceClient())
+  })
 
   container.register({
     eventProducer: asValue(new EventProducer({
