@@ -26,6 +26,15 @@ services:
     env_file:
       - .env
 
+  configuration:
+    container_name: configuration
+    image: webalytic/configuration:latest
+    build: ../../src/configuration
+    restart: always
+    command: bash -c "yarn migration && yarn start"
+    env_file:
+      - .env
+
   log-collector:
     container_name: log-collector
     image: webalytic/log-collector:latest

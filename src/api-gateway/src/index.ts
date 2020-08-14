@@ -1,5 +1,5 @@
-import * as dotenv from 'dotenv'
-import * as cluster from 'cluster'
+import dotenv from 'dotenv'
+import cluster from 'cluster'
 import { cpus } from 'os'
 import createLogger from '@webalytic/ms-tools/lib/logger'
 

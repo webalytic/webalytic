@@ -6,9 +6,15 @@
     "esModuleInterop": true,
     "experimentalDecorators": true,
     "noImplicitAny": false,
-    "baseUrl": "./src"
+    "baseUrl": "./src",
+    "paths": {
+      "@webalytic/graphql-types": [
+        "../graphql-types"
+      ]
+    }
   },
   "include": [
+    "graphql-types/**/*",
     "src/**/*",
     "test/**/*"
   ],

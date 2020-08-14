@@ -5,7 +5,6 @@ import request from 'supertest'
 import * as faker from 'faker'
 import { Server } from 'grpc'
 
-import EventConsumer from '@webalytic/ms-tools/lib/infra/EventConsumer'
 import { ILogCollectedEventPayload } from '@webalytic/ms-tools/shared/log-collector/log_collector_events'
 
 import createApp from '../before/createApp'

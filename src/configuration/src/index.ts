@@ -15,10 +15,11 @@ function main() {
   const container = createContainer()
 
   const logger = createLogger('configuration')
-  const server = container.build(createServer)
+
+  const server = createServer(container.cradle.resourceService)
 
   const addressInfo = getAddresInfo()
-  const host = `${addressInfo.address}:${addressInfo.port}`
+  const host = `0.0.0.0:${addressInfo.port}`
 
   server.bind(host, ServerCredentials.createInsecure())
   server.start()

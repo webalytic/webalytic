@@ -41,7 +41,7 @@ describe('Core Reporting Api', () => {
   })
 
   after(() => {
-    // dataStorageApiMock.done()
+    dataStorageApiMock.done()
   })
 
   it('Should return load result from data-storage', async () => {

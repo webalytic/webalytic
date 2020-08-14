@@ -1,0 +1,4 @@
+schema: http://localhost:3000/graphql
+generates:
+  graphql-types/index.ts:
+    - typescript

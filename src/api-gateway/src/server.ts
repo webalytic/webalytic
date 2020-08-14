@@ -4,7 +4,13 @@ import schema from './schema'
 
 export default (app: Application): ApolloServer => {
   // Create HTTP server.
-  const server = new ApolloServer({ schema })
+  const server = new ApolloServer({
+    schema,
+    formatError: (err) =>
+      // Todo: handle errors
+      err
+
+  })
 
   server.applyMiddleware({ app, path: '/graphql' })
 
