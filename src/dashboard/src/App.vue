@@ -1,45 +1,49 @@
 <template>
-  <div id="app">
-    <IndexPage />
+  <div id="wrapper">
+    <side-bar />
+    <div
+      id="content-wrapper"
+      class="d-flex flex-column"
+    >
+      <!-- Main Content -->
+      <div id="content">
+        <top-nav-bar />
+
+        <!-- Begin Page Content -->
+        <div class="container-fluid">
+          <index-page />
+        </div>
+        <!-- /.container-fluid -->
+      </div>
+      <!-- End of Main Content -->
+
+      <footer-bar />
+    </div>
   </div>
 </template>
 
+<style lang="css">
+  @import '../../../node_modules/@fortawesome/fontawesome-free/css/all.min.css';
+</style>
+
+<style lang="scss">
+  @import "../../../node_modules/bootstrap/scss/bootstrap.scss";
+  @import "./assets/scss/sb-admin-2.scss";
+</style>
+
 <script>
+import SideBar from './components/SideBar.vue'
+import FooterBar from './components/FooterBar.vue'
+import TopNavBar from './components/TopNavBar.vue'
 import IndexPage from './pages/IndexPage.vue'
 
 export default {
   name: 'App',
   components: {
+    SideBar,
+    TopNavBar,
+    FooterBar,
     IndexPage
   }
 }
 </script>
-
-<style lang="scss">
-#app {
-  font-family: 'Avenir', Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
-}
-
-h1, h2 {
-  font-weight: normal;
-}
-
-ul {
-  list-style-type: none;
-  padding: 0;
-}
-
-li {
-  display: inline-block;
-  margin: 0 10px;
-}
-
-a {
-  color: #42b983;
-}
-</style>

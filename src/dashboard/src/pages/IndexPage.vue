@@ -1,18 +1,14 @@
 <template>
-  <b-container class="bv-example-row">
-    <b-navbar
-      variant="faded"
-      type="light"
-    >
-      <b-navbar-brand href="#">
-        <b>WebAlytic</b>
-      </b-navbar-brand>
-    </b-navbar>
+  <div>
+    <!-- Page Heading -->
+    <h1 class="h3 mb-4 text-gray-800">
+      Blank Page
+    </h1>
 
     <summary-widget />
     <br>
     <dynamic-chart />
-  </b-container>
+  </div>
 </template>
 
 <script>
