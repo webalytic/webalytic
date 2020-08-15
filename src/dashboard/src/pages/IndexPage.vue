@@ -6,8 +6,11 @@
     </h1>
 
     <b-row>
-      <b-col>
+      <b-col lg="8">
         <audience-metrics />
+      </b-col>
+      <b-col lg="4">
+        <sessions-by-device />
       </b-col>
     </b-row>
     <b-row>
@@ -38,6 +41,7 @@ import AudienceMetrics from '../components/widgets/AudienceMetrics.vue'
 import VisitorsMetrics from '../components/widgets/VisitorsMetrics.vue'
 import BounceRateMetrics from '../components/widgets/BounceRateMetrics.vue'
 import SessionByChannels from '../components/widgets/SessionByChannels.vue'
+import SessionsByDevice from '../components/widgets/SessionsByDevice.vue'
 
 export default {
   name: 'IndexPage',
@@ -45,7 +49,8 @@ export default {
     AudienceMetrics,
     VisitorsMetrics,
     BounceRateMetrics,
-    SessionByChannels
+    SessionByChannels,
+    SessionsByDevice
   }
 }
 </script>

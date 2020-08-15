@@ -6,7 +6,7 @@
     <div class="sidebar-brand-icon rotate-n-15">
       <!-- <i class="fas fa-laugh-wink" /> -->
       <img
-        src="/images/logo-webalytic.svg"
+        src="/images/logo.svg"
         width="48"
         height="48"
         alt=""

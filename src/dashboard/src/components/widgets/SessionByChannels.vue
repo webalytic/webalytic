@@ -5,7 +5,7 @@
   >
     <b-card-body>
       <b-card-title>
-        Sessions by channels
+        Sessions by channel
       </b-card-title>
       <v-chart
         :options="options"
