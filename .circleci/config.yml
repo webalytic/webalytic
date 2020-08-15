@@ -221,3 +221,15 @@ workflows:
           requires:
             - configuration-typescript
             - configuration-lint
+
+  dashboard:
+    when: << pipeline.parameters.dashboard >>
+    jobs:
+      - build:
+          name: dashboard-build
+          package_name: dashboard
+      - lint:
+          name: dashboard-lint
+          package_name: dashboard
+          requires:
+            - dashboard-build

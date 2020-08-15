@@ -1,18 +1,24 @@
 <template>
   <div class="card-box">
-    <i class="fa fa-info-circle text-muted float-right" />
-    <h4 class="mt-0 font-16">
-      {{ label }}
-    </h4>
-    <h2 class="text-primary my-3 text-center">
+    <span class="mt-0">
+      <i
+        v-if="icon"
+        :class="`fa fa-${icon}`"
+      /> {{ label }}
+    </span>
+    <h5 class="text-primary">
       {{ prefix }}<span data-plugin="counterup">{{ value }}</span>
-    </h2>
+    </h5>
   </div>
 </template>
 
 <script>
 export default {
   props: {
+    icon: {
+      type: String,
+      default: null
+    },
     label: {
       type: String,
       required: true
