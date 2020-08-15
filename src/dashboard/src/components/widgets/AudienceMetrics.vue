@@ -12,12 +12,12 @@
       </b-card-sub-title>
       <hr>
       <audience-metrics-summary />
-    </b-card-body>
 
-    <v-chart
-      :options="options"
-      autoresize
-    />
+      <v-chart
+        :options="options"
+        autoresize
+      />
+    </b-card-body>
   </b-card>
 </template>
 
@@ -81,11 +81,11 @@ export default {
           show: false,
           height: '150px',
           left: '0%',
-          right: '0%',
+          right: '50px',
           bottom: '12%'
         },
         xAxis: {
-          splitNumber: 4,
+          splitNumber: 10,
           type: 'time',
           // minInterval: 3600 * 24 * 1000,
           splitLine: {
@@ -105,9 +105,12 @@ export default {
           }
         },
         yAxis: {
+          position: 'right',
+          show: true,
           type: 'value',
           axisLabel: {
-            inside: true,
+            inside: false,
+            showMaxLabel: false,
             showMinLabel: false
           },
           axisLine: {
@@ -121,7 +124,7 @@ export default {
           },
           z: 10
         },
-        color: ['#f6c95e', '#6f4d7b', '#ffa055', '#0b84a5', '#cb4630', '#9dd866', '#8dddd0'],
+        color: ['#3366d6', '#915dd1', '#cb50be', '#f446a2', '#ff4d7f', '#ff655b', '#ff8536', '#ffa600'],
         series: [
           {
             showSymbol: false,

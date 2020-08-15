@@ -7,12 +7,11 @@
       <b-card-title>
         Sessions by channels
       </b-card-title>
+      <v-chart
+        :options="options"
+        autoresize
+      />
     </b-card-body>
-
-    <v-chart
-      :options="options"
-      autoresize
-    />
   </b-card>
 </template>
 
@@ -24,67 +23,139 @@
  */
 .sessions-by-channels-widget .echarts {
   width: 100% !important;
-  height: 270 !important;
+  height: 270px !important;
 }
 </style>
 
 <script>
 /* eslint-disable max-len */
-import 'echarts/lib/chart/pie'
+
+import echarts from 'echarts'
+import audienceMetricsFakeData from './audienceMetricsFakeData'
+import 'echarts/lib/chart/line'
 import 'echarts/lib/component/polar'
 
 export default {
+  data() {
+    return {
+      load: [],
+      loadFake: audienceMetricsFakeData()
+    }
+  },
   computed: {
     options() {
       return {
+        animation: false,
+        tooltip: {
+          trigger: 'axis'
+        },
         grid: {
           show: false,
-          height: '270px',
+          height: '250px',
           left: '0%',
-          right: '0%',
-          bottom: '0%'
+          right: '10%',
+          bottom: '10%'
         },
-        color: ['#f6c95e', '#6f4d7b', '#ffa055', '#0b84a5', '#cb4630', '#9dd866', '#8dddd0'],
-        tooltip: {
-          trigger: 'item',
-          formatter: '{a} <br/>{b}: {c} ({d}%)'
+        xAxis: {
+          splitNumber: 4,
+          type: 'time',
+          // minInterval: 3600 * 24 * 1000,
+          splitLine: {
+            show: false
+          },
+          axisLine: {
+            lineStyle: {
+              color: '#8d8d8d'
+            }
+          },
+          axisLabel: {
+            showMinLabel: false,
+            showMaxLabel: false,
+            formatter(value) {
+              return echarts.format.formatTime('yyyy-MM-dd', value)
+            }
+          }
         },
-        legend: {
-          orient: 'vertical',
-          left: 10,
-          data: ['Organic search', 'Email', 'Referral', 'Social', 'Other']
+        yAxis: {
+          position: 'right',
+          type: 'value',
+          axisLabel: {
+            inside: false,
+            showMaxLabel: false,
+            showMinLabel: false
+          },
+          axisLine: {
+            lineStyle: {
+              color: '#8d8d8d'
+            },
+            show: false
+          },
+          splitLine: {
+            show: false
+          },
+          z: 10
         },
+        color: ['#3366d6', '#5c79dd', '#7a8ce4', '#95a0eb', '#aeb5f2', '#c6caf9', '#dee0ff'],
         series: [
           {
-            name: 'Channel',
-            type: 'pie',
-            radius: ['50%', '70%'],
-            avoidLabelOverlap: false,
-            label: {
-              show: false,
-              position: 'center'
-            },
-            emphasis: {
-              label: {
-                show: true,
-                fontSize: '14',
-                fontWeight: 'bold'
-              }
-            },
-            labelLine: {
-              show: false
-            },
-            data: [
-              { value: 335, name: 'Organic search' },
-              { value: 310, name: 'Email' },
-              { value: 234, name: 'Referral' },
-              { value: 135, name: 'Social' },
-              { value: 1548, name: 'Other' }
-            ]
+            showSymbol: false,
+            name: 'Sessions',
+            type: 'bar',
+            stack: 'one',
+            smooth: false,
+            data: this.loadFake.map((row) => ({
+              name: 'd',
+              value: [
+                row['Sessions.date'],
+                row['Sessions.count']
+              ]
+            }))
+          }, {
+            showSymbol: false,
+            name: 'PageViews',
+            type: 'bar',
+            stack: 'one',
+            smooth: false,
+            data: this.loadFake.map((row) => ({
+              name: 'd',
+              value: [
+                row['Sessions.date'],
+                row['Sessions.pageviews']
+              ]
+            }))
+          },
+          {
+            showSymbol: false,
+            name: 'Events',
+            type: 'bar',
+            stack: 'one',
+            smooth: false,
+            data: this.loadFake.map((row) => ({
+              name: 'd',
+              value: [
+                row['Sessions.date'],
+                row['Sessions.events']
+              ]
+            }))
+          },
+          {
+            showSymbol: false,
+            name: 'Visitors',
+            type: 'bar',
+            stack: 'one',
+            smooth: false,
+            data: this.loadFake.map((row) => ({
+              name: 'd',
+              value: [
+                row['Sessions.date'],
+                row['Sessions.visitors']
+              ]
+            }))
           }
         ]
       }
     }
+
   }
 }
 </script>

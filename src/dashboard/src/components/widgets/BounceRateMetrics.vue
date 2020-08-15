@@ -5,12 +5,11 @@
   >
     <b-card-body>
       <bounce-rate-metrics-summary />
+      <v-chart
+        :options="options"
+        autoresize
+      />
     </b-card-body>
-
-    <v-chart
-      :options="options"
-      autoresize
-    />
   </b-card>
 </template>
 
@@ -57,11 +56,11 @@ export default {
           show: false,
           height: '250px',
           left: '0%',
-          right: '0%',
-          bottom: '0%'
+          right: '10%',
+          bottom: '10%'
         },
         xAxis: {
-          show: false,
+          show: true,
           splitNumber: 4,
           type: 'time',
           minInterval: 3600 * 24 * 1000,
@@ -82,12 +81,13 @@ export default {
           }
         },
         yAxis: {
+          position: 'right',
           min: 0,
           max: 100,
           show: true,
           type: 'value',
           axisLabel: {
-            inside: true,
+            inside: false,
             showMaxLabel: false,
             showMinLabel: false
           },
@@ -102,7 +102,7 @@ export default {
           },
           z: 10
         },
-        color: ['#0b84a5'],
+        color: ['#3366d6'],
         series: [
           {
             showSymbol: false,

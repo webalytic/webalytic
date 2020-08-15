@@ -20,7 +20,7 @@ const maxByDayOfWeek = {
 export default () => {
   const data = []
   const current = moment('2020-08-01')
-  const end = moment('2020-09-01')
+  const end = moment('2020-08-15')
 
   while (current.unix() < end.unix()) {
     const week = current.format('E')
