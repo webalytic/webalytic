@@ -11,8 +11,11 @@ import 'bootstrap-vue/dist/bootstrap-vue.css'
 
 import 'echarts/lib/chart/bar'
 import 'echarts/lib/component/tooltip'
+import useFilters from './filters'
 
 import App from './App.vue'
+
+useFilters(Vue)
 
 Vue.component('v-chart', ECharts)
 Vue.use(VueApollo)

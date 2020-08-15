@@ -1,5 +1,3 @@
-/* eslint-disable no-mixed-operators */
-
 <template>
   <b-card title="Dynamic by last 30 days">
     <v-chart :options="options" />
@@ -14,7 +12,7 @@
  */
 .echarts {
   width: 100% !important;
-  height: 100%;
+  height: 350px;
 }
 </style>
 
@@ -45,19 +43,57 @@ export default {
   },
   data() {
     return {
-      load: []
+      load: [],
+      loadFake: [{
+        'Sessions.date': '2020-08-01',
+        'Sessions.events': 10,
+        'Sessions.count': 18,
+        'Sessions.pageviews': 18
+      },
+      {
+        'Sessions.date': '2020-08-02',
+        'Sessions.events': 12,
+        'Sessions.count': 22,
+        'Sessions.pageviews': 18
+      },
+      {
+        'Sessions.date': '2020-08-03',
+        'Sessions.events': 15,
+        'Sessions.count': 30,
+        'Sessions.pageviews': 19
+      },
+      {
+        'Sessions.date': '2020-08-04',
+        'Sessions.events': 10,
+        'Sessions.count': 25,
+        'Sessions.pageviews': 20
+      },
+      {
+        'Sessions.date': '2020-08-05',
+        'Sessions.events': 17,
+        'Sessions.count': 32,
+        'Sessions.pageviews': 25
+      },
+      {
+        'Sessions.date': '2020-08-06',
+        'Sessions.events': 15,
+        'Sessions.count': 36,
+        'Sessions.pageviews': 30
+      },
+      {
+        'Sessions.date': '2020-08-07',
+        'Sessions.events': 20,
+        'Sessions.count': 45,
+        'Sessions.pageviews': 40
+      }]
     }
   },
   computed: {
     options() {
       return {
         animation: false,
-        color: ['#3398DB'],
         tooltip: {
-          trigger: 'axis',
-          axisPointer: {
-            type: 'shadow'
-          }
+          trigger: 'axis'
         },
         legend: {
           type: 'plain'
@@ -84,7 +120,10 @@ export default {
           }
         },
         yAxis: {
-          type: 'value'
+          type: 'value',
+          splitLine: {
+            show: false
+          }
         },
         color: ['#42b5fd', '#958ccb', '#ffc221', '#758191'],
         series: [{
@@ -95,7 +134,7 @@ export default {
           //   color: "#42b5fd",
           //   opacity: 0.5
           // },
-          data: this.load.map((row) => ({
+          data: this.loadFake.map((row) => ({
             name: 'd',
             value: [
               row['Sessions.date'],
@@ -105,12 +144,8 @@ export default {
         }, {
           name: 'PageViews',
           type: 'line',
-          // areaStyle: {
-          //   color: "#958ccb",
-          //   opacity: 0.5
-          // },
           smooth: false,
-          data: this.load.map((row) => ({
+          data: this.loadFake.map((row) => ({
             name: 'd',
             value: [
               row['Sessions.date'],
@@ -122,11 +157,7 @@ export default {
           name: 'Events',
           type: 'line',
           smooth: false,
-          // areaStyle: {
-          //   color: "#ffc221",
-          //   opacity: 0.5
-          // },
-          data: this.load.map((row) => ({
+          data: this.loadFake.map((row) => ({
             name: 'd',
             value: [
               row['Sessions.date'],

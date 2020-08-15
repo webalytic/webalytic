@@ -27,14 +27,16 @@
 </style>
 
 <style lang="scss">
+  @import "./assets/scss/colors.scss";
   @import "../../../node_modules/bootstrap/scss/bootstrap.scss";
   @import "./assets/scss/sb-admin-2.scss";
 </style>
 
 <script>
-import SideBar from './components/SideBar.vue'
-import FooterBar from './components/FooterBar.vue'
-import TopNavBar from './components/TopNavBar.vue'
+import SideBar from './components/layout/SideBar.vue'
+import FooterBar from './components/layout/FooterBar.vue'
+import TopNavBar from './components/layout/TopNavBar.vue'
+
 import IndexPage from './pages/IndexPage.vue'
 
 export default {

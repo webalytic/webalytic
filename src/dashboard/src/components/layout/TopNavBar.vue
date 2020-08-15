@@ -12,17 +12,14 @@
     <!-- Topbar Search -->
     <b-dropdown
       id="dropdown-aria"
-      text="Active resource: Resource One"
+      text="Active: first.site.com"
       variant="primary"
     >
       <b-dropdown-item-button aria-describedby="dropdown-header-1">
-        Resource One
+        first.site.com
       </b-dropdown-item-button>
       <b-dropdown-item-button aria-describedby="dropdown-header-1">
-        Resource Two
-      </b-dropdown-item-button>
-      <b-dropdown-item-button aria-describedby="dropdown-header-1">
-        Resource Three
+        second.site.com
       </b-dropdown-item-button>
 
       <b-dropdown-divider />
@@ -106,7 +103,7 @@
           <span class="mr-2 d-none d-lg-inline text-gray-600 small">Admin</span>
           <img
             class="img-profile rounded-circle"
-            src="/dist/images/user.png"
+            src="/images/logo-user.png"
           >
         </a>
       </li>
