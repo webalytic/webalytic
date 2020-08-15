@@ -23,7 +23,7 @@
  */
 .sessions-by-channels-widget .echarts {
   width: 100% !important;
-  height: 270px !important;
+  height: 170px !important;
 }
 </style>
 
@@ -51,13 +51,13 @@ export default {
         },
         grid: {
           show: false,
-          height: '250px',
+          height: '150px',
           left: '0%',
-          right: '10%',
-          bottom: '10%'
+          right: '14%',
+          bottom: '12%'
         },
         xAxis: {
-          splitNumber: 4,
+          splitNumber: 2,
           type: 'time',
           // minInterval: 3600 * 24 * 1000,
           splitLine: {

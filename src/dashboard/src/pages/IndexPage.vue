@@ -6,10 +6,18 @@
     </h1>
 
     <b-row>
-      <b-col lg="8">
+      <b-col
+        lg="8"
+        md="6"
+        sm="12"
+      >
         <audience-metrics />
       </b-col>
-      <b-col lg="4">
+      <b-col
+        lg="4"
+        md="6"
+        sm="12"
+      >
         <sessions-by-device />
       </b-col>
     </b-row>

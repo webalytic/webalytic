@@ -7,7 +7,8 @@
   "private": true,
   "scripts": {
     "dev": "API_URL=http://localhost:3000 webpack-dev-server --inline --progress --config build/webpack.dev.conf.js",
-    "build": "node build/build.js"
+    "build": "node build/build.js",
+    "lint": "eslint --ext .js,.ts ./"
   },
   "engines": {
     "node": ">= 8.0.0",

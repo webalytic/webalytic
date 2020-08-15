@@ -7,10 +7,6 @@
       <b-card-title>
         Website Audience Metrics
       </b-card-title>
-      <b-card-sub-title>
-        Audience to which the users belonged while on the current date range
-      </b-card-sub-title>
-      <hr>
       <audience-metrics-summary />
 
       <v-chart
@@ -29,7 +25,7 @@
  */
 .audience-widget .echarts {
   width: 100% !important;
-  height: 200 !important;
+  height: 150 !important;
 }
 </style>
 
@@ -79,9 +75,9 @@ export default {
         },
         grid: {
           show: false,
-          height: '150px',
+          height: '100px',
           left: '0%',
-          right: '50px',
+          right: '40px',
           bottom: '12%'
         },
         xAxis: {

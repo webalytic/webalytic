@@ -21,7 +21,7 @@
  */
 .visitors-widget .echarts {
   width: 100% !important;
-  height: 250px !important;
+  height: 150px !important;
 }
 </style>
 
@@ -54,14 +54,14 @@ export default {
         },
         grid: {
           show: false,
-          height: '250px',
+          height: '150px',
           left: '0%',
-          right: '10%',
-          bottom: '10%'
+          right: '8%',
+          bottom: '12%'
         },
         xAxis: {
           show: true,
-          splitNumber: 4,
+          splitNumber: 2,
           type: 'time',
           minInterval: 3600 * 24 * 1000,
           splitLine: {

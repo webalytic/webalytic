@@ -7,9 +7,7 @@
       <b-card-title>
         Sessions by device
       </b-card-title>
-
-      <hr>
-
+      <sessions-by-device-summary />
       <v-chart
         :options="options"
         autoresize
@@ -26,7 +24,7 @@
  */
 .sessions-by-device-widget .echarts {
   width: 100% !important;
-  height: 285px !important;
+  height: 150px !important;
 }
 </style>
 
@@ -36,9 +34,12 @@
 import audienceMetricsFakeData from './audienceMetricsFakeData'
 import 'echarts/lib/chart/line'
 import 'echarts/lib/component/polar'
+import SessionsByDeviceSummary from './SessionsByDeviceSummary.vue'
 
 export default {
-
+  components: {
+    SessionsByDeviceSummary
+  },
   data() {
     return {
       load: [],
@@ -53,16 +54,15 @@ export default {
           formatter: '{a} <br/>{b}: {c} ({d}%)'
         },
         legend: {
-          orient: 'vertical',
-          left: 10,
-          data: ['Desktop', 'Mobile', 'Table']
+          bottom: -5,
+          icon: 'circle'
         },
         color: ['#3366d6', '#95a0eb', '#dee0ff'],
         series: [
           {
-            name: '访问来源',
+            name: 'Sessions',
             type: 'pie',
-            radius: ['50%', '70%'],
+            radius: ['40%', '70%'],
             avoidLabelOverlap: false,
             label: {
               show: false,
@@ -71,7 +71,7 @@ export default {
             emphasis: {
               label: {
                 show: true,
-                fontSize: '30',
+                fontSize: '15',
                 fontWeight: 'bold'
               }
             },
@@ -81,7 +81,7 @@ export default {
             data: [
               { value: 335, name: 'Desktop' },
               { value: 310, name: 'Mobile' },
-              { value: 234, name: 'Table' }
+              { value: 234, name: 'Tablet' }
             ]
           }
         ]

@@ -1,17 +1,24 @@
 <template>
   <div class="card-box">
     <span class="mt-0">
-      {{ label }}
+      <i
+        v-if="icon"
+        :class="`fa fa-${icon}`"
+      /> {{ label }}
     </span>
-    <h4 class="text-primary">
+    <h5 class="text-primary">
       {{ prefix }}<span data-plugin="counterup">{{ value }}</span>
-    </h4>
+    </h5>
   </div>
 </template>
 
 <script>
 export default {
   props: {
+    icon: {
+      type: String,
+      default: null
+    },
     label: {
       type: String,
       required: true
