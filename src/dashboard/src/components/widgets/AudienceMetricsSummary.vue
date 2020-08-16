@@ -27,31 +27,29 @@
 </template>
 
 <script>
-// import gql from 'graphql-tag'
 import SummaryCard from './SummaryCard.vue'
+import { fetchWithTimeDimensions } from '../../services/LoadService'
 
 export default {
   components: {
     SummaryCard
   },
-  // apollo: {
-  //   load: {
-  //     query: gql`
-  //       query load($measures: [String!], $dimensions: [String]) {
-  //         load(measures: $measures, dimensions: $dimensions)
-  //       }`,
-  //     variables: {
-  //       measures: ['Sessions.count', 'Sessions.pageviews', 'Sessions.events'],
-  //       dimensions: []
-  //     }
-  //   }
-  // },
+  data() {
+    return {
+      load: []
+    }
+  },
   computed: {
     summary() {
-      return this.load ? this.load[0] : {
-        'Sessions.visitors': 3430, 'Sessions.count': 4523, 'Sessions.pageviews': 6234, 'Sessions.events': 3123
+      return this.load.length ? this.load[0] : {
+        'Sessions.count': 0, 'Sessions.pageviews': 0, 'Sessions.events': 0
       }
     }
+  },
+  async created() {
+    this.load = await fetchWithTimeDimensions({
+      measures: ['Sessions.count', 'Sessions.pageviews', 'Sessions.events']
+    })
   }
 }
 </script>

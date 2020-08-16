@@ -31,15 +31,15 @@
 /* eslint-disable max-len */
 
 import echarts from 'echarts'
-import audienceMetricsFakeData from './audienceMetricsFakeData'
+
 import 'echarts/lib/chart/line'
 import 'echarts/lib/component/polar'
+import { fetchWithTimeDimensions } from '../../services/LoadService'
 
 export default {
   data() {
     return {
-      load: [],
-      loadFake: audienceMetricsFakeData()
+      load: []
     }
   },
   computed: {
@@ -96,66 +96,34 @@ export default {
           z: 10
         },
         color: ['#3366d6', '#5c79dd', '#7a8ce4', '#95a0eb', '#aeb5f2', '#c6caf9', '#dee0ff'],
-        series: [
-          {
-            showSymbol: false,
-            name: 'Sessions',
-            type: 'bar',
-            stack: 'one',
-            smooth: false,
-            data: this.loadFake.map((row) => ({
-              name: 'd',
-              value: [
-                row['Sessions.date'],
-                row['Sessions.count']
-              ]
-            }))
-          }, {
-            showSymbol: false,
-            name: 'PageViews',
-            type: 'bar',
-            stack: 'one',
-            smooth: false,
-            data: this.loadFake.map((row) => ({
-              name: 'd',
-              value: [
-                row['Sessions.date'],
-                row['Sessions.pageviews']
-              ]
-            }))
-          },
-          {
-            showSymbol: false,
-            name: 'Events',
-            type: 'bar',
-            stack: 'one',
-            smooth: false,
-            data: this.loadFake.map((row) => ({
-              name: 'd',
-              value: [
-                row['Sessions.date'],
-                row['Sessions.events']
-              ]
-            }))
-          },
-          {
-            showSymbol: false,
-            name: 'Visitors',
-            type: 'bar',
-            stack: 'one',
-            smooth: false,
-            data: this.loadFake.map((row) => ({
-              name: 'd',
-              value: [
-                row['Sessions.date'],
-                row['Sessions.visitors']
-              ]
-            }))
-          }
-        ]
+        series: Object.values(this.load.reduce((byChannel, row) => {
+          // eslint-disable-next-line no-param-reassign
+          if (!byChannel[row['Sessions.channel']]) byChannel[row['Sessions.channel']] = []
+          byChannel[row['Sessions.channel']].push(row)
+          return byChannel
+        }, {})).map((rows) => ({
+          showSymbol: false,
+          name: rows[0]['Sessions.channel'],
+          type: 'bar',
+          stack: 'one',
+          smooth: false,
+          data: rows.map((row) => ({
+            name: 'd',
+            value: [
+              row['Sessions.date'],
+              row['Sessions.count']
+            ]
+          }))
+        }))
       }
     }
 
+  },
+  async created() {
+    this.load = await fetchWithTimeDimensions({
+      measures: ['Sessions.count'],
+      dimensions: ['Sessions.date', 'Sessions.channel']
+    })
   }
 }
 </script>

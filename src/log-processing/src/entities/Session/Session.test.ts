@@ -133,6 +133,19 @@ describe('Session unit test', () => {
       expect(result).to.be.equal(true)
     })
 
+    it('Should update duration, add valid pageview hit', () => {
+      const instance = createSession()
+
+      const result = instance.addHit(new session.Hit({
+        time: moment().add(10, 'minutes').format('YYYY-MM-DD HH:mm:ss'),
+        type: HitType.PAGEVIEW,
+        dataSource: HitDataSource.SDK
+      }))
+
+      expect(result).to.be.equal(true)
+      expect(instance.props.duration).to.be.equal(10 * 60)
+    })
+
     it('Should return TRUE, add valid event hit', () => {
       const instance = createSession()
 

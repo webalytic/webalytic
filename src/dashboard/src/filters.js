@@ -11,4 +11,6 @@ export default (Vue) => {
   })
 
   Vue.filter('money', (value) => numeral(+value).format('0,0.00'))
+
+  Vue.filter('ucFirst', (value) => value[0].toUpperCase() + value.slice(1))
 }

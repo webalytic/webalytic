@@ -1,5 +1,7 @@
 /* eslint-disable @typescript-eslint/no-var-requires */
-import { clickhouse } from '@webalytic/ms-tools/lib/datasources'
+import { createClickhouse } from '@webalytic/ms-tools/lib/datasources'
+
+const clickhouse = createClickhouse()
 
 module.exports = {
   up: async () => {
@@ -13,9 +15,11 @@ module.exports = {
         sessionId UUID,
         clientId String,
         sessionStartTime DateTime,
+        duration UInt32,
 
         totals_hits UInt32,
         totals_pageviews UInt32,
+        totals_events UInt32,
 
         trafficSource_campaign LowCardinality(String),
         trafficSource_keyword String,

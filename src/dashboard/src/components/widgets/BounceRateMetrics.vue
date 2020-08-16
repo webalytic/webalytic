@@ -4,7 +4,20 @@
     class="visitors-widget"
   >
     <b-card-body>
-      <bounce-rate-metrics-summary />
+      <b-card
+        no-body
+        class="border-0"
+      >
+        <div class="d-flex flex-row">
+          <div class="pr-3 pl-3">
+            <summary-card
+              label="Bounce Rate"
+              :value="total | percent"
+            />
+          </div>
+        </div>
+      </b-card>
+
       <v-chart
         :options="options"
         autoresize
@@ -29,23 +42,25 @@
 /* eslint-disable max-len */
 // import gql from 'graphql-tag'
 import echarts from 'echarts'
-import audienceMetricsFakeData from './audienceMetricsFakeData'
 import 'echarts/lib/chart/line'
 import 'echarts/lib/component/polar'
-import BounceRateMetricsSummary from './BounceRateMetricsSummary.vue'
+import SummaryCard from './SummaryCard.vue'
+import { fetchWithTimeDimensions } from '../../services/LoadService'
 
 export default {
   components: {
-    BounceRateMetricsSummary
+    SummaryCard
   },
 
   data() {
     return {
-      load: [],
-      loadFake: audienceMetricsFakeData()
+      load: []
     }
   },
   computed: {
+    total() {
+      return this.load.reduce((sum, row) => sum + +row['Sessions.bounceRate'], 0) / this.load.length
+    },
     options() {
       return {
         animation: false,
@@ -54,7 +69,7 @@ export default {
         },
         grid: {
           show: false,
-          height: '150px',
+          height: '130px',
           left: '0%',
           right: '8%',
           bottom: '12%'
@@ -110,17 +125,23 @@ export default {
             type: 'line',
             barWidth: '60%',
             smooth: false,
-            data: this.loadFake.map((row) => ({
+            data: this.load.map((row) => ({
               name: 'd',
               value: [
                 row['Sessions.date'],
-                (row['Sessions.events'] * 100) / 8000
+                row['Sessions.bounceRate']
               ]
             }))
           }
         ]
       }
     }
+  },
+  async created() {
+    this.load = await fetchWithTimeDimensions({
+      measures: ['Sessions.bounceRate'],
+      dimensions: ['Sessions.date']
+    })
   }
 }
 </script>

@@ -24,6 +24,7 @@
 
 <style lang="css">
   @import '../../../node_modules/@fortawesome/fontawesome-free/css/all.min.css';
+  @import '../../../node_modules/vue2-daterange-picker/dist/vue2-daterange-picker.css';
 </style>
 
 <style lang="scss">

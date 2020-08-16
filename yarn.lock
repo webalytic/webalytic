@@ -818,7 +818,7 @@
   dependencies:
     "@babel/helper-plugin-utils" "^7.10.4"
 
-"@babel/plugin-transform-runtime@^7.6.2":
+"@babel/plugin-transform-runtime@^7.11.0":
   version "7.11.0"
   resolved "https://registry.yarnpkg.com/@babel/plugin-transform-runtime/-/plugin-transform-runtime-7.11.0.tgz#e27f78eb36f19448636e05c33c90fd9ad9b8bccf"
   integrity sha512-LFEsP+t3wkYBlis8w6/kmnd6Kb1dxTd+wGJ8MlxTGzQo//ehtqlVL4S9DNUa53+dtPSQobN2CXx4d81FqC58cw==
@@ -992,7 +992,7 @@
   resolved "https://registry.yarnpkg.com/@babel/preset-stage-0/-/preset-stage-0-7.8.3.tgz#b6a0eca1a3b72e07f9caf58f998e97568028f6f5"
   integrity sha512-+l6FlG1j73t4wh78W41StbcCz0/9a1/y+vxfnjtHl060kSmcgMfGzK9MEkLvrCOXfhp9RCX+d88sm6rOqxEIEQ==
 
-"@babel/runtime@^7.0.0", "@babel/runtime@^7.5.4":
+"@babel/runtime@^7.0.0", "@babel/runtime@^7.11.2":
   version "7.11.2"
   resolved "https://registry.yarnpkg.com/@babel/runtime/-/runtime-7.11.2.tgz#f549c13c754cc40b87644b9fa9f09a6a95fe0736"
   integrity sha512-TeWkU52so0mPtDcaCTxNBI/IHiz0pZgr8VEFqXFtZWpYD08ZB6FaSwVAS8MKRQAP3bYKiVjwysOJgMFY28o6Tw==
@@ -3030,14 +3030,14 @@
     source-map "~0.6.1"
     vue-template-es2015-compiler "^1.9.0"
 
-"@webalytic/ms-tools@^0.1.8":
-  version "0.1.8"
-  resolved "https://registry.yarnpkg.com/@webalytic/ms-tools/-/ms-tools-0.1.8.tgz#a8218a3c5c59a039bbc70a424ca974e87cc00e51"
-  integrity sha512-swrxkotaO/Jhu8FpP2C3ZblLpCYCDD4bLydkcnaMwbehFeL6cAVSG12eRD0yQ9gtWGtpYMf+b0lpRnNxF6OLKw==
+"@webalytic/ms-tools@^0.1.9":
+  version "0.1.9"
+  resolved "https://registry.yarnpkg.com/@webalytic/ms-tools/-/ms-tools-0.1.9.tgz#9291851b684340753dd11f294e00309024ce9886"
+  integrity sha512-J8B+6qrh7+2FR7mr7aCLed2Swsl6dKeBy57fjJvPu/OXrMRbbLtPT9AORZEZ7NJk0uME9e9Dmgbq3gfXCqRpBA==
   dependencies:
     "@apla/clickhouse" "^1.6.3"
     "@grpc/proto-loader" "^0.5.5"
-    "@webalytic/protorepo" webalytic/protorepo#0.2.6
+    "@webalytic/protorepo" webalytic/protorepo#0.2.7
     chai "^4.2.0"
     colors "^1.4.0"
     fastest-validator "^1.5.1"
@@ -3054,9 +3054,9 @@
     shelljs "^0.8.4"
     winston "^3.3.3"
 
-"@webalytic/protorepo@webalytic/protorepo#0.2.6":
-  version "0.2.6"
-  resolved "https://codeload.github.com/webalytic/protorepo/tar.gz/6fe36592f711b09c2be898594f2833ac742d14ca"
+"@webalytic/protorepo@webalytic/protorepo#0.2.7":
+  version "0.2.7"
+  resolved "https://codeload.github.com/webalytic/protorepo/tar.gz/11a8c33d7aa55d3f3835d0624f3af716058a6c81"
 
 "@webassemblyjs/ast@1.9.0":
   version "1.9.0"
@@ -15058,7 +15058,14 @@ vue-template-es2015-compiler@^1.9.0:
   resolved "https://registry.yarnpkg.com/vue-template-es2015-compiler/-/vue-template-es2015-compiler-1.9.1.tgz#1ee3bc9a16ecbf5118be334bb15f9c46f82f5825"
   integrity sha512-4gDntzrifFnCEvyoO8PqyJDmguXgVPxKiIxrBKjIowvL9l+N66196+72XVYR8BBf1Uv1Fgt3bGevJ+sEmxfZzw==
 
-vue@^2.5.11:
+vue2-daterange-picker@^0.5.1:
+  version "0.5.1"
+  resolved "https://registry.yarnpkg.com/vue2-daterange-picker/-/vue2-daterange-picker-0.5.1.tgz#f41f3cd20b242b7f34ce16eeea9534d9cbe9f4d7"
+  integrity sha512-p0y9RyI6wqqwffKM5EYgxvNM51un/fBu9hLZ/GxXVOBqTMxjDuV8mz9iUTj4p5R80lWSBwIY7GshW5RYgS8+rw==
+  dependencies:
+    vue "^2.6.10"
+
+vue@^2.5.11, vue@^2.6.10:
   version "2.6.11"
   resolved "https://registry.yarnpkg.com/vue/-/vue-2.6.11.tgz#76594d877d4b12234406e84e35275c6d514125c5"
   integrity sha512-VfPwgcGABbGAue9+sfrD4PuwFar7gPb1yl1UK1MwXoQPAw0BKSqWfoYCT/ThFrdEVWoI51dBuyCoiNU9bZDZxQ==

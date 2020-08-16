@@ -5,12 +5,13 @@ import path from 'path'
 
 dotenv.config()
 
-import { sequelize } from '@webalytic/ms-tools/lib/datasources'
+import { createSequelize } from '@webalytic/ms-tools/lib/datasources'
 
 import Umzug from 'umzug'
 import SequelizeStorage from 'umzug/lib/storages/SequelizeStorage'
 
-const SCHEMA = 'data-storage'
+const sequelize = createSequelize()
+const SCHEMA = 'data_storage'
 
 async function main() {
   try {
