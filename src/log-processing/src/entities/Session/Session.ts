@@ -47,6 +47,25 @@ export default class Session {
     this.hits = hits
   }
 
+  private incrementTotals(type: string): void {
+    this.props.totals.hits += 1
+
+    if (type === HitType.PAGEVIEW) {
+      this.props.totals.pageviews += 1
+    }
+
+    if (type === HitType.EVENT) {
+      this.props.totals.events += 1
+    }
+  }
+
+  private calcNewDuration(hitProps: session.IHit): void {
+    // Todo: handle opt_noninteraction hits
+    const hitTime = moment(hitProps.time).unix()
+    const sessionStartTime = moment(this.props.sessionStartTime).unix()
+    this.props.duration = hitTime - sessionStartTime
+  }
+
   static create(data: SessionCreateProps, hitProps: session.IHit): Session {
     createInputValidate(data, hitProps)
 
@@ -66,8 +85,10 @@ export default class Session {
       sessionStartTime: moment().format('YYYY-MM-DD HH:mm:ss'),
       totals: new session.SessionTotals({
         hits: 1,
-        pageviews: hit.type === HitType.PAGEVIEW ? 1 : 0
-      })
+        pageviews: hit.type === HitType.PAGEVIEW ? 1 : 0,
+        events: hit.type === HitType.EVENT ? 1 : 0
+      }),
+      duration: 0
     })
 
     const instance = new Session(props, [hit])
@@ -84,12 +105,8 @@ export default class Session {
     const prevProps = new session.SessionProps(this.props.toJSON())
     const hit = new session.Hit(hitProps)
 
-    this.props.totals.hits += 1
-
-    if (hit.type === HitType.PAGEVIEW) {
-      this.props.totals.pageviews += 1
-    }
-
+    this.incrementTotals(hit.type)
+    this.calcNewDuration(hit)
     this.hits.push(hit)
 
     const sessionUpdatedEvent = new SessionUpdatedEvent(hit, this.props, prevProps)
@@ -99,6 +116,7 @@ export default class Session {
   }
 
   public shouldBeEnd(newTrafficSource: session.TrafficSource | null, sessionControl: string, hitType: string): boolean {
+    // Todo: check 30 minutes without hits
     return hitType === HitType.PAGEVIEW && (
       sessionControl === HitSessionControl.START
       || this.date !== moment().format('YYYY-MM-DD')

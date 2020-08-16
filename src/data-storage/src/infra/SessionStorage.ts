@@ -48,9 +48,11 @@ export default class SessionStorage {
       props.sessionId,
       props.clientId || '',
       props.sessionStartTime,
+      props.duration,
 
       props.totals.hits,
       props.totals.pageviews,
+      props.totals.events,
 
       props.trafficSource.campaign,
       props.trafficSource.keyword || '',
