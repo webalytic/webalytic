@@ -30,7 +30,7 @@ services:
     restart: always
     ports:
       - 9000:9000
-      - 8124:8123
+      - 8123:8123
     volumes:
       - ./clickhouse/config.xml:/etc/clickhouse-server/config.xml
       - ./data/clickhouse/data:/opt/clickhouse/data
@@ -40,7 +40,7 @@ services:
     container_name: clickhouse-bulk
     image: nikepan/clickhouse-bulk:1.2.5
     ports:
-      - 8123:8124
+      - 8124:8124
     environment:
       CLICKHOUSE_SERVERS: http://clickhouse:8123
       CLICKHOUSE_FLUSH_INTERVAL: 3000

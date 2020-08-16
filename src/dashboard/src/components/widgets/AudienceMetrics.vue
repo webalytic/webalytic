@@ -18,11 +18,6 @@
 </template>
 
 <style>
-/**
- * The default size is 600px×400px, for responsive charts
- * you may need to set percentage values as follows (also
- * don't forget to provide a size for the container).
- */
 .audience-widget .echarts {
   width: 100% !important;
   height: 150 !important;
@@ -31,39 +26,20 @@
 
 <script>
 /* eslint-disable max-len */
-// import gql from 'graphql-tag'
 import echarts from 'echarts'
-import audienceMetricsFakeData from './audienceMetricsFakeData'
 import 'echarts/lib/chart/line'
 import 'echarts/lib/component/polar'
 import AudienceMetricsSummary from './AudienceMetricsSummary.vue'
+
+import { fetchWithTimeDimensions } from '../../services/LoadService'
 
 export default {
   components: {
     AudienceMetricsSummary
   },
-  // apollo: {
-  //   load: {
-  //     query: gql`
-  //       query load($measures: [String!], $dimensions: [String], $timeDimensions: [TimeDimensionInput], $order: JSON) {
-  //         load(measures: $measures, dimensions: $dimensions, timeDimensions: $timeDimensions, order: $order)
-  //       }`,
-  //     variables: {
-  //       measures: ['Sessions.count', 'Sessions.pageviews', 'Sessions.events'],
-  //       timeDimensions: [{
-  //         dimension: 'Sessions.date'
-  //       }],
-  //       dimensions: ['Sessions.date'],
-  //       order: {
-  //         'Sessions.date': 'asc'
-  //       }
-  //     }
-  //   }
-  // },
   data() {
     return {
-      load: [],
-      loadFake: audienceMetricsFakeData()
+      load: []
     }
   },
   computed: {
@@ -83,7 +59,7 @@ export default {
         xAxis: {
           splitNumber: 10,
           type: 'time',
-          // minInterval: 3600 * 24 * 1000,
+          minInterval: 3600 * 24 * 1000,
           splitLine: {
             show: false
           },
@@ -121,61 +97,27 @@ export default {
           z: 10
         },
         color: ['#3366d6', '#915dd1', '#cb50be', '#f446a2', '#ff4d7f', '#ff655b', '#ff8536', '#ffa600'],
-        series: [
-          {
-            showSymbol: false,
-            name: 'Sessions',
-            type: 'line',
-            smooth: false,
-            data: this.loadFake.map((row) => ({
-              name: 'd',
-              value: [
-                row['Sessions.date'],
-                row['Sessions.count']
-              ]
-            }))
-          }, {
-            showSymbol: false,
-            name: 'PageViews',
-            type: 'line',
-            smooth: false,
-            data: this.loadFake.map((row) => ({
-              name: 'd',
-              value: [
-                row['Sessions.date'],
-                row['Sessions.pageviews']
-              ]
-            }))
-          },
-          {
-            showSymbol: false,
-            name: 'Events',
-            type: 'line',
-            smooth: false,
-            data: this.loadFake.map((row) => ({
-              name: 'd',
-              value: [
-                row['Sessions.date'],
-                row['Sessions.events']
-              ]
-            }))
-          }
-          // {
-          //   showSymbol: false,
-          //   name: 'Visitors',
-          //   type: 'bar',
-          //   smooth: false,
-          //   data: this.loadFake.map((row) => ({
-          //     name: 'd',
-          //     value: [
-          //       row['Sessions.date'],
-          //       row['Sessions.events']
-          //     ]
-          //   }))
-          // }
-        ]
+        series: [['Session', 'count'], ['PageViews', 'pageviews'], ['Events', 'events']].map(([name, field]) => ({
+          showSymbol: false,
+          name,
+          type: 'line',
+          smooth: false,
+          data: this.load.map((row) => ({
+            name: 'd',
+            value: [
+              row['Sessions.date'],
+              row[`Sessions.${field}`]
+            ]
+          }))
+        }))
       }
     }
+  },
+  async created() {
+    this.load = await fetchWithTimeDimensions({
+      measures: ['Sessions.count', 'Sessions.pageviews', 'Sessions.events'],
+      dimensions: ['Sessions.date']
+    })
   }
 }
 </script>

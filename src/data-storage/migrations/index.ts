@@ -11,7 +11,7 @@ import Umzug from 'umzug'
 import SequelizeStorage from 'umzug/lib/storages/SequelizeStorage'
 
 const sequelize = createSequelize()
-const SCHEMA = 'data-storage'
+const SCHEMA = 'data_storage'
 
 async function main() {
   try {

@@ -4,7 +4,19 @@
     class="visitors-widget"
   >
     <b-card-body>
-      <visitors-metrics-summary />
+      <b-card
+        no-body
+        class="border-0"
+      >
+        <div class="d-flex flex-row">
+          <div class="pr-3 pl-3">
+            <summary-card
+              label="Visitors"
+              :value="totalVisitors | number"
+            />
+          </div>
+        </div>
+      </b-card>
 
       <v-chart
         :options="options"
@@ -28,22 +40,21 @@
 
 <script>
 /* eslint-disable max-len */
-// import gql from 'graphql-tag'
 import echarts from 'echarts'
-import audienceMetricsFakeData from './audienceMetricsFakeData'
 import 'echarts/lib/chart/line'
 import 'echarts/lib/component/polar'
-import VisitorsMetricsSummary from './VisitorsMetricsSummary.vue'
+import SummaryCard from './SummaryCard.vue'
+
+import { fetchWithTimeDimensions } from '../../services/LoadService'
 
 export default {
   components: {
-    VisitorsMetricsSummary
+    SummaryCard
   },
-
   data() {
     return {
       load: [],
-      loadFake: audienceMetricsFakeData()
+      total: []
     }
   },
   computed: {
@@ -109,17 +120,31 @@ export default {
             type: 'bar',
             barWidth: '60%',
             smooth: false,
-            data: this.loadFake.map((row) => ({
+            data: this.load.map((row) => ({
               name: 'd',
               value: [
                 row['Sessions.date'],
-                row['Sessions.events']
+                row['Sessions.visitors']
               ]
             }))
           }
         ]
       }
+    },
+    totalVisitors() {
+      return this.total.length ? this.total[0]['Sessions.visitors'] : 0
     }
+
+  },
+  async created() {
+    this.load = await fetchWithTimeDimensions({
+      measures: ['Sessions.visitors'],
+      dimensions: ['Sessions.date']
+    })
+
+    this.total = await fetchWithTimeDimensions({
+      measures: ['Sessions.visitors']
+    })
   }
 }
 </script>

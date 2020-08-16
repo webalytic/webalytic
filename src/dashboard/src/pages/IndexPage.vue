@@ -1,9 +1,16 @@
 <template>
   <div>
     <!-- Page Heading -->
-    <h1 class="h3 mb-4 text-gray-800">
-      Dashboard
-    </h1>
+    <div class="d-flex justify-content-between">
+      <h1 class="h3 mb-4 text-gray-800">
+        Dashboard
+      </h1>
+      <date-range-picker
+        v-model="dateRange"
+        class="pull-right"
+        opens="left"
+      />
+    </div>
 
     <b-row>
       <b-col
@@ -45,6 +52,9 @@
 }
 </style>
 <script>
+import moment from 'moment'
+import DateRangePicker from 'vue2-daterange-picker'
+
 import AudienceMetrics from '../components/widgets/AudienceMetrics.vue'
 import VisitorsMetrics from '../components/widgets/VisitorsMetrics.vue'
 import BounceRateMetrics from '../components/widgets/BounceRateMetrics.vue'
@@ -54,11 +64,20 @@ import SessionsByDevice from '../components/widgets/SessionsByDevice.vue'
 export default {
   name: 'IndexPage',
   components: {
+    DateRangePicker,
     AudienceMetrics,
     VisitorsMetrics,
     BounceRateMetrics,
     SessionByChannels,
     SessionsByDevice
+  },
+  data() {
+    return {
+      dateRange: {
+        startDate: moment().subtract(30, 'days'),
+        endDate: moment()
+      }
+    }
   }
 }
 </script>

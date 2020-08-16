@@ -7,7 +7,20 @@
       <b-card-title>
         Sessions by device
       </b-card-title>
-      <sessions-by-device-summary />
+
+      <div class="d-flex flex-row">
+        <div
+          v-for="item in load"
+          :key="item['Sessions.deviceCategory']"
+          class="pr-3 pl-3"
+        >
+          <summary-card
+            :label="normalizeDeviceCategory(item['Sessions.deviceCategory']) | ucFirst"
+            :value="item['Sessions.count'] | number"
+          />
+        </div>
+      </div>
+
       <v-chart
         :options="options"
         autoresize
@@ -30,15 +43,28 @@
 
 <script>
 /* eslint-disable max-len */
-// import gql from 'graphql-tag'
+import gql from 'graphql-tag'
 import audienceMetricsFakeData from './audienceMetricsFakeData'
 import 'echarts/lib/chart/line'
 import 'echarts/lib/component/polar'
-import SessionsByDeviceSummary from './SessionsByDeviceSummary.vue'
+
+import SummaryCard from './SummaryCard.vue'
 
 export default {
   components: {
-    SessionsByDeviceSummary
+    SummaryCard
+  },
+  apollo: {
+    load: {
+      query: gql`
+        query load($measures: [String!], $dimensions: [String], $timeDimensions: [TimeDimensionInput], $order: JSON) {
+          load(measures: $measures, dimensions: $dimensions, timeDimensions: $timeDimensions, order: $order)
+        }`,
+      variables: {
+        measures: ['Sessions.count'],
+        dimensions: ['Sessions.deviceCategory']
+      }
+    }
   },
   data() {
     return {
@@ -78,14 +104,18 @@ export default {
             labelLine: {
               show: false
             },
-            data: [
-              { value: 335, name: 'Desktop' },
-              { value: 310, name: 'Mobile' },
-              { value: 234, name: 'Tablet' }
-            ]
+            data: this.load.map((item) => ({
+              value: item['Sessions.count'],
+              name: item['Sessions.deviceCategory']
+            }))
           }
         ]
       }
+    }
+  },
+  methods: {
+    normalizeDeviceCategory(category) {
+      return category || 'unknown'
     }
   }
 }

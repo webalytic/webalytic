@@ -21,6 +21,14 @@ cube('Sessions', {
     durationAvg: {
       sql: `sum(duration * sign) / sum(sign)`,
       type: `number`
+    },
+    visitors: {
+      sql: `uniq(clientId)`,
+      type: `number`
+    },
+    bounceRate:{
+      sql: `round((100 - (uniqIf(sessionId, duration > 0) * 100) / sum(sign)), 2)`,
+      type: `number`
     }
   },
 
@@ -69,9 +77,14 @@ cube('Sessions', {
       type: 'string'
     },
 
-    deviceCategory: {
-      sql: `${CUBE}."device_deviceCategory"`,
+    source: {
+      sql: `${CUBE}."trafficSource_source"`,
       type: 'string'
     },
+
+    channel: {
+      sql: `${CUBE}."trafficSource_medium"`,
+      type: 'string'
+    }
   }
 })
