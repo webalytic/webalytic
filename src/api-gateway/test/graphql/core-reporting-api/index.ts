@@ -10,10 +10,20 @@ let dataStorageApiMock: nock.Scope
 
 describe('Core Reporting Api', () => {
   const LOAD_QUERY = gql`
-    query load($measures: [String!], $dimensions: [String]) {
-      load(measures: $measures, dimensions: $dimensions)
-    }
-  `
+  query load(
+    $measures: [String!], 
+    $dimensions: [String], 
+    $timeDimensions: [TimeDimensionInput], 
+    $filters: [FilterInput],
+    $order: JSON) {
+      load(
+        measures: $measures, 
+        dimensions: $dimensions, 
+        timeDimensions: $timeDimensions, 
+        filters: $filters,
+        order: $order
+      )
+  }`
 
   before(() => {
     const containerWithApp = createApp()
@@ -22,7 +32,6 @@ describe('Core Reporting Api', () => {
     const query = JSON.stringify({
       measures: ['Sessions.count'],
       dimensions: ['Sessions.date'],
-      filters: [],
       limit: 100,
       offset: 0
     })
