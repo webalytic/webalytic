@@ -14,6 +14,7 @@ import 'echarts/lib/component/tooltip'
 import useFilters from './filters'
 
 import App from './App.vue'
+import store from './store'
 
 useFilters(Vue)
 
@@ -26,6 +27,7 @@ Vue.use(IconsPlugin)
 new Vue({
   el: '#wrapper',
   render: (h) => h(App),
+  store,
   apolloProvider: new VueApollo({
     defaultClient: apolloClient
   })

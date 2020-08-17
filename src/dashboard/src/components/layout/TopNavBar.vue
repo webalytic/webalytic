@@ -9,27 +9,6 @@
       <i class="fa fa-bars" />
     </button>
 
-    <!-- Topbar Search -->
-    <b-dropdown
-      id="dropdown-aria"
-      text="Active: first.site.com"
-      variant="primary"
-    >
-      <b-dropdown-item-button aria-describedby="dropdown-header-1">
-        first.site.com
-      </b-dropdown-item-button>
-      <b-dropdown-item-button aria-describedby="dropdown-header-1">
-        second.site.com
-      </b-dropdown-item-button>
-
-      <b-dropdown-divider />
-
-      <b-dropdown-item-button>
-        Add resource
-        <i class="fa fa-plus" />
-      </b-dropdown-item-button>
-    </b-dropdown>
-
     <!-- Topbar Navbar -->
     <ul class="navbar-nav ml-auto">
       <!-- Nav Item - Search Dropdown (Visible Only XS) -->

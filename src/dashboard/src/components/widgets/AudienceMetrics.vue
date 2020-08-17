@@ -7,12 +7,20 @@
       <b-card-title>
         Website Audience Metrics
       </b-card-title>
-      <audience-metrics-summary />
 
-      <v-chart
-        :options="options"
-        autoresize
+      <b-spinner
+        v-show="processing"
+        label="Spinning"
       />
+
+      <div v-show="!processing">
+        <audience-metrics-summary :total="total" />
+
+        <v-chart
+          :options="options"
+          autoresize
+        />
+      </div>
     </b-card-body>
   </b-card>
 </template>
@@ -26,83 +34,37 @@
 
 <script>
 /* eslint-disable max-len */
-import echarts from 'echarts'
+
 import 'echarts/lib/chart/line'
 import 'echarts/lib/component/polar'
 import AudienceMetricsSummary from './AudienceMetricsSummary.vue'
-
-import { fetchWithTimeDimensions } from '../../services/LoadService'
+import { callQueryEngine } from '../../services/LoadService'
+import BaseChartOptions from './BaseChartOptions'
+import DataLoaderMixin from '../../mixins/DataLoaderMixin'
 
 export default {
   components: {
     AudienceMetricsSummary
   },
+  mixins: [DataLoaderMixin],
   data() {
     return {
-      load: []
+      processing: true,
+      data: [],
+      total: []
     }
   },
   computed: {
     options() {
       return {
-        animation: false,
-        tooltip: {
-          trigger: 'axis'
-        },
-        grid: {
-          show: false,
-          height: '100px',
-          left: '0%',
-          right: '40px',
-          bottom: '12%'
-        },
-        xAxis: {
-          splitNumber: 10,
-          type: 'time',
-          minInterval: 3600 * 24 * 1000,
-          splitLine: {
-            show: false
-          },
-          axisLine: {
-            lineStyle: {
-              color: '#8d8d8d'
-            }
-          },
-          axisLabel: {
-            showMinLabel: false,
-            showMaxLabel: false,
-            formatter(value) {
-              return echarts.format.formatTime('yyyy-MM-dd', value)
-            }
-          }
-        },
-        yAxis: {
-          position: 'right',
-          show: true,
-          type: 'value',
-          axisLabel: {
-            inside: false,
-            showMaxLabel: false,
-            showMinLabel: false
-          },
-          axisLine: {
-            lineStyle: {
-              color: '#8d8d8d'
-            },
-            show: false
-          },
-          splitLine: {
-            show: false
-          },
-          z: 10
-        },
+        ...BaseChartOptions,
         color: ['#3366d6', '#915dd1', '#cb50be', '#f446a2', '#ff4d7f', '#ff655b', '#ff8536', '#ffa600'],
         series: [['Session', 'count'], ['PageViews', 'pageviews'], ['Events', 'events']].map(([name, field]) => ({
           showSymbol: false,
           name,
           type: 'line',
           smooth: false,
-          data: this.load.map((row) => ({
+          data: this.data.map((row) => ({
             name: 'd',
             value: [
               row['Sessions.date'],
@@ -113,11 +75,21 @@ export default {
       }
     }
   },
-  async created() {
-    this.load = await fetchWithTimeDimensions({
-      measures: ['Sessions.count', 'Sessions.pageviews', 'Sessions.events'],
-      dimensions: ['Sessions.date']
-    })
+  methods: {
+    async fetchData() {
+      this.processing = true
+      const measures = ['Sessions.count', 'Sessions.pageviews', 'Sessions.events']
+
+      const [data, total] = await Promise.all([
+        callQueryEngine({ measures, dimensions: ['Sessions.date'] }, this.filter),
+        callQueryEngine({ measures }, this.filter)
+      ])
+
+      this.data = data
+      this.total = total
+
+      this.processing = false
+    }
   }
 }
 </script>

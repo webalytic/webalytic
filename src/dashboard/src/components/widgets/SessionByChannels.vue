@@ -7,7 +7,14 @@
       <b-card-title>
         Sessions by channel
       </b-card-title>
+
+      <b-spinner
+        v-show="processing"
+        label="Spinning"
+      />
+
       <v-chart
+        v-show="!processing"
         :options="options"
         autoresize
       />
@@ -30,25 +37,25 @@
 <script>
 /* eslint-disable max-len */
 
-import echarts from 'echarts'
-
 import 'echarts/lib/chart/line'
 import 'echarts/lib/component/polar'
-import { fetchWithTimeDimensions } from '../../services/LoadService'
+import { callQueryEngine } from '../../services/LoadService'
+
+import BaseChartOptions from './BaseChartOptions'
+import DataLoaderMixin from '../../mixins/DataLoaderMixin'
 
 export default {
+  mixins: [DataLoaderMixin],
   data() {
     return {
-      load: []
+      processing: true,
+      data: []
     }
   },
   computed: {
     options() {
       return {
-        animation: false,
-        tooltip: {
-          trigger: 'axis'
-        },
+        ...BaseChartOptions,
         grid: {
           show: false,
           height: '150px',
@@ -56,47 +63,8 @@ export default {
           right: '14%',
           bottom: '12%'
         },
-        xAxis: {
-          splitNumber: 2,
-          type: 'time',
-          // minInterval: 3600 * 24 * 1000,
-          splitLine: {
-            show: false
-          },
-          axisLine: {
-            lineStyle: {
-              color: '#8d8d8d'
-            }
-          },
-          axisLabel: {
-            showMinLabel: false,
-            showMaxLabel: false,
-            formatter(value) {
-              return echarts.format.formatTime('yyyy-MM-dd', value)
-            }
-          }
-        },
-        yAxis: {
-          position: 'right',
-          type: 'value',
-          axisLabel: {
-            inside: false,
-            showMaxLabel: false,
-            showMinLabel: false
-          },
-          axisLine: {
-            lineStyle: {
-              color: '#8d8d8d'
-            },
-            show: false
-          },
-          splitLine: {
-            show: false
-          },
-          z: 10
-        },
         color: ['#3366d6', '#5c79dd', '#7a8ce4', '#95a0eb', '#aeb5f2', '#c6caf9', '#dee0ff'],
-        series: Object.values(this.load.reduce((byChannel, row) => {
+        series: Object.values(this.data.reduce((byChannel, row) => {
           // eslint-disable-next-line no-param-reassign
           if (!byChannel[row['Sessions.channel']]) byChannel[row['Sessions.channel']] = []
           byChannel[row['Sessions.channel']].push(row)
@@ -119,11 +87,17 @@ export default {
     }
 
   },
-  async created() {
-    this.load = await fetchWithTimeDimensions({
-      measures: ['Sessions.count'],
-      dimensions: ['Sessions.date', 'Sessions.channel']
-    })
+  methods: {
+    async fetchData() {
+      this.processing = true
+
+      this.data = await callQueryEngine({
+        measures: ['Sessions.count'],
+        dimensions: ['Sessions.date', 'Sessions.channel']
+      }, this.filter)
+
+      this.processing = false
+    }
   }
 }
 </script>

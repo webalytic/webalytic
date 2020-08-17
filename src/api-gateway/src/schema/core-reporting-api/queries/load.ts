@@ -12,7 +12,6 @@ export default () =>
       params: {
         query: JSON.stringify({
           ...args,
-          filters: [],
           limit: 100,
           offset: 0
         })

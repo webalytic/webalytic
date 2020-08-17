@@ -5,11 +5,8 @@
       <h1 class="h3 mb-4 text-gray-800">
         Dashboard
       </h1>
-      <date-range-picker
-        v-model="dateRange"
-        class="pull-right"
-        opens="left"
-      />
+
+      <global-filter />
     </div>
 
     <b-row>
@@ -52,8 +49,7 @@
 }
 </style>
 <script>
-import moment from 'moment'
-import DateRangePicker from 'vue2-daterange-picker'
+import GlobalFilter from '../components/GlobalFilter/index.vue'
 
 import AudienceMetrics from '../components/widgets/AudienceMetrics.vue'
 import VisitorsMetrics from '../components/widgets/VisitorsMetrics.vue'
@@ -64,20 +60,12 @@ import SessionsByDevice from '../components/widgets/SessionsByDevice.vue'
 export default {
   name: 'IndexPage',
   components: {
-    DateRangePicker,
+    GlobalFilter,
     AudienceMetrics,
     VisitorsMetrics,
     BounceRateMetrics,
     SessionByChannels,
     SessionsByDevice
-  },
-  data() {
-    return {
-      dateRange: {
-        startDate: moment().subtract(30, 'days'),
-        endDate: moment()
-      }
-    }
   }
 }
 </script>
