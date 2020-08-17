@@ -4,7 +4,7 @@
   "main": "./src/index.ts",
   "license": "MIT",
   "dependencies": {
-    "@webalytic/ms-tools": "^0.1.9",
+    "@webalytic/ms-tools": "^0.1.10",
     "awilix": "^4.2.6",
     "dotenv": "^8.2.0",
     "express": "^4.17.1",

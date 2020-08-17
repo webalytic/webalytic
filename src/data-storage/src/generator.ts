@@ -6,8 +6,7 @@ import moment from 'moment'
 import EventProducer from '@webalytic/ms-tools/lib/infra/EventProducer'
 import { session } from '@webalytic/ms-tools/shared/log-processing/session'
 import {
-  SessionCreatedEventPayload,
-  SessionUpdatedEventPayload
+  LogProcessedEventPayload
 } from '@webalytic/ms-tools/shared/log-processing/log_processing_events'
 
 import { HitType, HitDataSource } from './constants'
@@ -92,15 +91,12 @@ async function main() {
       productsList: []
     })
 
-    const payload = new SessionCreatedEventPayload({ props, hit })
-    await eventProducer.send('SessionCreatedEvent', payload.toJSON())
+    const payload = new LogProcessedEventPayload({ props, hit })
+    await eventProducer.send('LogProcessedEvent', payload.toJSON())
 
     if (faker.random.boolean()) {
-      await new Promise((resolve) =>
-        setTimeout(() =>
-          resolve(), 200))
       const type = faker.random.arrayElement([HitType.PAGEVIEW, HitType.EVENT])
-      const payloadUpdated = new SessionUpdatedEventPayload({
+      const payloadUpdated = new LogProcessedEventPayload({
         prevProps: props,
         props: {
           ...props,
@@ -117,12 +113,13 @@ async function main() {
           time: time.clone().add(10, 'seconds').format('YYYY-MM-DD HH:mm:ss')
         }
       })
-      await eventProducer.send('SessionUpdatedEvent', payloadUpdated.toJSON())
+      await eventProducer.send('LogProcessedEvent', payloadUpdated.toJSON())
     }
 
     counter += 1
     const week = time.format('E')
     if (counter > (maxByDayOfWeek[week] - faker.random.number(100)) / 100) {
+      console.log(time.format('YYYY-MM-DD'))
       time.add(1, 'days')
       counter = 0
     }
