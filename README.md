@@ -16,14 +16,14 @@ Open source web analytics platform that tracks and reports website traffic.
 
 <img src="./docs/dashboard.jpg" width="800">
 
-## How is work?
+## How does it work?
 
-The platform seek to repeat processing logic described by Google Analytics, next article should be help for understanding core terms:
+The platform seeks to repeat processing logic described by Google Analytics, following articles should be helpful for understanding core terms:
 
 - [How a web session is defined in Analytics](https://support.google.com/analytics/answer/2731565?hl=en)
 - [Campaigns and traffic sources](https://support.google.com/analytics/answer/6205762?hl=en)
 
-Microservice architecture, project include next service:
+Microservice architecture, project includes following packages:
   - Dashboard, Vue.js SPA
   - Api-gateway
   - Log-collector & Web SDK
