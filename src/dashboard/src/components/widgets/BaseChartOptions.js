@@ -13,7 +13,7 @@ export default {
     bottom: '12%'
   },
   xAxis: {
-    splitNumber: 10,
+    splitNumber: 3,
     type: 'time',
     minInterval: 3600 * 24 * 1000,
     splitLine: {
