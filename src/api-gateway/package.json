@@ -4,7 +4,7 @@
   "main": "./src/index.ts",
   "license": "MIT",
   "dependencies": {
-    "@webalytic/ms-tools": "^0.1.9",
+    "@webalytic/ms-tools": "^0.1.10",
     "apollo-server": "^2.16.1",
     "apollo-server-express": "^2.16.1",
     "apollo-server-testing": "^2.16.1",

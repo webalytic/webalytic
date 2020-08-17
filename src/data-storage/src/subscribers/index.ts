@@ -3,8 +3,7 @@
 import EventConsumer from '@webalytic/ms-tools/lib/infra/EventConsumer'
 import SessionStorage from '../infra/SessionStorage'
 
-import AfterSessionCreated from './AfterSessionCreated'
-import AfterSessionUpdated from './AfterSessionUpdated'
+import AfterLogProcessed from './AfterLogProcessed'
 
 export default (): any => {
   const eventConsumer = new EventConsumer({
@@ -19,12 +18,7 @@ export default (): any => {
     async onInit(): Promise<void> {
       await eventConsumer.init()
 
-      new AfterSessionCreated({
-        eventConsumer,
-        sessionStorage
-      })
-
-      new AfterSessionUpdated({
+      new AfterLogProcessed({
         eventConsumer,
         sessionStorage
       })
