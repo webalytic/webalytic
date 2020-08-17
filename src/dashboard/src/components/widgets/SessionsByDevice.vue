@@ -8,23 +8,30 @@
         Sessions by device
       </b-card-title>
 
-      <div class="d-flex flex-row">
-        <div
-          v-for="item in load"
-          :key="item['Sessions.deviceCategory']"
-          class="pr-3 pl-3"
-        >
-          <summary-card
-            :label="normalizeDeviceCategory(item['Sessions.deviceCategory']) | ucFirst"
-            :value="item['Sessions.count'] | number"
-          />
-        </div>
-      </div>
-
-      <v-chart
-        :options="options"
-        autoresize
+      <b-spinner
+        v-show="processing"
+        label="Spinning"
       />
+
+      <div v-show="!processing">
+        <div class="d-flex flex-row">
+          <div
+            v-for="item in data"
+            :key="item['Sessions.deviceCategory']"
+            class="pr-3 pl-3"
+          >
+            <summary-card
+              :label="normalizeDeviceCategory(item['Sessions.deviceCategory']) | ucFirst"
+              :value="item['Sessions.count'] | number"
+            />
+          </div>
+        </div>
+
+        <v-chart
+          :options="options"
+          autoresize
+        />
+      </div>
     </b-card-body>
   </b-card>
 </template>
@@ -43,36 +50,25 @@
 
 <script>
 /* eslint-disable max-len */
-import gql from 'graphql-tag'
-import audienceMetricsFakeData from './audienceMetricsFakeData'
 import 'echarts/lib/chart/line'
 import 'echarts/lib/component/polar'
-
+import { callQueryEngine } from '../../services/LoadService'
 import SummaryCard from './SummaryCard.vue'
+import DataLoaderMixin from '../../mixins/DataLoaderMixin'
 
 export default {
   components: {
     SummaryCard
   },
-  apollo: {
-    load: {
-      query: gql`
-        query load($measures: [String!], $dimensions: [String], $timeDimensions: [TimeDimensionInput], $order: JSON) {
-          load(measures: $measures, dimensions: $dimensions, timeDimensions: $timeDimensions, order: $order)
-        }`,
-      variables: {
-        measures: ['Sessions.count'],
-        dimensions: ['Sessions.deviceCategory']
-      }
-    }
-  },
+  mixins: [DataLoaderMixin],
   data() {
     return {
-      load: [],
-      loadFake: audienceMetricsFakeData()
+      processing: true,
+      data: []
     }
   },
   computed: {
+
     options() {
       return {
         tooltip: {
@@ -104,7 +100,7 @@ export default {
             labelLine: {
               show: false
             },
-            data: this.load.map((item) => ({
+            data: this.data.map((item) => ({
               value: item['Sessions.count'],
               name: item['Sessions.deviceCategory']
             }))
@@ -116,6 +112,16 @@ export default {
   methods: {
     normalizeDeviceCategory(category) {
       return category || 'unknown'
+    },
+    async fetchData() {
+      this.processing = true
+
+      this.data = await callQueryEngine({
+        measures: ['Sessions.count'],
+        dimensions: ['Sessions.deviceCategory']
+      }, this.filter)
+
+      this.processing = false
     }
   }
 }

@@ -24,6 +24,7 @@ export type Query = {
 
 export type QueryLoadArgs = {
   measures?: Maybe<Array<Scalars['String']>>;
+  filters?: Maybe<Array<Maybe<FilterInput>>>;
   dimensions?: Maybe<Array<Maybe<Scalars['String']>>>;
   timeDimensions?: Maybe<Array<Maybe<TimeDimensionInput>>>;
   order?: Maybe<Scalars['JSON']>;
@@ -52,6 +53,12 @@ export type MutationResourceCreateArgs = {
 export type MutationResourceUpdateArgs = {
   id?: Maybe<Scalars['String']>;
   data?: Maybe<ResourceUpdateInput>;
+};
+
+export type FilterInput = {
+  member?: Maybe<Scalars['String']>;
+  operator?: Maybe<Scalars['String']>;
+  values?: Maybe<Array<Maybe<Scalars['String']>>>;
 };
 
 export type TimeDimensionInput = {

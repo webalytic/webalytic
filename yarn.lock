@@ -3054,7 +3054,7 @@
     shelljs "^0.8.4"
     winston "^3.3.3"
 
-"@webalytic/protorepo@github:webalytic/protorepo#0.2.8":
+"@webalytic/protorepo@webalytic/protorepo#0.2.8":
   version "0.2.8"
   resolved "https://codeload.github.com/webalytic/protorepo/tar.gz/c63104dfd85a20abc315266c23583b7ed212f0b0"
 
@@ -15069,6 +15069,11 @@ vue@^2.5.11, vue@^2.6.10:
   version "2.6.11"
   resolved "https://registry.yarnpkg.com/vue/-/vue-2.6.11.tgz#76594d877d4b12234406e84e35275c6d514125c5"
   integrity sha512-VfPwgcGABbGAue9+sfrD4PuwFar7gPb1yl1UK1MwXoQPAw0BKSqWfoYCT/ThFrdEVWoI51dBuyCoiNU9bZDZxQ==
+
+vuex@^3.5.1:
+  version "3.5.1"
+  resolved "https://registry.yarnpkg.com/vuex/-/vuex-3.5.1.tgz#f1b8dcea649bc25254cf4f4358081dbf5da18b3d"
+  integrity sha512-w7oJzmHQs0FM9LXodfskhw9wgKBiaB+totOdb8sNzbTB2KDCEEwEs29NzBZFh/lmEK1t5tDmM1vtsO7ubG1DFw==
 
 watchpack-chokidar2@^2.0.0:
   version "2.0.0"

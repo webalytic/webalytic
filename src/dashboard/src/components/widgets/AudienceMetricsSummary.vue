@@ -28,28 +28,24 @@
 
 <script>
 import SummaryCard from './SummaryCard.vue'
-import { fetchWithTimeDimensions } from '../../services/LoadService'
 
 export default {
   components: {
     SummaryCard
   },
-  data() {
-    return {
-      load: []
+  props: {
+    total: {
+      type: Array,
+      required: true
     }
   },
+
   computed: {
     summary() {
-      return this.load.length ? this.load[0] : {
+      return this.total.length ? this.total[0] : {
         'Sessions.count': 0, 'Sessions.pageviews': 0, 'Sessions.events': 0
       }
     }
-  },
-  async created() {
-    this.load = await fetchWithTimeDimensions({
-      measures: ['Sessions.count', 'Sessions.pageviews', 'Sessions.events']
-    })
   }
 }
 </script>

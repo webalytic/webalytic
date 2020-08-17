@@ -31,7 +31,8 @@
     "vue": "^2.5.11",
     "vue-apollo": "^3.0.4",
     "vue-echarts": "^5.0.0-beta.0",
-    "vue2-daterange-picker": "^0.5.1"
+    "vue2-daterange-picker": "^0.5.1",
+    "vuex": "^3.5.1"
   },
   "browserslist": [
     "> 1%",
