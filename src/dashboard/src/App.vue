@@ -1,52 +1,41 @@
 <template>
-  <div id="wrapper">
-    <side-bar />
-    <div
-      id="content-wrapper"
-      class="d-flex flex-column"
-    >
-      <!-- Main Content -->
-      <div id="content">
-        <top-nav-bar />
-
-        <!-- Begin Page Content -->
-        <div class="container-fluid">
-          <index-page />
-        </div>
-        <!-- /.container-fluid -->
-      </div>
-      <!-- End of Main Content -->
-
-      <footer-bar />
-    </div>
-  </div>
+  <component
+    :is="layout"
+    v-if="ready"
+  >
+    <router-view />
+  </component>
 </template>
 
-<style lang="css">
-  @import '../node_modules/@fortawesome/fontawesome-free/css/all.min.css';
-  @import '../node_modules/vue2-daterange-picker/dist/vue2-daterange-picker.css';
-</style>
-
-<style lang="scss">
-  @import "./assets/scss/colors.scss";
-  @import "../node_modules/bootstrap/scss/bootstrap.scss";
-  @import "./assets/scss/sb-admin-2.scss";
-</style>
-
 <script>
-import SideBar from './components/layout/SideBar.vue'
-import FooterBar from './components/layout/FooterBar.vue'
-import TopNavBar from './components/layout/TopNavBar.vue'
 
-import IndexPage from './pages/IndexPage.vue'
+import DashboardLayout from '@/common/layouts/DashboardLayout'
 
 export default {
   name: 'App',
-  components: {
-    SideBar,
-    TopNavBar,
-    FooterBar,
-    IndexPage
+  data() {
+    return {
+      ready: false
+    }
+  },
+  computed: {
+    layout() {
+      // Add any logic for select layout
+      return DashboardLayout
+    }
+  },
+  async created() {
+    await this.$store.dispatch('init')
+    this.ready = true
   }
 }
 </script>
+
+<style src="@fortawesome/fontawesome-free/css/all.min.css"></style>
+<style src="vue2-daterange-picker/dist/vue2-daterange-picker.css"></style>
+
+<style lang="scss">
+  @import "./common/assets/scss/colors.scss";
+  @import '../../../node_modules/bootstrap/scss/bootstrap.scss';
+  @import "./common/assets/scss/sb-admin-2.scss";
+</style>

@@ -32,6 +32,7 @@ describe('Core Reporting Api', () => {
     const query = JSON.stringify({
       measures: ['Sessions.count'],
       dimensions: ['Sessions.date'],
+      renewQuery: true,
       limit: 100,
       offset: 0
     })

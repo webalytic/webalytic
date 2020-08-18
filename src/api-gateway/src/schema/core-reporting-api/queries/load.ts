@@ -12,6 +12,7 @@ export default () =>
       params: {
         query: JSON.stringify({
           ...args,
+          renewQuery: true,
           limit: 100,
           offset: 0
         })

@@ -6,7 +6,7 @@
   "license": "MIT",
   "private": true,
   "scripts": {
-    "dev": "API_URL=http://localhost:3000 webpack-dev-server --inline --progress --config build/webpack.dev.conf.js",
+    "dev": "webpack-dev-server --inline --progress --config build/webpack.dev.conf.js",
     "build": "node build/build.js",
     "lint": "eslint --ext .js,.ts ./"
   },
@@ -31,6 +31,8 @@
     "vue": "^2.5.11",
     "vue-apollo": "^3.0.4",
     "vue-echarts": "^5.0.0-beta.0",
+    "vue-router": "^3.4.3",
+    "vue-tables-2": "^2.0.32",
     "vue2-daterange-picker": "^0.5.1",
     "vuex": "^3.5.1"
   },
@@ -75,6 +77,8 @@
     "rimraf": "^3.0.2",
     "sass-loader": "^6.0.6",
     "shelljs": "^0.8.4",
+    "ts-loader": "^8.0.2",
+    "typescript": "^3.9.7",
     "uglifyjs-webpack-plugin": "^2.2.0",
     "url-loader": "^4.1.0",
     "vue-loader": "~15.6",

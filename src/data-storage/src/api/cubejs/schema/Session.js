@@ -1,10 +1,11 @@
 cube('Sessions', {
   sql: 'SELECT * FROM tracker.sessions',
-
+  refreshKey: {
+    every: `1 seconds`
+  },
   joins: {
 
   },
-
   measures: {
     count: {
       sql: `sum(sign)`,
