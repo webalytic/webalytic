@@ -32,7 +32,7 @@ export default class Resource {
     updateInputValidate(data)
 
     this.props = new resource.ResourceProps({
-      ...this.props.toJSON(),
+      ...this.props,
       ...data,
       updateTime: moment().unix()
     })

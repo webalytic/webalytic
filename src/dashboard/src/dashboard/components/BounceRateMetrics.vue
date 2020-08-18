@@ -77,6 +77,11 @@ export default {
     options() {
       return {
         ...BaseChartOptions,
+        xAxis: {
+          ...BaseChartOptions.xAxis,
+          min: this.filter.dateRange.startDate,
+          max: this.filter.dateRange.endDate
+        },
         grid: {
           show: false,
           height: '130px',

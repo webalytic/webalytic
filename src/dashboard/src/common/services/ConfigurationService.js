@@ -18,6 +18,33 @@ const RESOURCES_QUERY = gql`
     }
   }
 `
+
+const RESOURCE_UPDATE_MUTATION = gql`
+  mutation($id: String, $data: ResourceUpdateInput) {
+    resourceUpdate(id: $id, data: $data){
+      id
+      name
+      category
+      defaultWebsiteUrl
+      createTime
+      updateTime
+    }
+  }
+`
+
+const RESOURCE_CREATE_MUTATION = gql`
+  mutation($data: ResourceCreateInput) {
+    resourceCreate(data: $data){
+      id
+      name
+      category
+      defaultWebsiteUrl
+      createTime
+      updateTime
+    }
+  }
+`
+
 class ConfigurationService extends BaseGraphqlService {
   async resources() {
     const { resources } = await this.callApi({
@@ -27,36 +54,29 @@ class ConfigurationService extends BaseGraphqlService {
 
     return resources.resources
   }
+
+  async resourceUpdate(id, data) {
+    const { resourceUpdate } = await this.callApi({
+      query: RESOURCE_UPDATE_MUTATION,
+      variables: {
+        id,
+        data
+      }
+    })
+
+    return resourceUpdate
+  }
+
+  async resourceCreate(data) {
+    const { resourceCreate } = await this.callApi({
+      query: RESOURCE_CREATE_MUTATION,
+      variables: {
+        data
+      }
+    })
+
+    return resourceCreate
+  }
 }
 
 export default new ConfigurationService()
-
-// const RESOURCE_CREATE_MUTATION = gql`
-//   mutation($data: ResourceCreateInput) {
-//     resourceCreate(data: $data){
-//       id
-//       name
-//       category
-//       defaultWebsiteUrl
-//       createTime
-//       updateTime
-//     }
-//   }
-// `
-
-// export function resourceCreate() {}
-
-// const RESOURCE_UPDATE_MUTATION = gql`
-//   mutation($id: String, $data: ResourceUpdateInput) {
-//     resourceUpdate(id: $id, data: $data){
-//       id
-//       name
-//       category
-//       defaultWebsiteUrl
-//       createTime
-//       updateTime
-//     }
-//   }
-// `
-
-// export function resourceUpdate() {}

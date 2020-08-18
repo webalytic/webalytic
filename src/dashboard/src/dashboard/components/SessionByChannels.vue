@@ -4,9 +4,21 @@
     class="sessions-by-channels-widget shadow"
   >
     <b-card-body>
-      <b-card-title>
-        Sessions by channel
-      </b-card-title>
+      <b-card
+        no-body
+        class="border-0"
+      >
+        <div
+          class="d-flex flex-row"
+        >
+          <div class="pr-3 pl-3">
+            <summary-card
+              label="Sessions by channel"
+              :value="total | number"
+            />
+          </div>
+        </div>
+      </b-card>
 
       <b-spinner
         v-show="processing"
@@ -30,7 +42,7 @@
  */
 .sessions-by-channels-widget .echarts {
   width: 100% !important;
-  height: 170px !important;
+  height: 150px !important;
 }
 </style>
 
@@ -43,8 +55,12 @@ import CoreReportingService from '@/common/services/CoreReportingService'
 
 import BaseChartOptions from './BaseChartOptions'
 import DataLoaderMixin from '../mixins/DataLoaderMixin'
+import SummaryCard from './SummaryCard.vue'
 
 export default {
+  components: {
+    SummaryCard
+  },
   mixins: [DataLoaderMixin],
   data() {
     return {
@@ -53,12 +69,15 @@ export default {
     }
   },
   computed: {
+    total() {
+      return this.data.reduce((sum, row) => sum + +row['Sessions.count'], 0)
+    },
     options() {
       return {
         ...BaseChartOptions,
         grid: {
           show: false,
-          height: '150px',
+          height: '130px',
           left: '0%',
           right: '14%',
           bottom: '12%'

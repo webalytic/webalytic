@@ -8,7 +8,7 @@
     >
       <b-form-input
         id="input-name"
-        v-model="model.name"
+        v-model="value.name"
         required
         placeholder="Enter name"
         style="min-width: 260px"
@@ -23,7 +23,7 @@
     >
       <b-form-select
         id="input-category"
-        v-model="model.category"
+        v-model="value.category"
         type="category"
         required
         placeholder="Select category"
@@ -38,18 +38,11 @@
     >
       <b-form-input
         id="input-defaultWebsiteUrl"
-        v-model="model.defaultWebsiteUrl"
+        v-model="value.defaultWebsiteUrl"
         required
         placeholder="Enter url"
       />
     </b-form-group>
-
-    <b-btn
-      variant="primary"
-      @click="submit"
-    >
-      Create
-    </b-btn>
   </b-form>
 </template>
 
@@ -59,21 +52,6 @@ export default {
     value: {
       type: Object,
       required: true
-    }
-  },
-
-  data() {
-    return {
-      model: {
-        defaultWebsiteUrl: '',
-        name: '',
-        category: 1
-      }
-    }
-  },
-  methods: {
-    submit() {
-      //
     }
   }
 }

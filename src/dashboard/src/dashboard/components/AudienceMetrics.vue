@@ -59,6 +59,11 @@ export default {
     options() {
       return {
         ...BaseChartOptions,
+        xAxis: {
+          ...BaseChartOptions.xAxis,
+          min: this.filter.dateRange.startDate,
+          max: this.filter.dateRange.endDate
+        },
         color: ['#3366d6', '#915dd1', '#cb50be', '#f446a2', '#ff4d7f', '#ff655b', '#ff8536', '#ffa600'],
         series: [['Session', 'count'], ['PageViews', 'pageviews'], ['Events', 'events']].map(([name, field]) => ({
           showSymbol: false,

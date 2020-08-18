@@ -6,7 +6,10 @@
         :class="`fa fa-${icon}`"
       /> {{ label }}
     </span>
-    <h5 class="text-primary">
+    <h5
+      v-if="value"
+      class="text-primary"
+    >
       {{ prefix }}<span data-plugin="counterup">{{ value }}</span>
     </h5>
   </div>
@@ -25,7 +28,10 @@ export default {
     },
     value: {
       type: [String, Number],
-      required: true
+      required: false,
+      default() {
+        return ''
+      }
     },
     prefix: {
       type: String,

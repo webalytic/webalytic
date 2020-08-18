@@ -81,6 +81,7 @@ export default class {
       if (!instance) throw new Error('NotFoundError')
 
       instance.update(call.request.data)
+      await this.resourceRepository.save(instance)
 
       res = new UpdateResourceResponse({ instance: instance.props })
     } catch (error) {

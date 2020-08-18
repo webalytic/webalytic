@@ -9,7 +9,7 @@ export default {
     show: false,
     height: '100px',
     left: '0%',
-    right: '40px',
+    right: '60px',
     bottom: '12%'
   },
   xAxis: {
