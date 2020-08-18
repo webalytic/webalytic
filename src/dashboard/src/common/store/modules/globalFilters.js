@@ -1,9 +1,11 @@
 import moment from 'moment'
+import ConfigurationService from '@/common/services/ConfigurationService'
 
 function initState() {
   return {
-    resourcesList: {
-
+    resources: {
+      active: null,
+      items: []
     },
     dateRange: {
       startDate: moment().subtract(30, 'days'),
@@ -16,12 +18,21 @@ const mutations = {
   setDateRange(state, dateRange) {
     state.dateRange.startDate = moment(dateRange.startDate)
     state.dateRange.endDate = moment(dateRange.endDate)
+  },
+  setResources(state, resources) {
+    state.resources.active = resources[0] || null
+    state.resources.items = resources
   }
 }
 
 const actions = {
-  fetchResources() {
-    // Todo: implement call api service
+  async fetchResources({ commit }) {
+    const resources = await ConfigurationService.resources()
+    commit('setResources', resources)
+  },
+
+  async init(ctx) {
+    await actions.fetchResources(ctx)
   }
 }
 

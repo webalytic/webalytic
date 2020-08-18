@@ -6,6 +6,8 @@ import adminRoute from '@/admin/pages/routes'
 import dashboardRoute from '@/dashboard/pages/routes'
 
 const ErrorPage = () => import('./pages/ErrorPage.vue')
+const IndexPage = () => import('./pages/IndexPage.vue')
+const ResourceWrapper = () => import('./pages/ResourceWrapper.vue')
 
 Vue.use(Router)
 
@@ -15,12 +17,17 @@ const router = new Router({
   routes: [
     {
       path: '/',
-      redirect: {
-        name: 'dashboard'
-      }
+      component: IndexPage
     },
-    dashboardRoute,
-    adminRoute,
+    {
+      name: 'resource-wrapper',
+      path: '/:resourceId',
+      component: ResourceWrapper,
+      children: [
+        dashboardRoute,
+        adminRoute
+      ]
+    },
     {
       path: '*',
       name: 'notFound',

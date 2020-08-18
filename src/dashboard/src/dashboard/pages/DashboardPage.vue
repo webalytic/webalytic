@@ -6,7 +6,7 @@
         Dashboard
       </h1>
 
-      <global-filter />
+      <date-range-filter />
     </div>
 
     <b-row>
@@ -52,7 +52,7 @@
 
 import Vue from 'vue'
 
-import GlobalFilter from '@/common/components/GlobalFilter/index.vue'
+import DateRangeFilter from '@/common/components/filters/DateRangeFilter.vue'
 
 import AudienceMetrics from '../components/AudienceMetrics.vue'
 import VisitorsMetrics from '../components/VisitorsMetrics.vue'
@@ -63,7 +63,7 @@ import SessionsByDevice from '../components/SessionsByDevice.vue'
 export default Vue.extend({
   name: 'IndexPage',
   components: {
-    GlobalFilter,
+    DateRangeFilter,
     AudienceMetrics,
     VisitorsMetrics,
     BounceRateMetrics,

@@ -9,6 +9,8 @@
       <i class="fa fa-bars" />
     </button>
 
+    <resource-filter />
+
     <!-- Topbar Navbar -->
     <ul class="navbar-nav ml-auto">
       <!-- Nav Item - Search Dropdown (Visible Only XS) -->
@@ -90,3 +92,13 @@
   </nav>
   <!-- End of Topbar -->
 </template>
+
+<script>
+import ResourceFilter from '../filters/ResourceFilter.vue'
+
+export default {
+  components: {
+    ResourceFilter
+  }
+}
+</script>

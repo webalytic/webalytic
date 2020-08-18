@@ -15,8 +15,8 @@ export default () =>
       resources: resources.map((resource) =>
         ({
           ...resource,
-          createTime: resource.createTime as number,
-          updateTime: resource.updateTime as number
+          createTime: +resource.createTime.toString(),
+          updateTime: +resource.updateTime.toString()
         }))
     }
   }

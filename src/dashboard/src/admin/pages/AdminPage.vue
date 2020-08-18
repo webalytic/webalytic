@@ -7,7 +7,7 @@
           active
         >
           <i class="fa fa-desktop fa-sm" />
-          Resources
+          Resource
         </b-list-group-item>
         <b-list-group-item
           href="#"

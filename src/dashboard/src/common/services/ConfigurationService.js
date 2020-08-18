@@ -1,36 +1,35 @@
-// import gql from 'graphql-tag'
-// import apolloClient from '../apolloClient'
+/* eslint-disable class-methods-use-this */
+import gql from 'graphql-tag'
 
-// const RESOURCES_QUERY = gql`
-//   query getResources($filter: ResourceFilter, $limit: Int, $offset: Int, $orderBy: String) {
-//     resources(filter: $filter, limit: $limit, offset: $offset, orderBy: $orderBy ){
-//       count
-//       resources {
-//         id
-//         name
-//         category
-//         defaultWebsiteUrl
-//         createTime
-//         updateTime
-//       }
-//     }
-//   }
-// `
+import BaseGraphqlService from './BaseGraphqlService'
 
-// export function resources() {
-//   const res = await apolloClient.query({
-//     query: LOAD_QUERY,
-//     variables: {
-//       measures: variables.measures || [],
-//       filters: prepareFiltersForQueryEngine(filter),
-//       timeDimensions: variables.timeDimensions || [],
-//       dimensions: variables.dimensions || [],
-//       order: {
-//         'Sessions.date': 'asc'
-//       }
-//     }
-//   })
-// }
+const RESOURCES_QUERY = gql`
+  query getResources($filter: ResourceFilter, $limit: Int, $offset: Int, $orderBy: String) {
+    resources(filter: $filter, limit: $limit, offset: $offset, orderBy: $orderBy ){
+      count
+      resources {
+        id
+        name
+        category
+        defaultWebsiteUrl
+        createTime
+        updateTime
+      }
+    }
+  }
+`
+class ConfigurationService extends BaseGraphqlService {
+  async resources() {
+    const { resources } = await this.callApi({
+      query: RESOURCES_QUERY,
+      variables: {}
+    })
+
+    return resources.resources
+  }
+}
+
+export default new ConfigurationService()
 
 // const RESOURCE_CREATE_MUTATION = gql`
 //   mutation($data: ResourceCreateInput) {

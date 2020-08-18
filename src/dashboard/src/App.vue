@@ -1,5 +1,8 @@
 <template>
-  <component :is="layout">
+  <component
+    :is="layout"
+    v-if="ready"
+  >
     <router-view />
   </component>
 </template>
@@ -9,11 +12,20 @@ import DashboardLayout from '@/common/layouts/DashboardLayout'
 
 export default {
   name: 'App',
+  data() {
+    return {
+      ready: false
+    }
+  },
   computed: {
     layout() {
       // Add any logic for select layout
       return DashboardLayout
     }
+  },
+  async created() {
+    await this.$store.dispatch('init')
+    this.ready = true
   }
 }
 </script>

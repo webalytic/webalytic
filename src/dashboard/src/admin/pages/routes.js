@@ -1,21 +1,31 @@
 const AdminPage = () => import('../pages/AdminPage.vue')
-const AdminPageResources = () => import('../pages/AdminPageResources.vue')
+const AdminResourcePage = () => import('../pages/AdminResourcePage.vue')
+const AdminResourceCreatePage = () => import('../pages/AdminResourceCreatePage.vue')
 
 export default {
   name: 'admin',
-  path: '/admin',
+  path: 'admin',
   component: AdminPage,
   redirect: {
-    name: 'admin-resources'
+    name: 'admin-resource'
   },
   children: [
     {
 
-      name: 'admin-resources',
-      path: 'resources',
-      component: AdminPageResources,
+      name: 'admin-resource',
+      path: 'resource',
+      component: AdminResourcePage,
       meta: {
-        title: 'Admin: resources'
+        title: 'Admin: resource'
+      }
+    },
+    {
+
+      name: 'admin-resource-create',
+      path: 'resource/create',
+      component: AdminResourceCreatePage,
+      meta: {
+        title: 'Admin: create resource'
       }
     }
   ]
