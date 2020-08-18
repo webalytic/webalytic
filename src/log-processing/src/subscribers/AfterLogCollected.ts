@@ -93,7 +93,8 @@ export default class AfterLogCollected extends Subscriber {
     try {
       await this.service.addHitToSession(data)
     } catch (error) {
-      logger.error(error.message)
+      logger.error(error)
+      if (error.details) logger.error(JSON.stringify(error.details))
     }
   }
 }

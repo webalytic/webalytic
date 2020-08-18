@@ -1,5 +1,5 @@
 export default class BaseEvent {
-  private name: 'LogProcessedEventPayload'
+  private name = 'LogProcessedEvent'
 
   get event(): string {
     return this.name

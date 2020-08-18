@@ -54,7 +54,7 @@ export default class SessionRepository {
 
     try {
       await Promise.all(instance.getEvents().map((e) =>
-        this.eventProducer.send(e.event, e.payload)))
+        this.eventProducer.send(e.event, e.payload.toJSON())))
 
       await multi.exec()
     } catch (error) {

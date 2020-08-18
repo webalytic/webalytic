@@ -12,7 +12,9 @@ const v = new Validator()
 const createSessionSchema = {
   resourceId: { type: 'uuid' },
   clientId: { type: 'string', min: 1, max: 64 },
-  userId: { type: 'string', min: 0, max: 64 }
+  userId: {
+    type: 'string', min: 0, max: 64, optional: true
+  }
 }
 const createSessionCheck = v.compile(createSessionSchema)
 
