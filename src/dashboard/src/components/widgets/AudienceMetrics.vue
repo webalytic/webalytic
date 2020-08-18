@@ -1,7 +1,7 @@
 <template>
   <b-card
     no-body
-    class="audience-widget"
+    class="audience-widget shadow"
   >
     <b-card-body>
       <b-card-title>
@@ -38,7 +38,7 @@
 import 'echarts/lib/chart/line'
 import 'echarts/lib/component/polar'
 import AudienceMetricsSummary from './AudienceMetricsSummary.vue'
-import { callQueryEngine } from '../../services/LoadService'
+import CoreReportingSerivce from '../../services/CoreReportingSerivce'
 import BaseChartOptions from './BaseChartOptions'
 import DataLoaderMixin from '../../mixins/DataLoaderMixin'
 
@@ -81,8 +81,8 @@ export default {
       const measures = ['Sessions.count', 'Sessions.pageviews', 'Sessions.events']
 
       const [data, total] = await Promise.all([
-        callQueryEngine({ measures, dimensions: ['Sessions.date'] }, this.filter),
-        callQueryEngine({ measures }, this.filter)
+        CoreReportingSerivce.callQueryEngine({ measures, dimensions: ['Sessions.date'] }, this.filter),
+        CoreReportingSerivce.callQueryEngine({ measures }, this.filter)
       ])
 
       this.data = data

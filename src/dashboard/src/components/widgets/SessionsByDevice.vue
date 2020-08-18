@@ -1,7 +1,7 @@
 <template>
   <b-card
     no-body
-    class="sessions-by-device-widget"
+    class="sessions-by-device-widget shadow"
   >
     <b-card-body>
       <b-card-title>
@@ -52,7 +52,7 @@
 /* eslint-disable max-len */
 import 'echarts/lib/chart/line'
 import 'echarts/lib/component/polar'
-import { callQueryEngine } from '../../services/LoadService'
+import CoreReportingSerivce from '../../services/CoreReportingSerivce'
 import SummaryCard from './SummaryCard.vue'
 import DataLoaderMixin from '../../mixins/DataLoaderMixin'
 
@@ -116,7 +116,7 @@ export default {
     async fetchData() {
       this.processing = true
 
-      this.data = await callQueryEngine({
+      this.data = await CoreReportingSerivce.callQueryEngine({
         measures: ['Sessions.count'],
         dimensions: ['Sessions.deviceCategory']
       }, this.filter)

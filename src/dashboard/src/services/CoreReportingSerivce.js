@@ -1,6 +1,6 @@
-/* eslint-disable import/prefer-default-export */
+/* eslint-disable class-methods-use-this */
 import gql from 'graphql-tag'
-import apolloClient from '../apolloClient'
+import BaseGraphqlService from './BaseGraphqlService'
 
 const LOAD_QUERY = gql`
   query load(
@@ -34,19 +34,23 @@ function prepareFiltersForQueryEngine(filter) {
   }]
 }
 
-export async function callQueryEngine(variables, filter = []) {
-  const res = await apolloClient.query({
-    query: LOAD_QUERY,
-    variables: {
-      measures: variables.measures || [],
-      filters: prepareFiltersForQueryEngine(filter),
-      timeDimensions: variables.timeDimensions || [],
-      dimensions: variables.dimensions || [],
-      order: {
-        'Sessions.date': 'asc'
+class CoreReportingSerivce extends BaseGraphqlService {
+  async callQueryEngine(variables, filter = []) {
+    const { load } = await this.callApi({
+      query: LOAD_QUERY,
+      variables: {
+        measures: variables.measures || [],
+        filters: prepareFiltersForQueryEngine(filter),
+        timeDimensions: variables.timeDimensions || [],
+        dimensions: variables.dimensions || [],
+        order: {
+          'Sessions.date': 'asc'
+        }
       }
-    }
-  })
+    })
 
-  return res.data.load
+    return load
+  }
 }
+
+export default new CoreReportingSerivce()

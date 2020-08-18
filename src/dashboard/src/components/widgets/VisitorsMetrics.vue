@@ -1,7 +1,7 @@
 <template>
   <b-card
     no-body
-    class="visitors-widget"
+    class="visitors-widget shadow"
   >
     <b-card-body>
       <b-card
@@ -53,7 +53,7 @@ import 'echarts/lib/chart/line'
 import 'echarts/lib/component/polar'
 import SummaryCard from './SummaryCard.vue'
 
-import { callQueryEngine } from '../../services/LoadService'
+import CoreReportingSerivce from '../../services/CoreReportingSerivce'
 import DataLoaderMixin from '../../mixins/DataLoaderMixin'
 import BaseChartOptions from './BaseChartOptions'
 
@@ -108,11 +108,11 @@ export default {
     async fetchData() {
       this.processing = true
       const [data, total] = await Promise.all([
-        callQueryEngine({
+        CoreReportingSerivce.callQueryEngine({
           measures: ['Sessions.visitors'],
           dimensions: ['Sessions.date']
         }, this.filter),
-        callQueryEngine({
+        CoreReportingSerivce.callQueryEngine({
           measures: ['Sessions.visitors']
         }, this.filter)
       ])

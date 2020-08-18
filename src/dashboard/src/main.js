@@ -15,6 +15,7 @@ import useFilters from './filters'
 
 import App from './App.vue'
 import store from './store'
+import router from './router'
 
 useFilters(Vue)
 
@@ -28,6 +29,7 @@ new Vue({
   el: '#wrapper',
   render: (h) => h(App),
   store,
+  router,
   apolloProvider: new VueApollo({
     defaultClient: apolloClient
   })

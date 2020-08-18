@@ -2,44 +2,38 @@
   <b-nav
     class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion"
   >
-    <!-- Sidebar - Brand -->
     <side-bar-brand />
 
-    <!-- Divider -->
     <hr class="sidebar-divider my-0">
 
-    <!-- Nav Item - Dashboard -->
     <li class="nav-item">
-      <a
+      <router-link
+        :to="{name: 'dashboard'}"
         class="nav-link"
-        href="index.html"
       >
         <i class="fas fa-fw fa-tachometer-alt" />
-        <span>Dashboard</span></a>
+        <span>Dashboard</span>
+      </router-link>
     </li>
 
-    <!-- Divider -->
     <hr class="sidebar-divider">
 
-    <!-- Heading -->
     <div class="sidebar-heading">
       Management
     </div>
 
-    <!-- Nav Item - Tables -->
     <li class="nav-item">
-      <a
+      <router-link
+        :to="{name: 'admin'}"
         class="nav-link"
-        href="tables.html"
       >
         <i class="fas fa-fw fa-wrench" />
-        <span>Settings</span></a>
+        <span>Admin</span>
+      </router-link>
     </li>
 
-    <!-- Divider -->
     <hr class="sidebar-divider d-none d-md-block">
 
-    <!-- Sidebar Toggler (Sidebar) -->
     <div class="text-center d-none d-md-inline">
       <button
         id="sidebarToggle"
