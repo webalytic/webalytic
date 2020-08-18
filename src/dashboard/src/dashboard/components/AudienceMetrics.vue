@@ -28,7 +28,7 @@
 <style>
 .audience-widget .echarts {
   width: 100% !important;
-  height: 150 !important;
+  height: 150px !important;
 }
 </style>
 
