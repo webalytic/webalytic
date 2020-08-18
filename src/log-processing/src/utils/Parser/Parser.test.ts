@@ -1,7 +1,7 @@
 /* eslint-disable import/no-extraneous-dependencies */
 import { createServer, Server } from 'http'
 import { expect } from 'chai'
-import * as faker from 'faker'
+import faker from 'faker'
 import { session } from '@webalytic/ms-tools/shared/log-processing/session'
 import Parser from './Parser'
 

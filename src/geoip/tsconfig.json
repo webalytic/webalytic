@@ -4,6 +4,7 @@
     "module": "commonjs",
     "moduleResolution": "node",
     "experimentalDecorators": true,
+    "esModuleInterop": true,
     "noImplicitAny": false,
     "baseUrl": "./src"
   },

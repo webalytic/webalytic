@@ -1,8 +1,8 @@
-import * as express from 'express'
+import express from 'express'
 import { AwilixContainer } from 'awilix'
 import { expect } from 'chai'
 import request from 'supertest'
-import * as faker from 'faker'
+import faker from 'faker'
 import { Server } from 'grpc'
 
 import { ILogCollectedEventPayload } from '@webalytic/ms-tools/shared/log-collector/log_collector_events'

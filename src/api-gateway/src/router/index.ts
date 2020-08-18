@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
-import * as express from 'express'
+import express from 'express'
 import { Dependencies } from '../container'
 import { Request, Response } from '../types'
 

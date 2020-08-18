@@ -1,5 +1,5 @@
 import { AwilixContainer } from 'awilix'
-import * as express from 'express'
+import express from 'express'
 import { createTestClient, ApolloServerTestClient } from 'apollo-server-testing'
 
 import createContainer, { Dependencies } from '../../src/container'

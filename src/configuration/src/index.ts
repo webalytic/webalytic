@@ -1,5 +1,5 @@
 import { ServerCredentials } from 'grpc'
-import * as dotenv from 'dotenv'
+import dotenv from 'dotenv'
 
 import createLogger from '@webalytic/ms-tools/lib/logger'
 import {
@@ -18,8 +18,8 @@ function main() {
 
   const server = createServer(container.cradle.resourceService)
 
-  const addressInfo = getAddresInfo()
-  const host = `0.0.0.0:${addressInfo.port}`
+  const addresInfo = getAddresInfo()
+  const host = `0.0.0.0:${addresInfo.port}`
 
   server.bind(host, ServerCredentials.createInsecure())
   server.start()

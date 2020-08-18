@@ -60,6 +60,14 @@ services:
     env_file:
       - .env
 
+  geoip: 
+    image: webalytic/geoip:latest
+    build: ../../src/geoip
+    container_name: geoip
+    restart: always
+    volumes:
+      - ./datasources/maxmind/GeoIP2-City.mmdb:/var/maxmind/GeoIP2-City.mmdb
+
 networks:
   default:
     external:

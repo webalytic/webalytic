@@ -1,6 +1,6 @@
 /* eslint-disable no-loop-func */
 /* eslint-disable no-await-in-loop */
-import * as dotenv from 'dotenv'
+import dotenv from 'dotenv'
 import createLogger from '@webalytic/ms-tools/lib/logger'
 import createContainer from './container'
 

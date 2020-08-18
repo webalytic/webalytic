@@ -1,4 +1,4 @@
-import * as express from 'express'
+import express from 'express'
 import { AwilixContainer } from 'awilix'
 import { expect } from 'chai'
 import request from 'supertest'

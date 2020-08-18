@@ -1,5 +1,5 @@
 /* eslint-disable global-require */
-import * as dotenv from 'dotenv'
+import dotenv from 'dotenv'
 
 process.env.NODE_ENV = 'test'
 dotenv.config()
