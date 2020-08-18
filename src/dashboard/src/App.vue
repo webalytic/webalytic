@@ -36,6 +36,6 @@ export default {
 
 <style lang="scss">
   @import "./common/assets/scss/colors.scss";
-  @import '../../../node_modules/bootstrap/scss/bootstrap.scss';
+  @import '~bootstrap/scss/bootstrap.scss';
   @import "./common/assets/scss/sb-admin-2.scss";
 </style>
