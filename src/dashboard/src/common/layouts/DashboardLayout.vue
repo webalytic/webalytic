@@ -19,10 +19,10 @@
   </div>
 </template>
 
-<script>
-import SideBar from '@/components/layout/SideBar.vue'
-import TopNavBar from '@/components/layout/TopNavBar.vue'
-import FooterBar from '@/components/layout/FooterBar.vue'
+<script lang="ts">
+import SideBar from '../components/layout/SideBar.vue'
+import TopNavBar from '../components/layout/TopNavBar.vue'
+import FooterBar from '../components/layout/FooterBar.vue'
 
 export default {
   components: {

@@ -39,10 +39,10 @@
 
 import 'echarts/lib/chart/line'
 import 'echarts/lib/component/polar'
-import CoreReportingSerivce from '../../services/CoreReportingSerivce'
+import CoreReportingService from '@/common/services/CoreReportingService'
 
 import BaseChartOptions from './BaseChartOptions'
-import DataLoaderMixin from '../../mixins/DataLoaderMixin'
+import DataLoaderMixin from '../mixins/DataLoaderMixin'
 
 export default {
   mixins: [DataLoaderMixin],
@@ -91,7 +91,7 @@ export default {
     async fetchData() {
       this.processing = true
 
-      this.data = await CoreReportingSerivce.callQueryEngine({
+      this.data = await CoreReportingService.callQueryEngine({
         measures: ['Sessions.count'],
         dimensions: ['Sessions.date', 'Sessions.channel']
       }, this.filter)

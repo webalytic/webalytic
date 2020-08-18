@@ -5,7 +5,7 @@
 </template>
 
 <script>
-import DashboardLayout from '@/layouts/DashboardLayout'
+import DashboardLayout from '@/common/layouts/DashboardLayout'
 
 export default {
   name: 'App',
@@ -24,7 +24,7 @@ export default {
 </style>
 
 <style lang="scss">
-  @import "./assets/scss/colors.scss";
-  @import "../node_modules/bootstrap/scss/bootstrap.scss";
-  @import "./assets/scss/sb-admin-2.scss";
+  @import "./common/assets/scss/colors.scss";
+  @import "../../../node_modules/bootstrap/scss/bootstrap.scss";
+  @import "./common/assets/scss/sb-admin-2.scss";
 </style>

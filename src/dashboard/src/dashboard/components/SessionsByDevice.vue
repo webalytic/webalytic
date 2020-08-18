@@ -52,9 +52,10 @@
 /* eslint-disable max-len */
 import 'echarts/lib/chart/line'
 import 'echarts/lib/component/polar'
-import CoreReportingSerivce from '../../services/CoreReportingSerivce'
+import CoreReportingService from '@/common/services/CoreReportingService'
+
 import SummaryCard from './SummaryCard.vue'
-import DataLoaderMixin from '../../mixins/DataLoaderMixin'
+import DataLoaderMixin from '../mixins/DataLoaderMixin'
 
 export default {
   components: {
@@ -116,7 +117,7 @@ export default {
     async fetchData() {
       this.processing = true
 
-      this.data = await CoreReportingSerivce.callQueryEngine({
+      this.data = await CoreReportingService.callQueryEngine({
         measures: ['Sessions.count'],
         dimensions: ['Sessions.deviceCategory']
       }, this.filter)

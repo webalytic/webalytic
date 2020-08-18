@@ -4,18 +4,15 @@ import ECharts from 'vue-echarts'
 import VueApollo from 'vue-apollo'
 import { BootstrapVue, IconsPlugin } from 'bootstrap-vue'
 
-import apolloClient from './apolloClient'
-
 import 'bootstrap/dist/css/bootstrap.css'
 import 'bootstrap-vue/dist/bootstrap-vue.css'
 
-import 'echarts/lib/chart/bar'
-import 'echarts/lib/component/tooltip'
-import useFilters from './filters'
+import apolloClient from './common/apolloClient'
+import useFilters from './common/filters'
+import store from './common/store'
+import router from './common/router'
 
 import App from './App.vue'
-import store from './store'
-import router from './router'
 
 useFilters(Vue)
 

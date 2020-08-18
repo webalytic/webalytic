@@ -49,15 +49,18 @@
 }
 </style>
 <script>
-import GlobalFilter from '../components/GlobalFilter/index.vue'
 
-import AudienceMetrics from '../components/widgets/AudienceMetrics.vue'
-import VisitorsMetrics from '../components/widgets/VisitorsMetrics.vue'
-import BounceRateMetrics from '../components/widgets/BounceRateMetrics.vue'
-import SessionByChannels from '../components/widgets/SessionByChannels.vue'
-import SessionsByDevice from '../components/widgets/SessionsByDevice.vue'
+import Vue from 'vue'
 
-export default {
+import GlobalFilter from '@/common/components/GlobalFilter/index.vue'
+
+import AudienceMetrics from '../components/AudienceMetrics.vue'
+import VisitorsMetrics from '../components/VisitorsMetrics.vue'
+import BounceRateMetrics from '../components/BounceRateMetrics.vue'
+import SessionByChannels from '../components/SessionByChannels.vue'
+import SessionsByDevice from '../components/SessionsByDevice.vue'
+
+export default Vue.extend({
   name: 'IndexPage',
   components: {
     GlobalFilter,
@@ -67,5 +70,5 @@ export default {
     SessionByChannels,
     SessionsByDevice
   }
-}
+})
 </script>

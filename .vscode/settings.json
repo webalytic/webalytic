@@ -5,6 +5,9 @@
     "javascript",
     "vue"
   ],
+  "path-intellisense.mappings": {
+    "@": "${workspaceRoot}/src/dashboard/src"
+  },
   "eslint.format.enable": true,
   "eslint.workingDirectories": [
     "./src/api-gateway",

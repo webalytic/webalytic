@@ -51,10 +51,10 @@
 /* eslint-disable max-len */
 import 'echarts/lib/chart/line'
 import 'echarts/lib/component/polar'
-import SummaryCard from './SummaryCard.vue'
+import CoreReportingService from '@/common/services/CoreReportingService'
 
-import CoreReportingSerivce from '../../services/CoreReportingSerivce'
-import DataLoaderMixin from '../../mixins/DataLoaderMixin'
+import SummaryCard from './SummaryCard.vue'
+import DataLoaderMixin from '../mixins/DataLoaderMixin'
 import BaseChartOptions from './BaseChartOptions'
 
 export default {
@@ -108,11 +108,11 @@ export default {
     async fetchData() {
       this.processing = true
       const [data, total] = await Promise.all([
-        CoreReportingSerivce.callQueryEngine({
+        CoreReportingService.callQueryEngine({
           measures: ['Sessions.visitors'],
           dimensions: ['Sessions.date']
         }, this.filter),
-        CoreReportingSerivce.callQueryEngine({
+        CoreReportingService.callQueryEngine({
           measures: ['Sessions.visitors']
         }, this.filter)
       ])

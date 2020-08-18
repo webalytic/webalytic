@@ -37,10 +37,11 @@
 
 import 'echarts/lib/chart/line'
 import 'echarts/lib/component/polar'
+import CoreReportingService from '@/common/services/CoreReportingService'
+
+import DataLoaderMixin from '../mixins/DataLoaderMixin'
 import AudienceMetricsSummary from './AudienceMetricsSummary.vue'
-import CoreReportingSerivce from '../../services/CoreReportingSerivce'
 import BaseChartOptions from './BaseChartOptions'
-import DataLoaderMixin from '../../mixins/DataLoaderMixin'
 
 export default {
   components: {
@@ -81,8 +82,8 @@ export default {
       const measures = ['Sessions.count', 'Sessions.pageviews', 'Sessions.events']
 
       const [data, total] = await Promise.all([
-        CoreReportingSerivce.callQueryEngine({ measures, dimensions: ['Sessions.date'] }, this.filter),
-        CoreReportingSerivce.callQueryEngine({ measures }, this.filter)
+        CoreReportingService.callQueryEngine({ measures, dimensions: ['Sessions.date'] }, this.filter),
+        CoreReportingService.callQueryEngine({ measures }, this.filter)
       ])
 
       this.data = data

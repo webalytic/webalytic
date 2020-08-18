@@ -34,7 +34,7 @@ function prepareFiltersForQueryEngine(filter) {
   }]
 }
 
-class CoreReportingSerivce extends BaseGraphqlService {
+class CoreReportingService extends BaseGraphqlService {
   async callQueryEngine(variables, filter = []) {
     const { load } = await this.callApi({
       query: LOAD_QUERY,
@@ -53,4 +53,4 @@ class CoreReportingSerivce extends BaseGraphqlService {
   }
 }
 
-export default new CoreReportingSerivce()
+export default new CoreReportingService()
