@@ -1,25 +1,18 @@
 <template>
   <b-card
     no-body
-    class="visitors-widget shadow"
+    class="visitors-widget shadow mb-4"
   >
     <b-card-body>
-      <b-card
-        no-body
-        class="border-0"
-      >
-        <div
-          v-show="!processing"
-          class="d-flex flex-row"
-        >
-          <div class="pr-3 pl-3">
-            <summary-card
-              label="Visitors"
-              :value="totalVisitors | number"
-            />
-          </div>
-        </div>
-      </b-card>
+      <b-card-title>
+        Visitors
+      </b-card-title>
+
+      <summary-card
+        v-show="!processing"
+        label="Total"
+        :value="totalVisitors | number-short"
+      />
 
       <b-spinner
         v-show="processing"
@@ -36,6 +29,9 @@
 </template>
 
 <style>
+.visitors-widget {
+  min-width: 135px;
+}
 .visitors-widget .echarts {
   width: 100% !important;
   height: 150px !important;

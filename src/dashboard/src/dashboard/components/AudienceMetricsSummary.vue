@@ -4,22 +4,22 @@
     class="border-0"
   >
     <div class="d-flex flex-row">
-      <div class="pr-3 pl-3">
+      <div class="mr-3">
         <summary-card
           label="Sessions"
-          :value="summary['Sessions.count'] | number"
+          :value="summary['Sessions.count'] | number-short"
         />
       </div>
-      <div class="pr-3 pl-3">
+      <div class="mr-3">
         <summary-card
           label="Page Views"
-          :value="summary['Sessions.pageviews'] | number"
+          :value="summary['Sessions.pageviews'] | number-short"
         />
       </div>
-      <div class="pr-3 pl-3">
+      <div>
         <summary-card
           label="Events"
-          :value="summary['Sessions.events'] | number"
+          :value="summary['Sessions.events'] | number-short"
         />
       </div>
     </div>

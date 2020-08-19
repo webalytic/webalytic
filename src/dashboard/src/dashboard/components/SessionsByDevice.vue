@@ -1,7 +1,7 @@
 <template>
   <b-card
     no-body
-    class="sessions-by-device-widget shadow"
+    class="sessions-by-device-widget shadow mb-4"
   >
     <b-card-body>
       <b-card-title>
@@ -18,11 +18,11 @@
           <div
             v-for="item in data"
             :key="item['Sessions.deviceCategory']"
-            class="pr-3 pl-3"
+            class="mr-3"
           >
             <summary-card
               :label="normalizeDeviceCategory(item['Sessions.deviceCategory']) | ucFirst"
-              :value="item['Sessions.count'] | number"
+              :value="item['Sessions.count'] | number-short"
             />
           </div>
         </div>
@@ -37,6 +37,9 @@
 </template>
 
 <style>
+.sessions-by-device-widget {
+  min-width: 300px;
+}
 .sessions-by-device-widget .echarts {
   width: 100% !important;
   height: 150px !important;
@@ -71,10 +74,10 @@ export default {
           trigger: 'item',
           formatter: '{a} <br/>{b}: {c} ({d}%)'
         },
-        legend: {
-          bottom: -5,
-          icon: 'circle'
-        },
+        // legend: {
+        //   bottom: -5,
+        //   icon: 'circle'
+        // },
         color: ['#3366d6', '#95a0eb', '#dee0ff'],
         series: [
           {
@@ -89,8 +92,7 @@ export default {
             emphasis: {
               label: {
                 show: true,
-                fontSize: '15',
-                fontWeight: 'bold'
+                fontSize: '10'
               }
             },
             labelLine: {
@@ -98,7 +100,7 @@ export default {
             },
             data: this.data.map((item) => ({
               value: item['Sessions.count'],
-              name: item['Sessions.deviceCategory']
+              name: this.normalizeDeviceCategory(item['Sessions.deviceCategory'])
             }))
           }
         ]
@@ -117,6 +119,21 @@ export default {
         dimensions: ['Sessions.deviceCategory']
       }, this.filter)
 
+      this.data.sort((a, b) => (+a['Sessions.count'] - +b['Sessions.count'] > 0 ? -1 : 1))
+
+      const topData = this.data.slice(0, 3)
+      const otherData = this.data.length > 3
+        ? this.data.slice(3).reduce((obj, item) => {
+          // eslint-disable-next-line no-param-reassign
+          obj['Sessions.count'] += +item['Sessions.count']
+          return obj
+        }, {
+          'Sessions.deviceCategory': 'other',
+          'Sessions.count': 0
+        })
+        : null
+
+      this.data = [...topData, ...(otherData ? [otherData] : [])]
       this.processing = false
     }
   }

@@ -1,7 +1,7 @@
 <template>
   <b-card
     no-body
-    class="audience-widget shadow"
+    class="audience-widget shadow mb-4"
   >
     <b-card-body>
       <b-card-title>
@@ -26,6 +26,9 @@
 </template>
 
 <style>
+.audience-widget {
+  min-width: 450px;
+}
 .audience-widget .echarts {
   width: 100% !important;
   height: 150px !important;

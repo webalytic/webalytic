@@ -1,24 +1,17 @@
 <template>
   <b-card
     no-body
-    class="sessions-by-channels-widget shadow"
+    class="sessions-by-channels-widget shadow mb-4"
   >
     <b-card-body>
-      <b-card
-        no-body
-        class="border-0"
-      >
-        <div
-          class="d-flex flex-row"
-        >
-          <div class="pr-3 pl-3">
-            <summary-card
-              label="Sessions by channel"
-              :value="total | number"
-            />
-          </div>
-        </div>
-      </b-card>
+      <b-card-title>
+        Sessions by channel
+      </b-card-title>
+
+      <summary-card
+        label="Total"
+        :value="total | number-short"
+      />
 
       <b-spinner
         v-show="processing"
@@ -35,6 +28,9 @@
 </template>
 
 <style>
+.sessions-by-channels-widget {
+  min-width: 300px;
+}
 .sessions-by-channels-widget .echarts {
   width: 100% !important;
   height: 150px !important;
@@ -109,6 +105,34 @@ export default {
         measures: ['Sessions.count'],
         dimensions: ['Sessions.date', 'Sessions.channel']
       }, this.filter)
+
+      const dateByDates = Object.values(this.data.reduce((obj, row) => {
+        const date = row['Sessions.date']
+        // eslint-disable-next-line no-param-reassign
+        if (!obj[date]) obj[date] = []
+        obj[date].push(row)
+        return obj
+      }, {})).map((arr) => {
+        arr.sort((a, b) => (+a['Sessions.count'] - +b['Sessions.count'] > 0 ? -1 : 1))
+        const limit = 5
+        const date = arr[0]['Sessions.date']
+        const topData = arr.slice(0, limit)
+        const otherData = arr.length > limit
+          ? arr.slice(limit).reduce((obj, item) => {
+          // eslint-disable-next-line no-param-reassign
+            obj['Sessions.count'] += +item['Sessions.count']
+            return obj
+          }, {
+            'Sessions.date': date,
+            'Sessions.channel': 'other',
+            'Sessions.count': 0
+          })
+          : null
+
+        return [...topData, ...(otherData ? [otherData] : [])]
+      }).flat()
+
+      this.data = dateByDates
 
       this.processing = false
     }
