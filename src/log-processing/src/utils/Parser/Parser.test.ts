@@ -136,7 +136,6 @@ describe('Parser unit test', () => {
       const parser = new Parser()
       const device = parser.getDevice(faker.internet.userAgent())
       expect(device).not.be.equal(null)
-      console.log(device)
       expect(device).to.have.keys([
         'browser',
         'browserVersion',
