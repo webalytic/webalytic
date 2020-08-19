@@ -12,42 +12,45 @@
     <b-row>
       <b-col
         lg="8"
-        md="6"
+        md="12"
         sm="12"
       >
         <audience-metrics />
       </b-col>
       <b-col
         lg="4"
-        md="6"
+        md="12"
         sm="12"
       >
         <sessions-by-device />
       </b-col>
     </b-row>
     <b-row>
-      <b-col>
-        <b-row>
-          <b-col>
-            <bounce-rate-metrics />
-          </b-col>
-          <b-col>
-            <visitors-metrics />
-          </b-col>
-          <b-col>
-            <session-by-channels />
-          </b-col>
-        </b-row>
+      <b-col
+        lg="4"
+        md="12"
+        sm="12"
+      >
+        <bounce-rate-metrics />
+      </b-col>
+      <b-col
+        lg="4"
+        md="12"
+        sm="12"
+      >
+        <visitors-metrics />
+      </b-col>
+      <b-col
+        lg="4"
+        md="12"
+        sm="12"
+      >
+        <session-by-channels />
       </b-col>
     </b-row>
   </div>
 </template>
 
-<style scoped>
-.row {
-    margin-bottom: 30px;
-}
-</style>
 <script>
 
 import Vue from 'vue'

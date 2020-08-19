@@ -35,7 +35,7 @@ export default class Parser {
       browserVersion: result.browser.major || '',
       operatingSystem: result.os.name || '',
       operatingSystemVersion: result.os.version || '',
-      deviceCategory: result.device.type || ''
+      deviceCategory: result.device.type || 'desktop'
     })
   }
 

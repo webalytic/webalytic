@@ -1,25 +1,18 @@
 <template>
   <b-card
     no-body
-    class="visitors-widget shadow"
+    class="bounce-rate-widget shadow mb-4"
   >
     <b-card-body>
-      <b-card
-        no-body
-        class="border-0"
-      >
-        <div
-          v-show="!processing"
-          class="d-flex flex-row"
-        >
-          <div class="pr-3 pl-3">
-            <summary-card
-              label="Bounce Rate"
-              :value="total | percent"
-            />
-          </div>
-        </div>
-      </b-card>
+      <b-card-title>
+        Bounce Rate
+      </b-card-title>
+
+      <summary-card
+        v-show="!processing"
+        label="Total"
+        :value="total | percent"
+      />
 
       <b-spinner
         v-show="processing"
@@ -37,7 +30,10 @@
 </template>
 
 <style>
-.visitors-widget .echarts {
+.bounce-rate-widget {
+  min-width: 135px;
+}
+.bounce-rate-widget .echarts {
   width: 100% !important;
   height: 150px !important;
 }

@@ -1,4 +1,5 @@
 import echarts from 'echarts'
+import numeral from 'numeral'
 
 export default {
   animation: false,
@@ -9,7 +10,7 @@ export default {
     show: false,
     height: '100px',
     left: '0%',
-    right: '60px',
+    right: '40px',
     bottom: '12%'
   },
   xAxis: {
@@ -39,7 +40,10 @@ export default {
     axisLabel: {
       inside: false,
       showMaxLabel: false,
-      showMinLabel: false
+      showMinLabel: false,
+      formatter(value) {
+        return numeral(+value).format('0a')
+      }
     },
     axisLine: {
       lineStyle: {

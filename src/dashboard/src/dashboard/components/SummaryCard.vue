@@ -1,17 +1,17 @@
 <template>
   <div class="card-box">
-    <span class="mt-0">
+    <small class="mt-0">
       <i
         v-if="icon"
         :class="`fa fa-${icon}`"
       /> {{ label }}
-    </span>
-    <h5
+    </small>
+    <h6
       v-if="value"
       class="text-primary"
     >
       {{ prefix }}<span data-plugin="counterup">{{ value }}</span>
-    </h5>
+    </h6>
   </div>
 </template>
 
