@@ -6,15 +6,19 @@
 
     <hr class="sidebar-divider my-0">
 
-    <li class="nav-item">
-      <router-link
-        :to="{name: 'dashboard'}"
+    <router-link
+      :to="{name: 'dashboard'}"
+      class="nav-item"
+      tag="li"
+    >
+      <a
+        href=""
         class="nav-link"
       >
         <i class="fas fa-fw fa-tachometer-alt" />
         <span>Dashboard</span>
-      </router-link>
-    </li>
+      </a>
+    </router-link>
 
     <hr class="sidebar-divider">
 
@@ -22,15 +26,19 @@
       Management
     </div>
 
-    <li class="nav-item">
-      <router-link
-        :to="{name: 'admin'}"
+    <router-link
+      :to="{name: 'admin'}"
+      class="nav-item"
+      tag="li"
+    >
+      <a
+        href=""
         class="nav-link"
       >
         <i class="fas fa-fw fa-wrench" />
         <span>Admin</span>
-      </router-link>
-    </li>
+      </a>
+    </router-link>
 
     <hr class="sidebar-divider d-none d-md-block">
 
@@ -38,6 +46,7 @@
       <button
         id="sidebarToggle"
         class="rounded-circle border-0"
+        @click="toggle"
       />
     </div>
   </b-nav>
@@ -49,6 +58,12 @@ import SideBarBrand from './SideBarBrand.vue'
 export default {
   components: {
     SideBarBrand
+  },
+  methods: {
+    toggle() {
+      document.body.classList.toggle('sidebar-toggled')
+      document.querySelector('.sidebar').classList.toggle('toggled')
+    }
   }
 }
 </script>

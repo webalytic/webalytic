@@ -77,8 +77,6 @@
     "rimraf": "^3.0.2",
     "sass-loader": "^6.0.6",
     "shelljs": "^0.8.4",
-    "ts-loader": "^8.0.2",
-    "typescript": "^3.9.7",
     "uglifyjs-webpack-plugin": "^2.2.0",
     "url-loader": "^4.1.0",
     "vue-loader": "~15.6",
