@@ -32,7 +32,7 @@
   "scripts": {
     "start": "ts-node --transpile-only -r tsconfig-paths/register --project ./tsconfig.json ./src/index.ts",
     "test": "npm run test:integration",
-    "test:integration": "mocha -r ts-node/register/transpile-only -r tsconfig-paths/register --timeout 15000 -b ./test/index.ts",
+    "test:integration": "mocha -r ts-node/register/transpile-only -r tsconfig-paths/register --timeout 60000 -b ./test/index.ts",
     "generator": "ts-node --transpile-only -r tsconfig-paths/register --project ./tsconfig.json ./src/generator.ts",
     "lint": "eslint --ext .js,.ts ./",
     "ts-check": "tsc -p ./tsconfig.json --noEmit",
