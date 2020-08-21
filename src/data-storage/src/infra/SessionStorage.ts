@@ -4,6 +4,10 @@ import { session } from '@webalytic/ms-tools/shared/log-processing/session'
 export default class SessionStorage {
   private clickhouse = createClickhouse()
 
+  async query(sql: string): Promise<any> {
+    return this.clickhouse.querying(sql, { dataObjects: true })
+  }
+
   async insert(hit: session.Hit, props: session.SessionProps): Promise<void> {
     await this.writeSession([
       this.sessionToTabSeparated(props)

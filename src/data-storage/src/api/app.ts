@@ -3,10 +3,10 @@
 import express from 'express'
 import addCubeJs from './cubejs'
 
-export default function createApp(): express.Application {
+export default async function createApp(): Promise<express.Application> {
   const app = express()
 
-  addCubeJs(app)
+  await addCubeJs(app)
 
   return app
 }

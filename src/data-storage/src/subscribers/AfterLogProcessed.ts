@@ -28,7 +28,7 @@ export default class AfterLogProcessed extends Subscriber {
   }
 
   async handler({ hit, props, prevProps }: ILogProcessedEventPayload): Promise<void> {
-    logger.info('AfterLogProcessed')
+    logger.debug('AfterLogProcessed')
     logger.debug({ props, hit })
 
     if (prevProps) {

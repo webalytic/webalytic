@@ -1,19 +1,21 @@
 /* eslint-disable @typescript-eslint/no-var-requires */
 /* eslint-disable import/first */
-import dotenv from 'dotenv'
 import path from 'path'
-
-dotenv.config()
-
-import { createSequelize } from '@webalytic/ms-tools/lib/datasources'
-
 import Umzug from 'umzug'
 import SequelizeStorage from 'umzug/lib/storages/SequelizeStorage'
+import { Sequelize } from 'sequelize/types'
 
-const sequelize = createSequelize()
 const SCHEMA = 'data_storage'
 
-async function main() {
+export const METHOD_UP = 'up'
+export const METHOD_DOWN = 'down'
+
+const METHODS = {
+  [METHOD_UP]: METHOD_UP,
+  [METHOD_DOWN]: METHOD_DOWN
+}
+
+export default async function migration(sequelize: Sequelize, method = METHOD_UP): Promise<void> {
   try {
     await sequelize.query(`CREATE SCHEMA ${SCHEMA}`)
   } catch (error) {
@@ -31,15 +33,7 @@ async function main() {
     storage: new SequelizeStorage({ sequelize, schema: SCHEMA })
   })
 
-  const METHOD_UP = 'up'
-  const METHOD_DOWN = 'down'
-  const methods = new Set([METHOD_UP, METHOD_DOWN])
-  const method = process.argv[2] || METHOD_UP
-  if (!methods.has(method)) throw new Error(`Unknown method: ${method}`)
+  if (!(method in METHODS)) throw new Error(`Unknown method: ${method}`)
 
   await umzug[method]()
-
-  process.exit(0)
 }
-
-main()
