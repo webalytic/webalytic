@@ -5,6 +5,7 @@ import {
 import EventProducer from '@webalytic/ms-tools/lib/infra/EventProducer'
 import EventConsumer from '@webalytic/ms-tools/lib/infra/EventConsumer'
 
+import { createRedis } from '@webalytic/ms-tools/lib/datasources'
 import Service from './Service'
 
 import Parser from './utils/Parser'
@@ -19,26 +20,31 @@ export interface Dependencies {
   eventProducer: EventProducer
   eventConsumer: EventConsumer
   subscribers: SubscribersManager
+  redis: any
 }
-
-const natsOpts = {
-  server: process.env.NATS_SERVER || 'nats://localhost:4222',
-  cluster: process.env.NATS_CLUSTER || 'webalytic'
-}
-
-const eventProducer = new EventProducer({
-  ...natsOpts,
-  clientId: `log-processing-producer-${Math.floor(Math.random() * 999999)}`
-})
-
-const eventConsumer = new EventConsumer({
-  ...natsOpts,
-  clientId: 'log-processing-consumer'
-})
 
 export default (): AwilixContainer<Dependencies> => {
+  const natsOpts = {
+    server: process.env.NATS_SERVER || 'nats://localhost:4222',
+    cluster: process.env.NATS_CLUSTER || 'webalytic'
+  }
+
+  const eventProducer = new EventProducer({
+    ...natsOpts,
+    clientId: `log-processing-producer-${Math.floor(Math.random() * 999999)}`
+  })
+
+  const eventConsumer = new EventConsumer({
+    ...natsOpts,
+    clientId: 'log-processing-consumer'
+  })
+
   // Create the container
   const container = createContainer<Dependencies>({ injectionMode: InjectionMode.PROXY })
+
+  container.register({
+    redis: asValue(createRedis())
+  })
 
   container.register({
     parser: asClass(Parser).singleton(),

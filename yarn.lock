@@ -14319,6 +14319,22 @@ testcontainers@^3.3.1:
     stream-to-array "^2.3.0"
     tar-fs "^2.1.0"
 
+testcontainers@^3.4.0:
+  version "3.4.0"
+  resolved "https://registry.yarnpkg.com/testcontainers/-/testcontainers-3.4.0.tgz#b4054acfbca04f01b8b84dd9a47b52561182fc2d"
+  integrity sha512-duZOulKBTbN3rTTdtj6rk53uZnGXkVzqKQh/Yp5paMZH9eToFEVs+nyyWrDea53qGhGyaOJKTN9PIqM/QfwJTA==
+  dependencies:
+    "@types/dockerode" "^2.5.34"
+    byline "^5.0.0"
+    debug "^4.1.1"
+    docker-compose "^0.23.5"
+    dockerode "^3.2.0"
+    get-port "^5.1.1"
+    glob "^7.1.6"
+    node-duration "^1.0.4"
+    stream-to-array "^2.3.0"
+    tar-fs "^2.1.0"
+
 text-extensions@^1.0.0:
   version "1.9.0"
   resolved "https://registry.yarnpkg.com/text-extensions/-/text-extensions-1.9.0.tgz#1853e45fee39c945ce6f6c36b2d659b5aabc2a26"

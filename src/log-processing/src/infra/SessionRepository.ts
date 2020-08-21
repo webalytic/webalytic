@@ -1,5 +1,4 @@
 /* eslint-disable no-underscore-dangle */
-import { createRedis } from '@webalytic/ms-tools/lib/datasources'
 import EventProducer from '@webalytic/ms-tools/lib/infra/EventProducer'
 import { session } from '@webalytic/ms-tools/shared/log-processing/session'
 import Session from '../entities/Session/Session'
@@ -12,10 +11,11 @@ interface ISessionPersistance {
 export default class SessionRepository {
   private eventProducer: EventProducer
 
-  private redis = createRedis()
+  private redis: any
 
-  constructor({ eventProducer }: Dependencies) {
+  constructor({ eventProducer, redis }: Dependencies) {
     this.eventProducer = eventProducer
+    this.redis = redis
   }
 
   private persistanceToDomain(data: ISessionPersistance): Session {
