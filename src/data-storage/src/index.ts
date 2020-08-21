@@ -32,9 +32,11 @@ if (cluster.isMaster) {
       logger.info('Init subscribers')
     })
 } else {
-  const app = createApp()
-  createServer(app).then((server) => {
-    const info: AddressInfo = server.address() as AddressInfo
-    logger.info(`Start server on http://${info.address}:${info.port}, worker ${process.pid} started`)
-  })
+  createApp()
+    .then((app) =>
+      createServer(app))
+    .then((server) => {
+      const info: AddressInfo = server.address() as AddressInfo
+      logger.info(`Start server on http://${info.address}:${info.port}, worker ${process.pid} started`)
+    })
 }

@@ -4,9 +4,9 @@
   "main": "./src/index.ts",
   "license": "MIT",
   "dependencies": {
-    "@webalytic/ms-tools": "^0.1.10",
-    "@cubejs-backend/server-core": "^0.19.56",
     "@cubejs-backend/clickhouse-driver": "^0.19.56",
+    "@cubejs-backend/server-core": "^0.19.56",
+    "@webalytic/ms-tools": "^0.1.10",
     "dotenv": "^8.2.0",
     "express": "^4.17.1",
     "faker": "^4.1.0",
@@ -19,13 +19,19 @@
     "@types/faker": "^4.1.12",
     "@typescript-eslint/eslint-plugin": "^3.5.0",
     "@typescript-eslint/parser": "^3.5.0",
+    "chai": "^4.2.0",
     "eslint": "^7.4.0",
     "eslint-config-airbnb-base": "^14.2.0",
     "eslint-plugin-es5": "^1.5.0",
-    "eslint-plugin-import": "^2.22.0"
+    "eslint-plugin-import": "^2.22.0",
+    "mocha": "^8.1.1",
+    "supertest": "^4.0.2",
+    "testcontainers": "^3.4.0"
   },
   "scripts": {
     "start": "ts-node --transpile-only -r tsconfig-paths/register --project ./tsconfig.json ./src/index.ts",
+    "test": "npm run test:integration",
+    "test:integration": "mocha -r ts-node/register/transpile-only -r tsconfig-paths/register --timeout 15000 -b ./test/index.ts",
     "generator": "ts-node --transpile-only -r tsconfig-paths/register --project ./tsconfig.json ./src/generator.ts",
     "lint": "eslint --ext .js,.ts ./",
     "ts-check": "tsc -p ./tsconfig.json --noEmit",

@@ -221,6 +221,29 @@ workflows:
           requires:
             - configuration-typescript
             - configuration-lint
+  
+  data-storage:
+    when: << pipeline.parameters.data-storage >>
+    jobs:
+      - build:
+          name: data-storage-build
+          package_name: data-storage
+      - lint:
+          name: data-storage-lint
+          package_name: data-storage
+          requires:
+            - data-storage-build
+      - typescript:  
+          name: data-storage-typescript
+          package_name: data-storage
+          requires:
+            - data-storage-build
+      - test:
+          name: data-storage-test
+          package_name: data-storage
+          requires:
+            - data-storage-typescript
+            - data-storage-lint
 
   dashboard:
     when: << pipeline.parameters.dashboard >>
