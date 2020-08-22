@@ -1,6 +1,9 @@
-# Webalytic/log-processing
+# Webalytic/data-storage
 
-Service subscribe on events from log-collector service, handle all hits, create and update sessions, parse Geo, User-Agent etc.., and as result sending events **LogProcessed**
+The service is responsible for the following:
+
+-  subscribe on events from [log-processing](../log-processing/README.md) service, write all data to database
+- provide API for QueryEngine base on [Cube.JS](https://cube.dev)
 
 ---
 ## Package.json scripts
