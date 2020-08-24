@@ -11,8 +11,8 @@ export default new Vuex.Store({
   },
   strict: process.env.NODE_ENV !== 'production',
   actions: {
-    async init() {
-      await this.dispatch('globalFilters/init')
+    async init(ctx, params) {
+      await this.dispatch('globalFilters/init', params)
     }
   }
 })

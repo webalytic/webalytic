@@ -19,19 +19,23 @@ const LOAD_QUERY = gql`
   }`
 
 function prepareFiltersForQueryEngine(filter) {
-  return [{
-    member: 'Sessions.date',
-    operator: 'gte',
-    values: [
-      filter.dateRange.startDate
-    ]
-  }, {
-    member: 'Sessions.date',
-    operator: 'lte',
-    values: [
-      filter.dateRange.endDate
-    ]
-  }]
+  return [
+    {
+      member: 'Sessions.resourceId',
+      operator: 'equals',
+      values: [filter.resource.id]
+    },
+    {
+      member: 'Sessions.date',
+      operator: 'gte',
+      values: [filter.dateRange.startDate]
+    },
+    {
+      member: 'Sessions.date',
+      operator: 'lte',
+      values: [filter.dateRange.endDate]
+    }
+  ]
 }
 
 class CoreReportingService extends BaseGraphqlService {

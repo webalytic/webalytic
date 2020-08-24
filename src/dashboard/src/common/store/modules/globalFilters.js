@@ -20,8 +20,10 @@ const mutations = {
     state.dateRange.endDate = moment(dateRange.endDate)
   },
   setResources(state, resources) {
-    state.resources.active = resources[0] || null
     state.resources.items = resources
+  },
+  setActiveResources(state, resource) {
+    state.resources.active = resource || state.resources.items[0] || null
   }
 }
 
@@ -31,8 +33,9 @@ const actions = {
     commit('setResources', resources)
   },
 
-  async init(ctx) {
+  async init(ctx, params) {
     await actions.fetchResources(ctx)
+    ctx.commit('setActiveResources', ctx.state.resources.items.find((i) => i.id === params.resourceId))
   }
 }
 
@@ -44,6 +47,7 @@ export default {
   getters: {
     filter(state) {
       return {
+        resource: state.resources.active,
         dateRange: {
           startDate: state.dateRange.startDate.format('YYYY-MM-DD'),
           endDate: state.dateRange.endDate.format('YYYY-MM-DD')
