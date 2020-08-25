@@ -80,9 +80,9 @@ export default class Session {
         content: TrafficSourceSystemValues.NOT_SET,
         keyword: TrafficSourceSystemValues.NOT_SET
       }),
-      date: moment().format('YYYY-MM-DD'),
+      date: moment(hit.time).format('YYYY-MM-DD'),
       sessionId: uuidV4(),
-      sessionStartTime: moment().format('YYYY-MM-DD HH:mm:ss'),
+      sessionStartTime: moment(hit.time).format('YYYY-MM-DD HH:mm:ss'),
       totals: new session.SessionTotals({
         hits: 1,
         pageviews: hit.type === HitType.PAGEVIEW ? 1 : 0,
