@@ -4,14 +4,14 @@
     :text="active.name"
     variant="primary"
   >
-    <b-dropdown-item
+    <router-link
       v-for="resource of resources"
       :key="resource.id"
+      tag="b-dropdown-item"
+      :to="{name: $route.name, params:{resourceId: resource.id }}"
     >
-      <router-link :to="{name: $route.name, params:{resourceId: resource.id }}">
-        {{ resource.name }}
-      </router-link>
-    </b-dropdown-item>
+      {{ resource.name }}
+    </router-link>
 
     <b-dropdown-divider />
 
