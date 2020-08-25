@@ -1,62 +1,24 @@
 <template>
   <b-form>
-    <ValidationProvider
-      v-slot="{ errors }"
-      rules="required"
-      name="Name"
-    >
-      <b-form-group
-        id="input-name-group"
-        label="Name of resource:"
-        label-for="input-name"
-        description="We'll never share your name with anyone else."
-        :invalid-feedback="errors[0]"
-        :state="errors.length ? false : null"
-      >
-        <b-form-input
-          id="input-name"
-          v-model="value.name"
-          required
+    <resource-name-input v-model="value.name" />
 
-          placeholder="Enter name"
-          style="min-width: 260px"
-        />
-      </b-form-group>
-    </ValidationProvider>
+    <!-- <resource-category-input v-model="value.category" /> -->
 
-    <b-form-group
-      id="input-category-group"
-      label="Category:"
-      label-for="input-category"
-      description="We'll never share your name with anyone else."
-    >
-      <b-form-select
-        id="input-category"
-        v-model="value.category"
-        type="category"
-        required
-        placeholder="Select category"
-      />
-    </b-form-group>
-
-    <b-form-group
-      id="input-defaultWebsiteUrl-group"
-      label="Website url:"
-      label-for="input-defaultWebsiteUrl"
-      description="We'll never share your name with anyone else."
-    >
-      <b-form-input
-        id="input-defaultWebsiteUrl"
-        v-model="value.defaultWebsiteUrl"
-        required
-        placeholder="Enter url"
-      />
-    </b-form-group>
+    <resource-url-input v-model="value.defaultWebsiteUrl" />
   </b-form>
 </template>
 
 <script>
+import ResourceNameInput from './inputs/ResourceNameInput.vue'
+// import ResourceCategoryInput from './inputs/ResourceCategoryInput.vue'
+import ResourceUrlInput from './inputs/ResourceUrlInput.vue'
+
 export default {
+  components: {
+    ResourceNameInput,
+    // ResourceCategoryInput,
+    ResourceUrlInput
+  },
   props: {
     value: {
       type: Object,

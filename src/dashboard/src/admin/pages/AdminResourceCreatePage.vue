@@ -5,13 +5,15 @@
       :opacity="0.4"
       rounded="sm"
     >
-      <resource-form v-model="model" />
-      <b-btn
-        variant="primary"
-        @click="resourceCreate"
-      >
-        Save
-      </b-btn>
+      <ValidationObserver v-slot="{ passes }">
+        <resource-form v-model="model" />
+        <b-btn
+          variant="primary"
+          @click="passes(resourceCreate)"
+        >
+          Save
+        </b-btn>
+      </ValidationObserver>
     </b-overlay>
   </b-card>
 </template>
