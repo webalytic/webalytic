@@ -1,19 +1,28 @@
 <template>
   <b-form>
-    <b-form-group
-      id="input-name-group"
-      label="Name of resource:"
-      label-for="input-name"
-      description="We'll never share your name with anyone else."
+    <ValidationProvider
+      v-slot="{ errors }"
+      rules="required"
+      name="Name"
     >
-      <b-form-input
-        id="input-name"
-        v-model="value.name"
-        required
-        placeholder="Enter name"
-        style="min-width: 260px"
-      />
-    </b-form-group>
+      <b-form-group
+        id="input-name-group"
+        label="Name of resource:"
+        label-for="input-name"
+        description="We'll never share your name with anyone else."
+        :invalid-feedback="errors[0]"
+        :state="errors.length ? false : null"
+      >
+        <b-form-input
+          id="input-name"
+          v-model="value.name"
+          required
+
+          placeholder="Enter name"
+          style="min-width: 260px"
+        />
+      </b-form-group>
+    </ValidationProvider>
 
     <b-form-group
       id="input-category-group"
