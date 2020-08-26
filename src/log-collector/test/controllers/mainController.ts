@@ -106,7 +106,13 @@ describe('MainController', () => {
 
       await request(app)
         .get('/collect')
-        .query(queryMeasurementProtocol)
+        .query({
+          ...queryMeasurementProtocol,
+          cd1: 'dimension1',
+          cd155: 'dimension155',
+          cm1: '1',
+          cm132: '132'
+        })
 
       const eventPayload: ILogCollectedEventPayload = await consumerPromise
 
@@ -125,6 +131,16 @@ describe('MainController', () => {
         eventValue: 0,
         transactionRevenue: 0
       })
+
+      expect(eventPayload.hit.customDimensions).to.deep.equal([
+        { index: 1, value: 'dimension1' },
+        { index: 155, value: 'dimension155' }
+      ])
+
+      expect(eventPayload.hit.customMetrics).to.deep.equal([
+        { index: 1, value: 1 },
+        { index: 132, value: 132 }
+      ])
     })
 
     it('Should don`t send payload, unknown resourceId [GET] /collect?tid=...&cid=...&t=pageview', async () => {
