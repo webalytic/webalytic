@@ -44,6 +44,10 @@ executors:
     machine:
       image: default
 
+  buildpack: 
+    docker:
+      - image: circleci/buildpack-deps:stretch
+
 jobs:
   trigger-workflows:
     executor: node
@@ -52,6 +56,25 @@ jobs:
       - run:
           name: Trigger workflows
           command: chmod +x .circleci/circle_trigger.sh && .circleci/circle_trigger.sh
+
+  build-docker:
+    parameters:
+      package_name:
+        type: string
+    executor: buildpack
+    working_directory: ~/project/src/<< parameters.package_name >>
+    steps:
+      - attach_workspace:
+          at: ~/
+      - setup_remote_docker
+      - run:
+          name: Build Docker image
+          command: docker build -t webalytic/<< parameters.package_name >>:latest .
+      - run:
+          name: Publish Docker Image to Docker Hub
+          command: |
+            echo "$DOCKERHUB_PASS" | docker login -u "$DOCKERHUB_USERNAME" --password-stdin
+            docker push webalytic/<< parameters.package_name >>:latest
 
   build:
     executor: node
@@ -152,6 +175,14 @@ workflows:
           requires:
             - log-processing-typescript
             - log-processing-lint
+      - build-docker:
+          name: log-processing-build-docker
+          package_name: log-processing
+          requires:
+            - log-processing-test
+          # filters:
+          #   branches:
+          #     only: master
 
   log-collector:
     when: << pipeline.parameters.log-collector >>
