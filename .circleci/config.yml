@@ -180,9 +180,9 @@ workflows:
           package_name: log-processing
           requires:
             - log-processing-test
-          # filters:
-          #   branches:
-          #     only: master
+          filters:
+            branches:
+              only: master
 
   log-collector:
     when: << pipeline.parameters.log-collector >>
@@ -206,6 +206,14 @@ workflows:
           requires:
             - log-collector-typescript
             - log-collector-lint
+      - build-docker:
+          name: log-collector-build-docker
+          package_name: log-collector
+          requires:
+            - log-collector-test
+          filters:
+            branches:
+              only: master
 
   api-gateway:
     when: << pipeline.parameters.api-gateway >>
@@ -229,6 +237,14 @@ workflows:
           requires:
             - api-gateway-typescript
             - api-gateway-lint
+      - build-docker:
+          name: api-gateway-build-docker
+          package_name: api-gateway
+          requires:
+            - api-gateway-test
+          filters:
+            branches:
+              only: master
 
   configuration:
     when: << pipeline.parameters.configuration >>
@@ -252,6 +268,14 @@ workflows:
           requires:
             - configuration-typescript
             - configuration-lint
+      - build-docker:
+          name: configuration-build-docker
+          package_name: configuration
+          requires:
+            - configuration-test
+          filters:
+            branches:
+              only: master
   
   data-storage:
     when: << pipeline.parameters.data-storage >>
@@ -275,6 +299,14 @@ workflows:
           requires:
             - data-storage-typescript
             - data-storage-lint
+      - build-docker:
+          name: data-storage-docker
+          package_name: data-storage
+          requires:
+            - data-storage-test
+          filters:
+            branches:
+              only: master
 
   dashboard:
     when: << pipeline.parameters.dashboard >>
@@ -287,3 +319,11 @@ workflows:
           package_name: dashboard
           requires:
             - dashboard-build
+      - build-docker:
+          name: dashboard-docker
+          package_name: dashboard
+          requires:
+            - dashboard-lint
+          filters:
+            branches:
+              only: master
