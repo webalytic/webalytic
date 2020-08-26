@@ -1,45 +1,7 @@
 <template>
-  <b-row class="admin-page">
-    <b-col lg="3">
-      <b-list-group class="admin-page-menu">
-        <b-list-group-item
-          href="#some-link"
-          active
-        >
-          <i class="fa fa-desktop fa-sm" />
-          Resource
-        </b-list-group-item>
-        <b-list-group-item
-          href="#"
-          disabled
-        >
-          <i class="fa fa-laptop-code fa-sm" />
-          Tracking info
-          <b-badge variant="light">
-            soon
-          </b-badge>
-        </b-list-group-item>
-        <b-list-group-item
-          href="#"
-          disabled
-        >
-          <i class="far fa-dot-circle fa-sm" />
-          Goals
-          <b-badge variant="light">
-            soon
-          </b-badge>
-        </b-list-group-item>
-        <b-list-group-item
-          href="#"
-          disabled
-        >
-          <i class="fa fa-layer-group " />
-          Grouping channels
-          <b-badge variant="light">
-            soon
-          </b-badge>
-        </b-list-group-item>
-      </b-list-group>
+  <b-row class="admin-page mb-4">
+    <b-col lg="3 mb-4">
+      <side-bar-menu />
     </b-col>
     <b-col lg="9">
       <router-view />
@@ -47,8 +9,12 @@
   </b-row>
 </template>
 
-<style lang="css" scoped>
-.admin-page-menu i {
-  width: 32px;
+<script>
+import SideBarMenu from '../components/SideBarMenu.vue'
+
+export default {
+  components: {
+    SideBarMenu
+  }
 }
-</style>
+</script>

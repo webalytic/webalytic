@@ -1,5 +1,8 @@
 <template>
-  <b-card title="Management resource">
+  <b-card
+    title="Management resource"
+    class="shadow"
+  >
     <b-overlay
       :show="processing"
       :opacity="0.4"
