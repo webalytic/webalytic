@@ -16,6 +16,9 @@
 
     <h6>Send event hit</h6>
     <pre class="bg-light p-4">{{ eventScript }}</pre>
+
+    <h6>Custom dimensions and metrics</h6>
+    <pre class="bg-light p-4">{{ customDimensionAndMetricsScript }}</pre>
   </b-card>
 </template>
 
@@ -51,6 +54,21 @@ WebAlyticSDK.push(['init', {
   action: 'purchase',
   label: '12dawd0',
   value: '10023'
+}]);`
+    },
+    customDimensionAndMetricsScript() {
+      return `WebAlyticSDK.push(['hit'], {
+  dimension1: 'male',
+  metric1: 101
+});
+      
+WebAlyticSDK.push(['event', {
+  category: 'some-category',
+  action: 'purchase',
+  label: '12dawd0',
+  value: '10023',
+  dimension1: 'female',
+  metric1: 101
 }]);`
     }
   }
