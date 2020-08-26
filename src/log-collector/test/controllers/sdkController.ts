@@ -33,7 +33,7 @@ describe('SdkController routes', () => {
 
     expect(result.header).to.include({
       'content-type': 'application/javascript',
-      'content-length': '2233',
+      'content-length': '2254',
       'cache-control': 'public, max-age=7200'
     })
   })

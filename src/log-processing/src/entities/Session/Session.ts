@@ -115,11 +115,16 @@ export default class Session {
     return true
   }
 
-  public shouldBeEnd(newTrafficSource: session.TrafficSource | null, sessionControl: string, hitType: string): boolean {
+  public shouldBeEnd(
+    newTrafficSource: session.TrafficSource | null,
+    sessionControl: string,
+    hitType: string,
+    hitTime: string
+  ): boolean {
     // Todo: check 30 minutes without hits
     return hitType === HitType.PAGEVIEW && (
       sessionControl === HitSessionControl.START
-      || this.date !== moment().format('YYYY-MM-DD')
+      || this.date !== moment(hitTime).format('YYYY-MM-DD')
       || (newTrafficSource && !this.trafficSourceEql(newTrafficSource))
     )
   }

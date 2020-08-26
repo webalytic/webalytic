@@ -75,9 +75,44 @@ describe('Session unit test', () => {
         source: 'new-source',
         campaign: 'new-campaign'
       })
-      const result = instance.shouldBeEnd(newTrafficSource, '', HitType.PAGEVIEW)
+
+      const hitTime = instance.props.sessionStartTime
+      const result = instance.shouldBeEnd(newTrafficSource, '', HitType.PAGEVIEW, hitTime)
 
       expect(result).to.be.equal(true)
+    })
+
+    it('Should return TRUE, traffic source not changed, session control equal start, pageview hit', () => {
+      const instance = createSession()
+
+      const newTrafficSource = new session.TrafficSource()
+      const hitTime = instance.props.sessionStartTime
+
+      const result = instance.shouldBeEnd(newTrafficSource, HitSessionControl.START, HitType.PAGEVIEW, hitTime)
+
+      expect(result).to.be.equal(true)
+    })
+
+    it('Should return TRUE, traffic source not changed, pageview hit from next day', () => {
+      const instance = createSession()
+
+      const newTrafficSource = new session.TrafficSource()
+      const hitTime = moment(instance.props.sessionStartTime).add(1, 'days').format('YYYY-MM-DD HH:mm:ss')
+
+      const result = instance.shouldBeEnd(newTrafficSource, null, HitType.PAGEVIEW, hitTime)
+
+      expect(result).to.be.equal(true)
+    })
+
+    it('Should return FALSE, traffic source not changed, session control equal start, event hit', () => {
+      const instance = createSession()
+
+      const newTrafficSource = new session.TrafficSource()
+      const hitTime = instance.props.sessionStartTime
+
+      const result = instance.shouldBeEnd(newTrafficSource, HitSessionControl.START, HitType.EVENT, hitTime)
+
+      expect(result).to.be.equal(false)
     })
 
     it('Should return FALSE, traffic source changed, event hit', () => {
@@ -87,7 +122,9 @@ describe('Session unit test', () => {
         source: 'new-source',
         campaign: 'new-campaign'
       })
-      const result = instance.shouldBeEnd(newTrafficSource, '', HitType.EVENT)
+
+      const hitTime = instance.props.sessionStartTime
+      const result = instance.shouldBeEnd(newTrafficSource, '', HitType.EVENT, hitTime)
 
       expect(result).to.be.equal(false)
     })
@@ -96,27 +133,11 @@ describe('Session unit test', () => {
       const instance = createSession()
 
       const newTrafficSource = new session.TrafficSource()
-      const result = instance.shouldBeEnd(newTrafficSource, '', HitType.PAGEVIEW)
+      const hitTime = instance.props.sessionStartTime
+
+      const result = instance.shouldBeEnd(newTrafficSource, '', HitType.PAGEVIEW, hitTime)
 
       expect(result).to.be.equal(false)
-    })
-
-    it('Should return TRUE, traffic source not changed, session control equal start, pageview hit', () => {
-      const instance = createSession()
-
-      const newTrafficSource = new session.TrafficSource()
-      const result = instance.shouldBeEnd(newTrafficSource, HitSessionControl.START, HitType.PAGEVIEW)
-
-      expect(result).to.be.equal(true)
-    })
-
-    it('Should return FALSE, traffic source not changed, session control equal start, event hit', () => {
-      const instance = createSession()
-
-      const newTrafficSource = new session.TrafficSource()
-      const result = instance.shouldBeEnd(newTrafficSource, HitSessionControl.START, HitType.PAGEVIEW)
-
-      expect(result).to.be.equal(true)
     })
   })
 

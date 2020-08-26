@@ -33,9 +33,11 @@ export default class Service {
     )
 
     let session = await this.sessionRepository.get(data.resourceId, data.clientId)
-    if (session && !session.shouldBeEnd(trafficSource, data.sessionControl, data.hit.type)) {
+    const { sessionControl, hit } = data
+
+    if (session && !session.shouldBeEnd(trafficSource, sessionControl, hit.type, hit.time)) {
       // ** Update current session
-      session.addHit(data.hit)
+      session.addHit(hit)
     } else {
       // ** Create new session
       session = Session.create({
@@ -45,7 +47,7 @@ export default class Service {
         device: this.parser.getDevice(data.userAgent),
         geoNetwork: await this.parser.getGeoNetwork(data.ip),
         trafficSource
-      }, data.hit)
+      }, hit)
     }
 
     await this.sessionRepository.save(session)
