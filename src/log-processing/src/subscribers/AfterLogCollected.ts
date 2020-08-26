@@ -82,12 +82,15 @@ export default class AfterLogCollected extends Subscriber {
               productQuantity: product.productQuantity,
               productCouponCode: product.productCouponCode
             }))
-          : []
+          : [],
+
+        // ** Custom dimensions and metrics
+        customDimensions: payload.hit.customDimensions || [],
+        customMetrics: payload.hit.customMetrics || []
       },
 
       // ** Content Information
       documentLocation: payload.documentLocation
-
     }
 
     try {

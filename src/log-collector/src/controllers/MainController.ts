@@ -15,8 +15,6 @@ const logger = createLogger('log-collector/MainController')
 export default class MainController {
   private logCollectorService: LogCollectorService
 
-  private productsArrayMax = new Array(200)
-
   constructor({ logCollectorService }: Dependencies) {
     this.logCollectorService = logCollectorService
   }
@@ -74,23 +72,41 @@ export default class MainController {
         transactionAffiliation: query.get('ta'),
         transactionRevenue: +query.get('tr') || 0,
         productAction: query.get('pa'), // detail, click, add, remove, checkout, checkout_option, purchase, refund
-        productsList: this.productsArrayMax.slice(0).reduce((acc, curr, i, arr) => {
-          const propPrefix = `pr${i + 1}`
-          const product = {
-            productSKU: query.get(`${propPrefix}id`), // Example: P12345
-            productName: query.get(`${propPrefix}nm`), // Example: Brand T-Shirt
-            productBrand: query.get(`${propPrefix}br`), // Example: Brand
-            productCategory: query.get(`${propPrefix}ca`), // Example: Apparel/Mens/T-Shirts
-            productVariant: query.get(`${propPrefix}va`), // Example: Black
-            productPrice: +query.get(`${propPrefix}pr`) || 0, // Example: 29.03
-            productQuantity: +query.get(`${propPrefix}qt`) || 0, // Example: 2.5
-            productCouponCode: query.get(`${propPrefix}cc`) // Example: SUMMER_SALE13
-          }
-          if (!product.productSKU && !product.productName) acc.push(product)
-          else arr.splice(1)
+        productsList: [...query.keys()]
+          .filter((key) =>
+            /ˆpr([1-9]|[1-9][0-9]|[1][0-9][0-9])id$/.test(key))
+          .map((idKey) => {
+            const propPrefix = idKey.replace('id', '')
+            const product = {
+              productSKU: query.get(`${propPrefix}id`), // Example: P12345
+              productName: query.get(`${propPrefix}nm`), // Example: Brand T-Shirt
+              productBrand: query.get(`${propPrefix}br`), // Example: Brand
+              productCategory: query.get(`${propPrefix}ca`), // Example: Apparel/Mens/T-Shirts
+              productVariant: query.get(`${propPrefix}va`), // Example: Black
+              productPrice: +query.get(`${propPrefix}pr`) || 0, // Example: 29.03
+              productQuantity: +query.get(`${propPrefix}qt`) || 0, // Example: 2.5
+              productCouponCode: query.get(`${propPrefix}cc`) // Example: SUMMER_SALE13
+            }
 
-          return acc
-        }, [])
+            return product
+          }),
+        customDimensions: [...query.keys()]
+          .filter((key) =>
+            /^cd([1-9]|[1-9][0-9]|[1][0-9][0-9])$/.test(key))
+          .map((key) =>
+            ({
+              index: +key.replace('cd', ''),
+              value: query.get(key)
+            })),
+        customMetrics: [...query.keys()]
+          .filter((key) =>
+            // eslint-disable-next-line no-restricted-globals
+            /^cm([1-9]|[1-9][0-9]|[1][0-9][0-9])$/.test(key) && !isNaN(+query.get(key)))
+          .map((key) =>
+            ({
+              index: +key.replace('cm', ''),
+              value: +query.get(key)
+            }))
       },
 
       // ** Content Information

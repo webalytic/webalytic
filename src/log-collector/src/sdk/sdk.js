@@ -101,6 +101,18 @@
       xhr.send(data);
     }
   };
+
+  function getCustomDimensionsAndMetrics(params){
+    return Object.keys(params)
+      .filter(function(key) {
+        return /^(dimension|metric)([1-9]|[1-9][0-9]|[1][0-9][0-9])$/.test(key)
+      }).map(function(key) {
+        return [
+          key.replace('dimension', 'cd').replace('metric', 'cm'),
+          params[key]
+        ].join('=')
+      });
+  };
   /** END HELPERS BLOCK */
 
   WebAlyticSDK.push = function (item) {
@@ -129,25 +141,29 @@
     state.resourceId = config.resourceId;
   };
 
-  WebAlyticSDK.hit = function () {
+  WebAlyticSDK.hit = function (params) {
     var url = encodeURIComponent(document.URL);
     var referrer = encodeURIComponent(document.referrer);
 
-    sendPostRequest([
+    sendPostRequest(
+      [
       't=pageview',
       'dl=' + url,
       'dr=' + referrer
-    ]);
+      ].concat(getCustomDimensionsAndMetrics(params || []))
+    );
   };
 
   WebAlyticSDK.event = function (params) {
-    sendPostRequest([
-      't=event',
-      'ec=' + params.category,
-      'ea=' + params.action,
-      'el=' + params.label,
-      'ev=' + params.value
-    ]);
+    sendPostRequest(
+      [
+        't=event',
+        'ec=' + params.category,
+        'ea=' + params.action,
+        'el=' + params.label,
+        'ev=' + params.value
+      ].concat(getCustomDimensionsAndMetrics(params))
+    );
   };
 
   if (window.WebAlyticSDK && isArray(window.WebAlyticSDK)) {

@@ -66,12 +66,14 @@ You can find list of all env variables in sample [env file](./deploy/docker-comp
 
 - [x] Base analytics dashboard: Audience, sessions by device/by channel, visitors, bounce rate. Upgrade Cube.Js schema, more metrics and dimensions
 
+- [x] Collect and provide base custom metrics and dimensions
+
+- [ ] Scope and settings for custom metrics and dimensions
+
 - [ ] Conversions service: 
   - Goals, conversions and funnels
   - Grouping channel
   - Attribution (Last Click, Time Decay, Liner, Position Based, First Click)
-
-- [ ] Custom metrics and dimensions
 
 - [ ] Custom widget builder
 

@@ -3035,14 +3035,14 @@
     source-map "~0.6.1"
     vue-template-es2015-compiler "^1.9.0"
 
-"@webalytic/ms-tools@^0.1.10":
-  version "0.1.10"
-  resolved "https://registry.yarnpkg.com/@webalytic/ms-tools/-/ms-tools-0.1.10.tgz#788467241b7a1d887f86eecfaa7850353a492150"
-  integrity sha512-xUNTDdyvWJBOAoUul5eLYTd/KR2gG3XZv1KbdPpiCknqucMye0+iXGIqFQ3sQWtd3xGxYBYgNHg1c230MX0wvQ==
+"@webalytic/ms-tools@^0.1.12":
+  version "0.1.12"
+  resolved "https://registry.yarnpkg.com/@webalytic/ms-tools/-/ms-tools-0.1.12.tgz#6780c9c95bbf5cbf550dab43f0b823cea72b8d33"
+  integrity sha512-nPHI8qjbgZlgbI0NZh2MUpuVhLFZZT+2vcN3qPNOTK/r9mVsN9YeyMdAwvISX348BrJJliRJiKka7WS7HYf1Hw==
   dependencies:
     "@apla/clickhouse" "^1.6.3"
     "@grpc/proto-loader" "^0.5.5"
-    "@webalytic/protorepo" webalytic/protorepo#0.2.8
+    "@webalytic/protorepo" webalytic/protorepo#0.3.1
     chai "^4.2.0"
     colors "^1.4.0"
     fastest-validator "^1.5.1"
@@ -3059,9 +3059,9 @@
     shelljs "^0.8.4"
     winston "^3.3.3"
 
-"@webalytic/protorepo@webalytic/protorepo#0.2.8":
-  version "0.2.8"
-  resolved "https://codeload.github.com/webalytic/protorepo/tar.gz/c63104dfd85a20abc315266c23583b7ed212f0b0"
+"@webalytic/protorepo@github:webalytic/protorepo#0.3.1":
+  version "0.3.1"
+  resolved "https://codeload.github.com/webalytic/protorepo/tar.gz/eca67e221cf3962873aaeed08fe253bf3673fc13"
 
 "@webassemblyjs/ast@1.9.0":
   version "1.9.0"
