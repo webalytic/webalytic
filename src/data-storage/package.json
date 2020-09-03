@@ -36,7 +36,7 @@
     "generator": "ts-node --transpile-only -r tsconfig-paths/register --project ./tsconfig.json ./src/generator.ts",
     "lint": "eslint --ext .js,.ts ./",
     "ts-check": "tsc -p ./tsconfig.json --noEmit",
-    "migration": "ts-node --transpile-only -r tsconfig-paths/register --project ./tsconfig.json ./migrations",
-    "migration:down": "ts-node --transpile-only -r tsconfig-paths/register --project ./tsconfig.json ./migrations down"
+    "migration": "ts-node --transpile-only -r tsconfig-paths/register --project ./tsconfig.json ./bin/migration",
+    "migration:down": "ts-node --transpile-only -r tsconfig-paths/register --project ./tsconfig.json ./bin/migration down"
   }
 }
