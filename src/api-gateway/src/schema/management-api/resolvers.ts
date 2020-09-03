@@ -1,13 +1,6 @@
-import resources from './queries/resources'
-import resourceCreate from './mutations/resourceCreate'
-import resourceUpdate from './mutations/resourceUpdate'
+import { merge } from 'lodash'
 
-export default {
-  Query: {
-    resources: resources()
-  },
-  Mutation: {
-    resourceCreate: resourceCreate(),
-    resourceUpdate: resourceUpdate()
-  }
-}
+import resource from './resource/resolvers'
+import customDefinition from './customDefinition/resolvers'
+
+export default merge(resource, customDefinition)

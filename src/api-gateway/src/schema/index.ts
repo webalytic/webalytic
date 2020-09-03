@@ -15,7 +15,7 @@ export default makeExecutableSchema({
       type Mutation
     `,
     coreReportingApiTypeDefs,
-    managementApiTypeDefs
+    ...managementApiTypeDefs
   ],
   resolvers: merge(
     {
