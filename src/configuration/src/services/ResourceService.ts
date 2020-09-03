@@ -11,7 +11,7 @@ import {
 
 import { Dependencies } from '../container'
 import Resource from '../entities/Resource/Resource'
-import ResourceRepository from '../infra/ResourceRepository'
+import ResourceRepository from '../infra/Resource/ResourceRepository'
 
 type CreateResourceCall = ServerUnaryCall<CreateResourceRequest>
 type CreateResourceCallback = ResourceService.CreateResourceCallback
@@ -35,7 +35,6 @@ export default class {
   ): Promise<void> {
     let res: ListResourcesResponse = null
     let err = null
-
     try {
       const [data, count] = await Promise.all([
         this.resourceRepository.findAll(call.request),
@@ -50,7 +49,6 @@ export default class {
     } catch (error) {
       err = this.handleError(error)
     }
-
     callback(err, res)
   }
 

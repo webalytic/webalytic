@@ -1,26 +1,23 @@
 /* eslint-disable @typescript-eslint/ban-types */
 import {
-  UUID, STRING, Model, BuildOptions, SMALLINT, DATE
+  UUID, STRING, Model, SMALLINT, DATE
 } from 'sequelize'
 
+import { resource } from '@webalytic/ms-tools/shared/configuration/resource'
 import { Dependencies } from '../../container'
+import { BaseModelStatic } from '../base/BaseModel'
 
-export interface IResourceModel extends Model {
-  readonly rowNumber: number
+export interface IResourceModel extends
+  Model<resource.IResourceProps>,
+  Omit<resource.IResourceProps, 'createTime'|'updateTime'> {
   readonly id: string
-  name: string
-  category: string
-  defaultWebsiteUrl: string
-  options: object
-  createTime: number
-  updateTime: number
+  createTime: string
+  updateTime: string
 }
 
-export type ResourceModelStatic = typeof Model & {
-  new (values?: object, options?: BuildOptions): IResourceModel
-  create(data?: object, options?: BuildOptions): IResourceModel
-  build(data?: object): IResourceModel
-}
+export type ResourceModelInstance = typeof Model & IResourceModel
+
+export type ResourceModelStatic = typeof Model & BaseModelStatic<ResourceModelInstance>
 
 export default ({ sequelize }: Dependencies): ResourceModelStatic => {
   const ResourceModel = sequelize.define(

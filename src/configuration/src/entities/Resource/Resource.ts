@@ -3,17 +3,9 @@ import { v4 as uuidV4 } from 'uuid'
 import moment from 'moment'
 
 import { createInputValidate, updateInputValidate } from './Validator'
+import BaseEntity from '../BaseEntity'
 
-export default class Resource {
-  id: string
-
-  props: resource.ResourceProps
-
-  constructor(id: string, props: resource.ResourceProps) {
-    this.id = id
-    this.props = props
-  }
-
+export default class Resource extends BaseEntity<resource.ResourceProps> {
   static create(data: resource.ICreateResourceInput): Resource {
     createInputValidate(data)
 
