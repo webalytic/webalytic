@@ -74,7 +74,7 @@ export default class {
       const { data } = call.request
 
       await this.testResourceExistsInvariant(data.resourceId)
-      const index = await this.getNextIndex(data.type)
+      const index = await this.getNextIndex(data.resourceId, data.type)
 
       const instance = CustomDefinition.create({
         ...call.request.data,
@@ -101,11 +101,14 @@ export default class {
     }
   }
 
-  private async getNextIndex(type: custom_definition.CustomDefinitionType): Promise<number> {
+  private async getNextIndex(resourceId: string, type: custom_definition.CustomDefinitionType): Promise<number> {
     const INDEX_LIMIT = 200
 
     const [customDefinition] = await this.customDefinitionRepository.findAll({
-      filter: { type },
+      filter: {
+        resourceId,
+        type
+      },
       limit: 1,
       orderBy: 'index:desc'
     })
