@@ -15,6 +15,7 @@
         id="input-type"
         :value="value"
         :options="options"
+        :disabled="disabled"
         placeholder="Select type"
         @input="val => $emit('input', val)"
       />
@@ -27,6 +28,10 @@ import { CustomDefinitionType } from '@/common/services/ConfigurationService/cus
 
 export default {
   props: {
+    disabled: {
+      type: Boolean,
+      required: true
+    },
     value: {
       type: Number,
       required: true

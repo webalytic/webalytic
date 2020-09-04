@@ -5,6 +5,7 @@
     thead-class="text-center"
     tbody-tr-class="text-center"
     class="border-top-0 mb-0"
+    show-empty
     :items="items"
     :fields="fields"
   >
@@ -47,6 +48,10 @@
           }"
         />
       </div>
+    </template>
+
+    <template v-slot:empty="scope">
+      <h6>{{ scope.emptyText }}</h6>
     </template>
   </b-table>
 </template>

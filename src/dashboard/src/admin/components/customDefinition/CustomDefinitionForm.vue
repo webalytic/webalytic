@@ -1,6 +1,9 @@
 <template>
   <b-form>
-    <custom-definition-type v-model="value.type" />
+    <custom-definition-type
+      v-model="value.type"
+      :disabled="!isNewRecord"
+    />
     <custom-definition-name v-model="value.name" />
 
     <custom-definition-scope v-model="value.scope" />
@@ -23,6 +26,10 @@ export default {
     // CustomDefinitionActive
   },
   props: {
+    isNewRecord: {
+      type: Boolean,
+      required: true
+    },
     value: {
       type: Object,
       required: true
