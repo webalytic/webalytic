@@ -27,7 +27,7 @@ describe('Resource unit test', () => {
         return createResource.bind(createResource, props)
       }
 
-      it('Should throw ValidationError,  empty name', () => {
+      it('Should throw ValidationError, empty name', () => {
         expect(factoryToThrow({ name: '' })).to.throw('ValidationError')
       })
 

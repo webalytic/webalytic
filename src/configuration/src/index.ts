@@ -1,22 +1,32 @@
-import { ServerCredentials } from 'grpc'
+import { ServerCredentials, Server } from 'grpc'
 import dotenv from 'dotenv'
-
 import createLogger from '@webalytic/ms-tools/lib/logger'
+
 import {
-  createServer,
+  createService as createResourceService,
   getAddresInfo
 } from '@webalytic/ms-tools/lib/grpc/configuration/ResourceService'
 
+import {
+  createService as createCustomDefinitionService
+} from '@webalytic/ms-tools/lib/grpc/configuration/CustomDefinitionService'
+
 import createContainer from './container'
 
-function main() {
+export default function createServer(): Server {
   dotenv.config()
 
   const container = createContainer()
 
   const logger = createLogger('configuration')
 
-  const server = createServer(container.cradle.resourceService)
+  const server: Server = new Server({
+    'grpc.max_receive_message_length': -1,
+    'grpc.max_send_message_length': -1
+  })
+
+  server.addService(createResourceService(), container.cradle.resourceService)
+  server.addService(createCustomDefinitionService(), container.cradle.customDefinitionService)
 
   const addresInfo = getAddresInfo()
   const host = `0.0.0.0:${addresInfo.port}`
@@ -25,6 +35,8 @@ function main() {
   server.start()
 
   logger.info(`Start grpc server on ${host}`)
+
+  return server
 }
 
-main()
+if (require.main === module) createServer()

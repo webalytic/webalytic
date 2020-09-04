@@ -4,7 +4,7 @@
   "main": "./src/index.ts",
   "license": "MIT",
   "dependencies": {
-    "@webalytic/ms-tools": "^0.1.12",
+    "@webalytic/ms-tools": "^0.2.3",
     "awilix": "^4.2.6",
     "chai": "^4.2.0",
     "dotenv": "^8.2.0",
@@ -41,6 +41,7 @@
     "ts-check": "tsc -p ./tsconfig.json --noEmit",
     "test": "npm run test:unit && npm run test:integration",
     "test:unit": "mocha -r ts-node/register/transpile-only -r tsconfig-paths/register --timeout 15000 ./src/**/*.test.ts",
+    "test:unit:watch": "mocha -r ts-node/register/transpile-only -r tsconfig-paths/register --timeout 15000 ./src/**/*.test.ts ",
     "test:integration": "mocha -r ts-node/register/transpile-only -r tsconfig-paths/register --timeout 15000 -b ./test/index.ts",
     "migration": "ts-node --transpile-only -r tsconfig-paths/register --project ./tsconfig.json ./bin/migration",
     "migration:down": "ts-node --transpile-only -r tsconfig-paths/register --project ./tsconfig.json ./bin/migration down",

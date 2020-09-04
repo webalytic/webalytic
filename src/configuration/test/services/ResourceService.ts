@@ -1,7 +1,6 @@
 import { expect } from 'chai'
 import faker from 'faker'
 
-import { Server } from 'grpc'
 import { AwilixContainer } from 'awilix'
 import { createClient } from '@webalytic/ms-tools/lib/grpc/configuration/ResourceService'
 import { resource } from '@webalytic/ms-tools/shared/configuration/resource'
@@ -12,38 +11,21 @@ import {
   UpdateResourceRequest
 } from '@webalytic/ms-tools/shared/configuration/resource_service'
 
-import createInfra, { InfraContainers } from '../before/createInfra'
-import createServer from '../before/createServer'
-
 import cleanUp from '../cleanUp'
 
 import createContainer, { Dependencies } from '../../src/container'
 
 describe('ResourceService', () => {
-  let server: Server
   let container: AwilixContainer<Dependencies>
   let client: ResourceService
-  let infra: InfraContainers
 
   before(async () => {
-    infra = await createInfra()
-
     container = createContainer()
-    server = createServer(container)
     client = createClient()
   })
 
   beforeEach(async () => {
     await cleanUp(container.cradle)
-  })
-
-  after(async () => {
-    await Promise.all([
-      infra.postgres.stop(),
-      new Promise((resolve) =>
-        server.tryShutdown(() =>
-          resolve()))
-    ])
   })
 
   function createValidInput() {

@@ -10,6 +10,7 @@
     >
       <resource-form v-model="model" />
       <b-btn
+        size="sm"
         variant="primary"
         @click="resourceUpdate"
       >

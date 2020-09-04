@@ -5,25 +5,32 @@ import {
 import { createSequelize } from '@webalytic/ms-tools/lib/datasources'
 import { Sequelize } from 'sequelize/types'
 
-import createResourceModel, { ResourceModelStatic } from './infra/models/ResourceModel'
-import ResourceMapper from './infra/ResourceMapper'
-import ResourceRepository from './infra/ResourceRepository'
-
+import createResourceModel, { ResourceModelStatic } from './infra/Resource/ResourceModel'
+import ResourceMapper from './infra/Resource/ResourceMapper'
+import ResourceRepository from './infra/Resource/ResourceRepository'
 import ResourceService from './services/ResourceService'
+
+import createCustomDefinitionModel,
+{ CustomDefinitionModelStatic } from './infra/CustomDefinition/CustomDefinitionModel'
+import CustomDefinitionMapper from './infra/CustomDefinition/CustomDefinitionMapper'
+import CustomDefinitionRepository from './infra/CustomDefinition/CustomDefinitionRepository'
+import CustomDefinitionService from './services/CustomDefinitionService'
 
 export interface Dependencies {
   // ** DataSources
   sequelize: Sequelize
 
-  // ** Sequelize Models
+  // ** Resources
   ResourceModel: ResourceModelStatic
-
-  // ** Repositories and Mappers
   resourceMapper: ResourceMapper
   resourceRepository: ResourceRepository
-
-  // ** Services
   resourceService: ResourceService
+
+  // ** Custom definition
+  CustomDefinitionModel: CustomDefinitionModelStatic
+  customDefinitionRepository: CustomDefinitionRepository
+  customDefinitionMapper: CustomDefinitionMapper
+  customDefinitionService: CustomDefinitionService
 }
 
 export default (): AwilixContainer<Dependencies> => {
@@ -35,20 +42,20 @@ export default (): AwilixContainer<Dependencies> => {
     sequelize: asValue(createSequelize())
   })
 
-  // ** Sequelize Models
+  // ** Resources
   container.register({
-    ResourceModel: asFunction(createResourceModel).singleton()
-  })
-
-  // ** Repositories and Mappers
-  container.register({
+    ResourceModel: asFunction(createResourceModel).singleton(),
     resourceRepository: asClass(ResourceRepository).singleton(),
-    resourceMapper: asClass(ResourceMapper).singleton()
+    resourceMapper: asClass(ResourceMapper).singleton(),
+    resourceService: asClass(ResourceService).singleton()
   })
 
-  // ** Services
+  // ** Custom definition
   container.register({
-    resourceService: asClass(ResourceService).singleton()
+    CustomDefinitionModel: asFunction(createCustomDefinitionModel).singleton(),
+    customDefinitionRepository: asClass(CustomDefinitionRepository).singleton(),
+    customDefinitionMapper: asClass(CustomDefinitionMapper).singleton(),
+    customDefinitionService: asClass(CustomDefinitionService).singleton()
   })
 
   return container
