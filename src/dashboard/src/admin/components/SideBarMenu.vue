@@ -10,6 +10,11 @@
       <i class="fa fa-laptop-code fa-sm" />
       Tracking info
     </b-list-group-item>
+    <b-list-group-item :to="{name: 'admin-custom-definition'}">
+      <i class="fa fa-stream fa-sm" />
+      Custom definition
+    </b-list-group-item>
+
     <b-list-group-item
       href="#"
       disabled

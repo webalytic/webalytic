@@ -34,6 +34,7 @@ describe('CustomDefinition endpoints', () => {
           count
           customDefinitions {
             id
+            resourceId
             name
             scope
             type

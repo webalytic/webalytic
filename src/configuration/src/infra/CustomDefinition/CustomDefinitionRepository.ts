@@ -26,6 +26,8 @@ class CustomDefinitionRepository extends BaseRepository<
         else where.id = filter.id
       }
       if (filter.name) where.name = { [Op.like]: `%${filter.name}%` }
+      if (filter.type) where.type = filter.type
+      if (filter.resourceId) where.resourceId = filter.resourceId
     }
 
     return where

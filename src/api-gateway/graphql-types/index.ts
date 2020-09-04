@@ -126,6 +126,7 @@ export type CustomDefinition = {
   __typename?: 'CustomDefinition';
   id?: Maybe<Scalars['String']>;
   resourceId?: Maybe<Scalars['String']>;
+  index?: Maybe<Scalars['Int']>;
   name?: Maybe<Scalars['String']>;
   type?: Maybe<Scalars['Int']>;
   scope?: Maybe<Scalars['Int']>;

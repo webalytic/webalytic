@@ -4,7 +4,7 @@
   "main": "index.js",
   "license": "MIT",
   "dependencies": {
-    "@webalytic/ms-tools": "^0.2.2",
+    "@webalytic/ms-tools": "^0.2.3",
     "awilix": "^4.2.6",
     "dotenv": "^8.2.0",
     "fastest-validator": "^1.6.0",

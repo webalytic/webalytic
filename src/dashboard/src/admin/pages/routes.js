@@ -1,7 +1,8 @@
 const AdminPage = () => import('../pages/AdminPage.vue')
-const AdminResourcePage = () => import('../pages/AdminResourcePage.vue')
-const AdminResourceCreatePage = () => import('../pages/AdminResourceCreatePage.vue')
-const AdminTrackingInfoPage = () => import('../pages/AdminTrackingInfoPage.vue')
+const AdminResourcePage = () => import('../pages/ResourcePage.vue')
+const AdminResourceCreatePage = () => import('../pages/ResourceCreatePage.vue')
+const AdminTrackingInfoPage = () => import('../pages/TrackingInfoPage.vue')
+const AdminCustomDefinitionPage = () => import('../pages/CustomDefinitionPage.vue')
 
 export default {
   name: 'admin',
@@ -36,6 +37,15 @@ export default {
       component: AdminTrackingInfoPage,
       meta: {
         title: 'Admin: tracking info'
+      }
+    },
+    {
+
+      name: 'admin-custom-definition',
+      path: 'custom-definition',
+      component: AdminCustomDefinitionPage,
+      meta: {
+        title: 'Admin: custom definition'
       }
     }
   ]

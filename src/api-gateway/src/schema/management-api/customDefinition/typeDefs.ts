@@ -4,6 +4,7 @@ export default gql`
   type CustomDefinition {
     id: String
     resourceId: String
+    index: Int
     name: String
     type: Int
     scope: Int
