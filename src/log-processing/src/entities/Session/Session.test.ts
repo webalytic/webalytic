@@ -17,6 +17,8 @@ describe('Session unit test', () => {
       device: new session.Device(),
       geoNetwork: new session.GeoNetwork(),
       trafficSource: new session.TrafficSource(),
+      customDimensions: [],
+      customMetrics: [],
       ...props
     }, new session.Hit({
       time: moment().format('YYYY-MM-DD HH:mm:ss'),
@@ -209,6 +211,38 @@ describe('Session unit test', () => {
       expect(events.length).to.be.equal(2)
       expect(events[0]).instanceOf(SessionCreatedEvent)
       expect(events[1]).instanceOf(SessionUpdatedEvent)
+    })
+
+    it('Should merge custom definitions', () => {
+      const customDimensions = [new session.CustomDimension({ index: 1, name: 'test', value: 'test' })]
+      const customMetrics = [new session.CustomMetric({ index: 1, name: 'test', value: 1 })]
+
+      const instance = createSession({ customDimensions, customMetrics })
+
+      instance.addHit(new session.Hit({
+        time: moment().format('YYYY-MM-DD HH:mm:ss'),
+        type: HitType.PAGEVIEW,
+        dataSource: HitDataSource.SDK
+      }), {
+        customDimensions: [
+          new session.CustomDimension({ index: 1, name: 'test', value: 'test2' }),
+          new session.CustomDimension({ index: 4, name: 'test4', value: 'test4' })
+        ],
+        customMetrics: [
+          new session.CustomMetric({ index: 1, name: 'test', value: 2 }),
+          new session.CustomMetric({ index: 2, name: 'test2', value: 4 })
+        ]
+      })
+
+      expect(instance.props.customDimensions).to.be.deep.equal([
+        new session.CustomDimension({ index: 1, name: 'test', value: 'test' }),
+        new session.CustomDimension({ index: 4, name: 'test4', value: 'test4' })
+      ])
+
+      expect(instance.props.customMetrics).to.be.deep.equal([
+        new session.CustomMetric({ index: 1, name: 'test', value: 1 }),
+        new session.CustomMetric({ index: 2, name: 'test2', value: 4 })
+      ])
     })
   })
 })

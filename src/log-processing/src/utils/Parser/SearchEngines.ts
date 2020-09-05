@@ -19,7 +19,7 @@ export default [
     hostnames: ['www.yahoo.com', 'yahoo.com', 'm.yahoo.com'],
     queryParams: ['p']
   }, {
-    name: 'Яндекс',
+    name: 'Yandex',
     hostnames: ['www.yandex.com', 'yande.ru'],
     queryParams: ['text']
   }

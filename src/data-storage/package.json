@@ -6,7 +6,7 @@
   "dependencies": {
     "@cubejs-backend/clickhouse-driver": "^0.19.56",
     "@cubejs-backend/server-core": "^0.19.56",
-    "@webalytic/ms-tools": "^0.2.3",
+    "@webalytic/ms-tools": "^0.2.4",
     "dotenv": "^8.2.0",
     "express": "^4.17.1",
     "faker": "^4.1.0",
