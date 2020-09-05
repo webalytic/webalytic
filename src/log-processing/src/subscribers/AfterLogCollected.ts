@@ -4,23 +4,23 @@ import { ILogCollectedEventPayload } from '@webalytic/ms-tools/shared/log-collec
 
 import { Dependencies } from '../container'
 import AddHitInput from '../inputs/AddHitInput'
-import Service from '../Service'
+import LogProcessingService from '../services/LogProcessingService'
 
 import { HitType, HitDataSource } from '../constants'
 
 const logger = Logger('log-processing/AfterLogCollected')
 
 export default class AfterLogCollected extends Subscriber {
-  private service: Service
+  private logProcessingService: LogProcessingService
 
-  constructor(index: number, { eventConsumer, service }: Dependencies) {
+  constructor(index: number, { eventConsumer, logProcessingService }: Dependencies) {
     super({
       event: `LogCollectedEvent:${index}`,
       durableName: 'log-processing',
       eventConsumer
     })
 
-    this.service = service
+    this.logProcessingService = logProcessingService
   }
 
   async handler(payload: ILogCollectedEventPayload): Promise<void> {
@@ -94,7 +94,7 @@ export default class AfterLogCollected extends Subscriber {
     }
 
     try {
-      await this.service.addHitToSession(data)
+      await this.logProcessingService.addHitToSession(data)
     } catch (error) {
       logger.error(error)
       if (error.details) logger.error(JSON.stringify(error.details))

@@ -19,7 +19,7 @@ export default class SessionRepository {
   }
 
   private persistanceToDomain(data: ISessionPersistance): Session {
-    // Todo: not safe, need refactoring, use data-mapper pattern, class SessionMapper
+    // Todo: not safe, should be refactored, use data-mapper pattern, class SessionMapper
     const { hits, props } = data
 
     try {

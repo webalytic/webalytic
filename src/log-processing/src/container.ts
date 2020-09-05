@@ -6,16 +6,24 @@ import EventProducer from '@webalytic/ms-tools/lib/infra/EventProducer'
 import EventConsumer from '@webalytic/ms-tools/lib/infra/EventConsumer'
 
 import { createRedis } from '@webalytic/ms-tools/lib/datasources'
-import Service from './Service'
+import ConfigurationService from './services/ConfigurationService'
+import LogProcessingService from './services/LogProcessingService'
 
 import Parser from './utils/Parser'
 import SessionRepository from './infra/SessionRepository'
 import createSubscribers, { SubscribersManager } from './subscribers'
 
 export interface Dependencies {
+  // ** External services
+  configurationService: ConfigurationService
+
   // ** Services
-  service: Service
+  logProcessingService: LogProcessingService
+
+  // ** Utils
   parser: Parser
+
+  // ** Infra
   sessionRepository: SessionRepository
   eventProducer: EventProducer
   eventConsumer: EventConsumer
@@ -54,7 +62,8 @@ export default (): AwilixContainer<Dependencies> => {
   })
 
   container.register({
-    service: asClass(Service).singleton()
+    configurationService: asClass(ConfigurationService).singleton(),
+    logProcessingService: asClass(LogProcessingService).singleton()
   })
 
   container.register({

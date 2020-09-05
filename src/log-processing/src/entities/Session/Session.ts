@@ -15,9 +15,16 @@ export interface SessionCreateProps {
   trafficSource: session.TrafficSource
   device: session.Device
   geoNetwork: session.GeoNetwork
+  customDimensions: session.CustomDimension[]
+  customMetrics: session.CustomMetric[]
 }
 
 export type SessionEvent = SessionUpdatedEvent | SessionCreatedEvent
+
+interface CustomDefinitions {
+  customDimensions: session.CustomDimension[]
+  customMetrics: session.CustomMetric[]
+}
 
 export default class Session {
   props: session.SessionProps
@@ -99,8 +106,28 @@ export default class Session {
     return instance
   }
 
-  public addHit(hitProps: session.IHit): boolean {
+  public addHit(hitProps: session.IHit, sessionCustomDefinition?: CustomDefinitions): boolean {
     addHitInputValidatte(hitProps)
+
+    // Todo add types
+    function mergeCustomDefinition(currentDefinitions: any, newDefinitions: any) {
+      return [
+        ...currentDefinitions,
+        ...newDefinitions.filter((newItem) =>
+          !currentDefinitions.find((prevItem) =>
+            newItem.index === prevItem.index))]
+    }
+
+    if (sessionCustomDefinition) {
+      this.props.customDimensions = mergeCustomDefinition(
+        this.props.customDimensions,
+        sessionCustomDefinition.customDimensions
+      )
+      this.props.customMetrics = mergeCustomDefinition(
+        this.props.customMetrics,
+        sessionCustomDefinition.customMetrics
+      )
+    }
 
     const prevProps = new session.SessionProps(this.props.toJSON())
     const hit = new session.Hit(hitProps)

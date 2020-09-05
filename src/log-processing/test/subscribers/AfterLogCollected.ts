@@ -7,14 +7,18 @@ import { ILogCollectedEventPayload } from '@webalytic/ms-tools/shared/log-collec
 import EventConsumer from '@webalytic/ms-tools/lib/infra/EventConsumer'
 import EventProducer from '@webalytic/ms-tools/lib/infra/EventProducer'
 import { ILogProcessedEventPayload } from '@webalytic/ms-tools/shared/log-processing/log_processing_events'
+import { Server } from 'grpc'
 import createContainer, { Dependencies } from '../../src/container'
 
 import AfterLogCollected from '../../src/subscribers/AfterLogCollected'
 import { HitType } from '../../src/constants'
+import { createCustomDefinitionService } from '../before/createMocks'
 
 let eventConsumer:EventConsumer = null
 let eventProducer:EventProducer = null
 let container: AwilixContainer<Dependencies> = null
+let customDefinitionServiceMock: Server
+const resourceId = faker.random.uuid()
 
 const INDEX_OF_EVENT_CHANNEL = 1
 
@@ -23,6 +27,9 @@ describe('AfterLogCollected', () => {
     container = createContainer()
     eventConsumer = container.cradle.eventConsumer
     eventProducer = container.cradle.eventProducer
+
+    customDefinitionServiceMock = createCustomDefinitionService(resourceId)
+    customDefinitionServiceMock.start()
 
     await Promise.all([
       eventConsumer.init(),
@@ -37,7 +44,11 @@ describe('AfterLogCollected', () => {
     await Promise.all([
       eventConsumer.destroy(),
       eventProducer.destroy(),
-      container.cradle.redis.quit()
+      container.cradle.redis.quit(),
+      new Promise((resolve) => {
+        customDefinitionServiceMock.tryShutdown(() =>
+          resolve())
+      })
     ])
   })
 
@@ -57,7 +68,7 @@ describe('AfterLogCollected', () => {
 
   it('Should send LogProcessedEvent', async () => {
     const logCollectedEventPayload: ILogCollectedEventPayload = {
-      resourceId: faker.random.uuid(),
+      resourceId,
       clientId: faker.random.uuid(),
       userAgent: faker.internet.userAgent(),
       userId: faker.random.uuid(),
@@ -79,8 +90,12 @@ describe('AfterLogCollected', () => {
     const eventPayload: ILogProcessedEventPayload = await consumerPromise
 
     expect(eventPayload).not.to.be.equal(null)
+    expect(eventPayload.hit).to.be.deep.equal({
+      ...logCollectedEventPayload.hit,
+      customDimensions: [{ index: 1, name: 'dim1', value: 'dimension1' }],
+      customMetrics: [{ index: 1, name: 'met1', value: 1 }]
+    })
 
-    expect(eventPayload.hit).to.be.deep.equal(logCollectedEventPayload.hit)
     expect(eventPayload.props).to.deep.include({
       resourceId: logCollectedEventPayload.resourceId,
       date: moment().format('YYYY-MM-DD'),
@@ -95,7 +110,8 @@ describe('AfterLogCollected', () => {
       },
       device: container.cradle.parser.getDevice(logCollectedEventPayload.userAgent).toJSON(),
       geoNetwork: (await container.cradle.parser.getGeoNetwork(logCollectedEventPayload.userAgent)).toJSON(),
-      duration: 0
+      duration: 0,
+      customMetrics: [{ index: 1, name: 'met1', value: 1 }]
     })
   })
 })
