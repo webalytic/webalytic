@@ -24,7 +24,7 @@ declare global {
 
   if (w[varName] && isArray(w[varName].q)) {
     for (let i = 0; i < (w[varName].q as []).length; i += 1) {
-      const [method, options] = w.WebAlyticSDK[i]
+      const [method, options] = w[varName].q[i]
       webAlyticSDK.push(method, options)
     }
   }
