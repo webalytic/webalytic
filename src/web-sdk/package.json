@@ -1,0 +1,40 @@
+{
+  "name": "web-sdk",
+  "version": "0.0.1",
+  "main": "./src/index.ts",
+  "license": "MIT",
+  "dependencies": {
+    "typescript": "^3.9.6",
+    "ts-node": "^8.10.2",
+    "finalhandler": "^1.1.2",
+    "serve-static": "^1.14.1"
+  },
+  "devDependencies": {
+    "@types/chai": "^4.2.12",
+    "@types/faker": "^4.1.12",
+    "@types/finalhandler": "^1.1.0",
+    "@types/mocha": "^7.0.2",
+    "@types/puppeteer": "^3.0.1",
+    "@types/uglify-js": "^3.9.3",
+    "@typescript-eslint/eslint-plugin": "^3.5.0",
+    "@typescript-eslint/parser": "^3.5.0",
+    "chai": "^4.2.0",
+    "eslint": "^7.4.0",
+    "eslint-config-airbnb-base": "^14.2.0",
+    "eslint-plugin-es5": "^1.5.0",
+    "eslint-plugin-import": "^2.22.0",
+    "faker": "^4.1.0",
+    "mocha": "^8.0.1",
+    "puppeteer": "^5.2.1",
+    "ts-loader": "^8.0.3",
+    "uglifyjs-webpack-plugin": "^2.2.0"
+  },
+  "scripts": {
+    "build": "webpack",
+    "server": "ts-node --transpile-only -r tsconfig-paths/register --project ./test/tsconfig.json ./test/server.ts",
+    "lint": "eslint --ext .js,.ts ./",
+    "ts-check": "tsc --project ./tsconfig.json --noEmit",
+    "test": "npm run test:integration",
+    "test:integration": "mocha -r ts-node/register/transpile-only -r tsconfig-paths/register --timeout 15000 -b ./test/index.ts"
+  }
+}

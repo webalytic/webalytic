@@ -29,40 +29,46 @@ export default {
     sdkScript() {
       const ORIGIN = window.location.origin
       const resource = this.$store.state.globalFilters.resources.active
-      return `(function() {
-  WebAlyticSDK = window.WebAlyticSDK || (window.WebAlyticSDK = []);
-  var s = document.createElement('script');
+      return `(function(w, d, tag, script, varName) {
+  w['WebAlyticObject'] = varName
+  w[varName] = w[varName] || (w[varName] = function(){
+    (w[varName].q = w[varName].q || []).push(arguments)
+  });
+  var s = document.createElement(tag);
   s.type = 'text/javascript';
   s.async = true;
-  s.src = '${ORIGIN}/lc/sdk.js';
+  s.src = script;
   var x = document.getElementsByTagName('script')[0];
   x.parentNode.insertBefore(s, x);
-})();
+})(window, document, 'script', '${ORIGIN}/lc/webalytic.js', 'WebAlyticSDK');
 
-WebAlyticSDK.push(['init', { 
+WebAlyticSDK('create', { 
   apiUrl: '${ORIGIN}/lc',
   resourceId: '${resource.id}'
-}]);`
+});`
     },
 
     hitScript() {
-      return 'WebAlyticSDK.push([\'hit\']);'
+      return 'WebAlyticSDK(\'send\', { hitType: \'pageview\' });'
     },
     eventScript() {
-      return `WebAlyticSDK.push(['event', {
+      return `WebAlyticSDK('send', {
+  hitType: 'event',
   category: 'some-category',
   action: 'purchase',
   label: '12dawd0',
   value: '10023'
-}]);`
+});`
     },
     customDimensionAndMetricsScript() {
-      return `WebAlyticSDK.push(['hit'], {
+      return `WebAlyticSDK('send', {
+  hitType: 'pageview' 
   dimension1: 'male',
   metric1: 101
 });
       
-WebAlyticSDK.push(['event', {
+WebAlyticSDK('send', {
+  hitType: 'event',
   category: 'some-category',
   action: 'purchase',
   label: '12dawd0',

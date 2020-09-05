@@ -28,6 +28,10 @@ export default function createRouter({ mainController, sdkController }: Dependen
     sdkController.sdk(req, res)
   })
 
+  router.get('/webalytic.js', (req: Request, res: Response) => {
+    sdkController.webalytic(req, res)
+  })
+
   const collectHandler = (req: Request, res: Response) =>
     mainController.collect(req, res)
 
