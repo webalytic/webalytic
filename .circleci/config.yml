@@ -35,6 +35,10 @@ parameters:
     type: boolean
     default: false
 
+  web-sdk:
+    type: boolean
+    default: false
+
 executors:
   node:
     docker:
@@ -327,3 +331,20 @@ workflows:
           filters:
             branches:
               only: master
+
+  web-sdk:
+    when: << pipeline.parameters.web-sdk >>
+    jobs:
+      - build:
+          name: web-sdk-build
+          package_name: web-sdk
+      - lint:
+          name: web-sdk-lint
+          package_name: web-sdk
+          requires:
+            - web-sdk-build
+      - typescript:  
+          name: web-sdk-typescript
+          package_name: web-sdk
+          requires:
+            - web-sdk-build

@@ -2,6 +2,7 @@ package.json
 .eslintrc.js
 
 src/sdk/sdk.js
+src/sdk/webalytic.js
 helm
 shared
 
