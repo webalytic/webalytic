@@ -345,6 +345,6 @@ workflows:
             - web-sdk-build
       - typescript:  
           name: web-sdk-typescript
-          package_name: web-sdk-storage
+          package_name: web-sdk
           requires:
             - web-sdk-build
