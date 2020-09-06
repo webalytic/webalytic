@@ -17,11 +17,11 @@ Scope determines which hits will be associated with a particular custom-dimensio
 
 2. Click `Add Custom definition`.
 
-3. Select `type`
+3. Select `Type`
 
 4. Add a `Name`. This can be any string, but use something unique so it’s not confused with any other dimension or metric in your reports.
 
-5. Select the `Scope`. Choose to track at the Hit or Session level.
+5. Select `Scope`. Choose to track at the Hit or Session level.
 
 7. Click `Save`.
 

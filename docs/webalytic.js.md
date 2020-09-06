@@ -1,4 +1,4 @@
-# Web SDK aka webalytic.js
+# Web SDK (webalytic.js)
 
 The webalytic.js library is a JavaScript library for measuring how users interact with your website. This document explains how to add the Webalytic SDK to your site.
 
@@ -7,7 +7,10 @@ Webalytic SDK should be added to `<HEAD>` tag and before any other script or CSS
 ```html
 <script>
 
-(function(t,e,c,n,a){t.WebAlyticObject=a,t[a]=t[a]||(t[a]=function(){(t[a].q=t[a].q||[]).push(arguments)});var r=document.createElement(c);r.type='text/javascript',r.async=!0,r.src=n;var s=document.getElementsByTagName('script')[0];s.parentNode.insertBefore(r,s)})(window,document,'script','http://localhost/lc/webalytic.js','WebAlyticSDK');
+(function(t,e,c,n,a){t.WebAlyticObject=a,t[a]=t[a]||(t[a]=function(){
+(t[a].q=t[a].q||[]).push(arguments)});var r=document.createElement(c);
+r.type='text/javascript',r.async=!0,r.src=n;var s=document.getElementsByTagName('script')[0];
+s.parentNode.insertBefore(r,s)})(window,document,'script','http://localhost/lc/webalytic.js','WebAlyticSDK');
 
 
 WebAlyticSDK('create', { 
