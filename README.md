@@ -2,7 +2,7 @@
 
 This is open source web analytics platform, tracks and reports website traffic.  
 
-<img src="./docs/dashboard.jpg" width="800">
+<img src="./docs/images/dashboard.jpg" width="800">
 
 ## Features 
 
@@ -10,6 +10,8 @@ This is open source web analytics platform, tracks and reports website traffic.
 - Collect client hits (page views, events, transactions)
 - Processes the client-interaction data with the configuration data 
 - Provides access to all the processed and **RAW** data
+- [Custom definition](./docs/customDefinition.md) with different scope (Hit | Session)
+- Web SDK - [webalytic.js](./docs/webalytic.js.md)
 - GeoNetwork data parsing with [maxmind](https://www.maxmind.com)
 - Produce domain events to [Nats Streaming](https://docs.nats.io/nats-streaming-concepts/intro) (create your custom subscribers module for any goals, example anti-fraud detector)
 - Microservices architecture, with shared [protobuf contracts](https://github.com/webalytic/protorepo)
@@ -22,16 +24,17 @@ The platform seeks to repeat processing logic described by Google Analytics, fol
 - [How a web session is defined in Analytics](https://support.google.com/analytics/answer/2731565?hl=en)
 - [Campaigns and traffic sources](https://support.google.com/analytics/answer/6205762?hl=en)
 
-Microservice architecture, project includes following packages:
+Monorepo includes following packages:
   - [Dashboard](./src/dashboard/README.md), Vue.js SPA
   - [Api-gateway](./src/api-gateway/README.md)
   - [Configuration](./src/configuration/README.md)
-  - [Log-collector & Web SDK](./src/log-collector/README.md)
+  - [Log-collector](./src/log-collector/README.md)
   - [Log-processing](./src/log-processing/README.md)
   - [Geoip](./src/geoip/README.md)
   - [Data-storage](./src/data-storage/README.md) with [Cube.JS](https://cube.dev/) API 
+  - [Web-sdk](./src/web-sdk/README.md)
 
-  <img src="./docs/WebAlyticMicroservices.jpg" width="800">
+  <img src="./docs/images/WebAlyticMicroservices.jpg" width="800">
 
 ## Run with docker-compose
 
@@ -68,17 +71,17 @@ You can find list of all env variables in sample [env file](./deploy/docker-comp
 
 - [x] Collect and provide base custom metrics and dimensions
 
-- [ ] Scope and settings for custom metrics and dimensions
+- [x] Scope and settings for custom metrics and dimensions
+
+- [x] New SDK
 
 - [ ] Conversions service: 
   - Goals, conversions and funnels
   - Grouping channel
   - Attribution (Last Click, Time Decay, Liner, Position Based, First Click)
 
-- [ ] Custom widget builder
-
 - [ ] Identity and access management service
 
-- [ ] Smart SDK
+- [ ] Custom widget builder
 
 - [ ] Kubernetes deploy with Helm
