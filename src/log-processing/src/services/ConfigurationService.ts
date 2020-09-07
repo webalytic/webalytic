@@ -74,7 +74,7 @@ export default class {
   private async getCustomDefition(resourceId: string): Promise<CustomDefinitionCache> {
     let result = this.customDefinitions[resourceId]
     if (!result || result.time <= new Date(new Date().getTime() + 5 * 1000)) {
-      const listReq = { filter: { resourceId } }
+      const listReq = { filter: { resourceId }, limit: 400 }
 
       const { customDefinitions } = await this.customDefinitionService.listCustomDefinitions(listReq)
 
