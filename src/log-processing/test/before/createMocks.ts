@@ -19,7 +19,7 @@ export function createCustomDefinitionService(resourceId: string): Server {
     {
       method: 'ListCustomDefinitions',
       cases: [{
-        request: { filter: { resourceId } },
+        request: { filter: { resourceId }, limit: 400 },
         response: new ListCustomDefinitionsResponse({
           customDefinitions: [
             {
