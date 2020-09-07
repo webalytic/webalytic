@@ -106,12 +106,17 @@ describe('MainController', () => {
 
       await request(app)
         .get('/collect')
+        .set('X-TEST-HEADER', 'some-test-value')
         .query({
           ...queryMeasurementProtocol,
           cd1: 'dimension1',
           cd155: 'dimension155',
           cm1: '1',
-          cm132: '132'
+          cm132: '132',
+          cd2: '{USER_AGENT}',
+          cd3: '{IP_ADDRESS}',
+          cd4: '{H_UNKNOWN}',
+          cd5: '{H_X-TEST-HEADER}'
         })
 
       const eventPayload: ILogCollectedEventPayload = await consumerPromise
@@ -134,7 +139,11 @@ describe('MainController', () => {
 
       expect(eventPayload.hit.customDimensions).to.deep.equal([
         { index: 1, value: 'dimension1' },
-        { index: 155, value: 'dimension155' }
+        { index: 155, value: 'dimension155' },
+        { index: 2, value: queryMeasurementProtocol.ua },
+        { index: 3, value: '::ffff:127.0.0.1' },
+        { index: 4, value: '' },
+        { index: 5, value: 'some-test-value' }
       ])
 
       expect(eventPayload.hit.customMetrics).to.deep.equal([
