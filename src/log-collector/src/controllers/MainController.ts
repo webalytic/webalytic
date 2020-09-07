@@ -12,6 +12,10 @@ import { Dependencies } from '../container'
 
 const logger = createLogger('log-collector/MainController')
 
+enum CUSTOM_DEFINITION_PREFIX {
+  DIMENSION = 'cd',
+  METRIC = 'cm'
+}
 export default class MainController {
   private logCollectorService: LogCollectorService
 
@@ -29,6 +33,11 @@ export default class MainController {
     const query = new URLSearchParams(url.search)
     // const cacheBuster = query.get('z')
 
+    const baseHeaderProps = {
+      ip: query.get('uip') || getClientIp(req),
+      userAgent: query.get('ua') || req.headers['user-agent']
+    }
+
     const data: ILogCollectedEventPayload = {
       // ** General
       resourceId: query.get('tid'),
@@ -39,8 +48,7 @@ export default class MainController {
 
       // ** Session
       sessionControl: query.get('sc'),
-      ip: query.get('uip') || getClientIp(req),
-      userAgent: query.get('ua') || req.headers['user-agent'],
+      ...baseHeaderProps,
 
       // ** Traffic Sources
       documentReferrer: query.get('dr'),
@@ -90,22 +98,17 @@ export default class MainController {
 
             return product
           }),
-        customDimensions: [...query.keys()]
-          .filter((key) =>
-            /^cd([1-9]|[1-9][0-9]|[1][0-9][0-9])$/.test(key))
-          .map((key) =>
+        customDimensions: this.getDefinition(query, req, baseHeaderProps, CUSTOM_DEFINITION_PREFIX.DIMENSION)
+          .map(({ key, value }) =>
             ({
               index: +key.replace('cd', ''),
-              value: query.get(key)
+              value
             })),
-        customMetrics: [...query.keys()]
-          .filter((key) =>
-            // eslint-disable-next-line no-restricted-globals
-            /^cm([1-9]|[1-9][0-9]|[1][0-9][0-9])$/.test(key) && !isNaN(+query.get(key)))
-          .map((key) =>
+        customMetrics: this.getDefinition(query, req, baseHeaderProps, CUSTOM_DEFINITION_PREFIX.METRIC)
+          .map(({ key, value }) =>
             ({
               index: +key.replace('cm', ''),
-              value: +query.get(key)
+              value: +value
             }))
       },
 
@@ -120,5 +123,38 @@ export default class MainController {
     }
 
     res.status(204).end()
+  }
+
+  private getDefinition(
+    query: URLSearchParams,
+    req: Request,
+    baseHeaderProps: any,
+    prefix: CUSTOM_DEFINITION_PREFIX
+  ): {key:string; value: string}[] {
+    const result = []
+    const isMetric = prefix === CUSTOM_DEFINITION_PREFIX.METRIC
+    const regExp = new RegExp(`^${prefix}([1-9]|[1-9][0-9]|[1][0-9][0-9])$`)
+    // eslint-disable-next-line no-restricted-syntax
+    for (const key of [...query.keys()]) {
+      // eslint-disable-next-line no-restricted-globals
+      if (regExp.test(key) && (!isMetric || !isNaN(+query.get(key)))) {
+        result.push({
+          key,
+          value: this.replaceMacrosInCustomDefinition(query.get(key), baseHeaderProps, req)
+        })
+      }
+    }
+    return result
+  }
+
+  private replaceMacrosInCustomDefinition(value: string, baseHeaderProps: any, req: Request) {
+    return value
+      .replace('{USER_AGENT}', baseHeaderProps.userAgent)
+      .replace('{IP_ADDRESS}', baseHeaderProps.ip)
+      .replace(
+        /^{H_(.*)}$/,
+        (_, p): string =>
+          (req.headers[(p || '').toLowerCase()] || '').toString()
+      )
   }
 }

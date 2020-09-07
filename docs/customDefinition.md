@@ -35,6 +35,28 @@ WebAlyticSDK('send', {
   dimension1: 'male',
   metric1: 101
 });
-      
+
 </script>
 ```
+
+### Server side macros
+
+Use macros to replace values from request headers. Webalytic support next macros:
+
+- {USER_AGENT} - set user-agent
+- {IP_ADDRESS} - set ip address
+- {H_```HEADER-KEY```} - set value from any http header. Replace ```HEADER-KEY``` with real header key which you need. 
+
+```html
+<script>
+
+WebAlyticSDK('send', {
+  ...,
+  dimension1: '{USER_AGENT}', 
+  dimension1: '{IP_ADDRESS}', 
+  dimension1: '{H_X-CUSTOM-HEADER}',
+});
+
+</script>
+```
+      
