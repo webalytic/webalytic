@@ -53,8 +53,8 @@ Use macros to replace values from request headers. Webalytic support next macros
 WebAlyticSDK('send', {
   ...,
   dimension1: '{USER_AGENT}', 
-  dimension1: '{IP_ADDRESS}', 
-  dimension1: '{H_X-CUSTOM-HEADER}',
+  dimension2: '{IP_ADDRESS}', 
+  dimension3: '{H_X-CUSTOM-HEADER}',
 });
 
 </script>
