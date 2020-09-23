@@ -152,8 +152,12 @@ export default class Session {
     return hitType === HitType.PAGEVIEW && (
       sessionControl === HitSessionControl.START
       || this.date !== moment(hitTime).format('YYYY-MM-DD')
-      || (newTrafficSource && !this.trafficSourceEql(newTrafficSource))
+      || (!this.trafficSourceIsEmpty(newTrafficSource) && !this.trafficSourceEql(newTrafficSource))
     )
+  }
+
+  private trafficSourceIsEmpty(newTrafficSource: session.TrafficSource): boolean {
+    return JSON.stringify(newTrafficSource.toJSON()) === JSON.stringify(new session.TrafficSource().toJSON())
   }
 
   private trafficSourceEql(newTrafficSource: session.TrafficSource): boolean {
