@@ -114,7 +114,7 @@ DATA="{ \"branch\": \"$CIRCLE_BRANCH\", \"parameters\": { $PARAMETERS } }"
 echo "Triggering pipeline with data:"
 echo -e "  $DATA"
 
-URL="${CIRCLE_API}/v2/project/${REPOSITORY_TYPE}/${CIRCLE_PROJECT_USERNAME}/${CIRCLE_PROJECT_REPONAME}/pipeline"
+URL="${CIRCLE_API}/v2/project/${REPOSITORY_TYPE}/webalytic/webalytic/pipeline"
 HTTP_RESPONSE=$(curl -s -u "${CIRCLE_TOKEN}:" -o response.txt -w "%{http_code}" -X POST --header "Content-Type: application/json" -d "$DATA" "$URL")
 
 echo -e "curl -s -u \"${CIRCLE_TOKEN}:\" -o response.txt -w \"%{http_code}\" -X POST --header \"Content-Type: application/json\" -d \"$DATA\" \"$URL\""
