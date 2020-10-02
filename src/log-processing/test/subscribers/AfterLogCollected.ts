@@ -78,6 +78,7 @@ describe('AfterLogCollected', () => {
         type: HitType.PAGEVIEW,
         pageUrl: faker.internet.url(),
         time: moment().format('YYYY-MM-DD HH:mm:ss'),
+        timestamp: moment().unix(),
         customDimensions: [{ index: 1, value: 'dimension1' }],
         customMetrics: [{ index: 1, value: 1 }]
       }

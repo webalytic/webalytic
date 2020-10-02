@@ -37,7 +37,8 @@ describe('AfterLogProcessed', () => {
       hit: {
         type: HitType.PAGEVIEW,
         pageUrl: faker.internet.url(),
-        time: moment().format('YYYY-MM-DD HH:mm:ss')
+        time: moment().format('YYYY-MM-DD HH:mm:ss'),
+        timestamp: moment().unix()
       },
       props: {
         resourceId: faker.random.uuid(),
@@ -46,6 +47,7 @@ describe('AfterLogProcessed', () => {
         userId: faker.random.uuid(),
         clientId: faker.random.uuid(),
         sessionStartTime: moment().format('YYYY-MM-DD HH:mm:ss'),
+        sessionStartTimestamp: moment().unix(),
         totals: { hits: 1, pageviews: 1, events: 0 },
         trafficSource: {
           source: faker.random.word(),
@@ -70,7 +72,7 @@ describe('AfterLogProcessed', () => {
       userId: evenPayload.props.userId,
       sessionId: evenPayload.props.sessionId,
       clientId: evenPayload.props.clientId,
-      sessionStartTime: evenPayload.hit.time,
+      sessionStartTime: moment.unix(evenPayload.hit.timestamp).format('YYYY-MM-DD HH:mm:ss'),
       duration: 0,
       totals_hits: 1,
       totals_pageviews: 1,
@@ -93,8 +95,8 @@ describe('AfterLogProcessed', () => {
 
     expect(hit).to.be.deep.equal({
       resourceId: evenPayload.props.resourceId,
-      date: evenPayload.props.date,
-      time: evenPayload.hit.time,
+      date: moment.unix(evenPayload.hit.timestamp).format('YYYY-MM-DD'),
+      time: moment.unix(evenPayload.hit.timestamp).format('YYYY-MM-DD HH:mm:ss'),
       position: 1,
       userId: evenPayload.props.userId,
       sessionId: evenPayload.props.sessionId,

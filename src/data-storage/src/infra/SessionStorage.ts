@@ -1,3 +1,5 @@
+import moment from 'moment'
+
 import { createClickhouse } from '@webalytic/ms-tools/lib/datasources'
 import { session } from '@webalytic/ms-tools/shared/log-processing/session'
 
@@ -51,7 +53,7 @@ export default class SessionStorage {
       props.userId || '',
       props.sessionId,
       props.clientId || '',
-      props.sessionStartTime,
+      moment.unix(props.sessionStartTimestamp).format('YYYY-MM-DD HH:mm:ss'),
       props.duration,
 
       props.totals.hits,
@@ -85,7 +87,7 @@ export default class SessionStorage {
     const valuesForCh = [
       props.resourceId,
       props.date,
-      hit.time,
+      moment.unix(hit.timestamp).format('YYYY-MM-DD HH:mm:ss'),
       position,
       props.userId || '',
       props.sessionId,

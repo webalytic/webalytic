@@ -65,6 +65,7 @@ export default class MainController {
 
       hit: {
         time: moment().format('YYYY-MM-DD HH:mm:ss'),
+        timestamp: moment().unix(),
         type: query.get('t'),
         dataSource: query.get('ds'),
         pageUrl: query.get('dl'),

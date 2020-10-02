@@ -68,9 +68,7 @@ export default class Session {
 
   private calcNewDuration(hitProps: session.IHit): void {
     // Todo: handle opt_noninteraction hits
-    const hitTime = moment(hitProps.time).unix()
-    const sessionStartTime = moment(this.props.sessionStartTime).unix()
-    this.props.duration = hitTime - sessionStartTime
+    this.props.duration = hitProps.timestamp - this.props.sessionStartTimestamp
   }
 
   static create(data: SessionCreateProps, hitProps: session.IHit): Session {
@@ -87,9 +85,10 @@ export default class Session {
         content: TrafficSourceSystemValues.NOT_SET,
         keyword: TrafficSourceSystemValues.NOT_SET
       }),
-      date: moment(hit.time).format('YYYY-MM-DD'),
+      date: moment.unix(hit.timestamp).format('YYYY-MM-DD'),
       sessionId: uuidV4(),
-      sessionStartTime: moment(hit.time).format('YYYY-MM-DD HH:mm:ss'),
+      sessionStartTime: moment.unix(hit.timestamp).format('YYYY-MM-DD HH:mm:ss'),
+      sessionStartTimestamp: hit.timestamp,
       totals: new session.SessionTotals({
         hits: 1,
         pageviews: hit.type === HitType.PAGEVIEW ? 1 : 0,
@@ -146,12 +145,12 @@ export default class Session {
     newTrafficSource: session.TrafficSource | null,
     sessionControl: string,
     hitType: string,
-    hitTime: string
+    hitTimestamp: number
   ): boolean {
     // Todo: check 30 minutes without hits
     return hitType === HitType.PAGEVIEW && (
       sessionControl === HitSessionControl.START
-      || this.date !== moment(hitTime).format('YYYY-MM-DD')
+      || this.date !== moment.unix(hitTimestamp).format('YYYY-MM-DD')
       || (!this.trafficSourceIsEmpty(newTrafficSource) && !this.trafficSourceEql(newTrafficSource))
     )
   }
