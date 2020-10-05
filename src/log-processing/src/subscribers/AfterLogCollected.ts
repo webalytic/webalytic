@@ -1,3 +1,5 @@
+import moment from 'moment'
+
 import Subscriber from '@webalytic/ms-tools/lib/ddd/Subscriber'
 import Logger from '@webalytic/ms-tools/lib/logger'
 import { ILogCollectedEventPayload } from '@webalytic/ms-tools/shared/log-collector/log_collector_events'
@@ -53,6 +55,8 @@ export default class AfterLogCollected extends Subscriber {
       // ** Hit
       hit: {
         time: payload.hit.time,
+        // TODO: remove moment after full switching to timestamp
+        timestamp: payload.hit.timestamp || moment(payload.hit.time).unix(),
         type: payload.hit.type as HitType,
         dataSource: payload.hit.dataSource as HitDataSource,
 
