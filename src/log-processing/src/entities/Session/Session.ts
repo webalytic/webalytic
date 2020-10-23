@@ -152,6 +152,7 @@ export default class Session {
       sessionControl === HitSessionControl.START
       || this.date !== moment.unix(hitTimestamp).format('YYYY-MM-DD')
       || (!this.trafficSourceIsEmpty(newTrafficSource) && !this.trafficSourceEql(newTrafficSource))
+      || moment.duration(moment.unix(hitTimestamp).diff(moment.unix(this.getLastHit().timestamp))).asMinutes() >= 30
     )
   }
 
@@ -161,6 +162,11 @@ export default class Session {
 
   private trafficSourceEql(newTrafficSource: session.TrafficSource): boolean {
     return JSON.stringify(newTrafficSource.toJSON()) === JSON.stringify(this.trafficSource.toJSON())
+  }
+
+  private getLastHit(): session.Hit {
+    return this.hits.sort((a, b) =>
+      (a.timestamp < b.timestamp ? 1 : -1))[0]
   }
 
   public getEvents(): SessionEvent[] {
