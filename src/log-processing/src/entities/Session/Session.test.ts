@@ -22,6 +22,7 @@ describe('Session unit test', () => {
       ...props
     }, new session.Hit({
       time: moment().format('YYYY-MM-DD HH:mm:ss'),
+      timestamp: moment().unix(),
       type: HitType.PAGEVIEW,
       dataSource: HitDataSource.SDK
     }))
@@ -78,8 +79,8 @@ describe('Session unit test', () => {
         campaign: 'new-campaign'
       })
 
-      const hitTime = instance.props.sessionStartTime
-      const result = instance.shouldBeEnd(newTrafficSource, '', HitType.PAGEVIEW, hitTime)
+      const hitTimestamp = instance.props.sessionStartTimestamp
+      const result = instance.shouldBeEnd(newTrafficSource, '', HitType.PAGEVIEW, hitTimestamp)
 
       expect(result).to.be.equal(true)
     })
@@ -88,9 +89,9 @@ describe('Session unit test', () => {
       const instance = createSession()
 
       const newTrafficSource = new session.TrafficSource()
-      const hitTime = instance.props.sessionStartTime
+      const hitTimestamp = instance.props.sessionStartTimestamp
 
-      const result = instance.shouldBeEnd(newTrafficSource, HitSessionControl.START, HitType.PAGEVIEW, hitTime)
+      const result = instance.shouldBeEnd(newTrafficSource, HitSessionControl.START, HitType.PAGEVIEW, hitTimestamp)
 
       expect(result).to.be.equal(true)
     })
@@ -99,9 +100,9 @@ describe('Session unit test', () => {
       const instance = createSession()
 
       const newTrafficSource = new session.TrafficSource()
-      const hitTime = moment(instance.props.sessionStartTime).add(1, 'days').format('YYYY-MM-DD HH:mm:ss')
+      const hitTimestamp = moment.unix(instance.props.sessionStartTimestamp).add(1, 'days').unix()
 
-      const result = instance.shouldBeEnd(newTrafficSource, null, HitType.PAGEVIEW, hitTime)
+      const result = instance.shouldBeEnd(newTrafficSource, null, HitType.PAGEVIEW, hitTimestamp)
 
       expect(result).to.be.equal(true)
     })
@@ -110,9 +111,9 @@ describe('Session unit test', () => {
       const instance = createSession()
 
       const newTrafficSource = new session.TrafficSource()
-      const hitTime = instance.props.sessionStartTime
+      const hitTimestamp = instance.props.sessionStartTimestamp
 
-      const result = instance.shouldBeEnd(newTrafficSource, HitSessionControl.START, HitType.EVENT, hitTime)
+      const result = instance.shouldBeEnd(newTrafficSource, HitSessionControl.START, HitType.EVENT, hitTimestamp)
 
       expect(result).to.be.equal(false)
     })
@@ -125,8 +126,8 @@ describe('Session unit test', () => {
         campaign: 'new-campaign'
       })
 
-      const hitTime = instance.props.sessionStartTime
-      const result = instance.shouldBeEnd(newTrafficSource, '', HitType.EVENT, hitTime)
+      const hitTimestamp = instance.props.sessionStartTimestamp
+      const result = instance.shouldBeEnd(newTrafficSource, '', HitType.EVENT, hitTimestamp)
 
       expect(result).to.be.equal(false)
     })
@@ -135,9 +136,9 @@ describe('Session unit test', () => {
       const instance = createSession()
 
       const newTrafficSource = new session.TrafficSource()
-      const hitTime = instance.props.sessionStartTime
+      const hitTimestamp = instance.props.sessionStartTimestamp
 
-      const result = instance.shouldBeEnd(newTrafficSource, '', HitType.PAGEVIEW, hitTime)
+      const result = instance.shouldBeEnd(newTrafficSource, '', HitType.PAGEVIEW, hitTimestamp)
 
       expect(result).to.be.equal(false)
     })
@@ -161,6 +162,7 @@ describe('Session unit test', () => {
 
       const result = instance.addHit(new session.Hit({
         time: moment().add(10, 'minutes').format('YYYY-MM-DD HH:mm:ss'),
+        timestamp: moment().add(10, 'minutes').unix(),
         type: HitType.PAGEVIEW,
         dataSource: HitDataSource.SDK
       }))
@@ -174,6 +176,7 @@ describe('Session unit test', () => {
 
       const result = instance.addHit(new session.Hit({
         time: moment().format('YYYY-MM-DD HH:mm:ss'),
+        timestamp: moment().unix(),
         type: HitType.EVENT,
         dataSource: HitDataSource.SDK,
         eventAction: 'event-action',
@@ -190,6 +193,7 @@ describe('Session unit test', () => {
 
       const testFn = instance.addHit.bind(instance, new session.Hit({
         time: moment().format('YYYY-MM-DD HH:mm:ss'),
+        timestamp: moment().unix(),
         type: faker.random.word(),
         dataSource: faker.random.word()
       }))
@@ -202,6 +206,7 @@ describe('Session unit test', () => {
 
       instance.addHit(new session.Hit({
         time: moment().format('YYYY-MM-DD HH:mm:ss'),
+        timestamp: moment().unix(),
         type: HitType.PAGEVIEW,
         dataSource: HitDataSource.SDK
       }))
@@ -221,6 +226,7 @@ describe('Session unit test', () => {
 
       instance.addHit(new session.Hit({
         time: moment().format('YYYY-MM-DD HH:mm:ss'),
+        timestamp: moment().unix(),
         type: HitType.PAGEVIEW,
         dataSource: HitDataSource.SDK
       }), {

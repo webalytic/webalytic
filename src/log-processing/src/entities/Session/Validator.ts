@@ -20,6 +20,7 @@ const createSessionCheck = v.compile(createSessionSchema)
 
 const createHitSchema = {
   time: { type: 'string', pattern: /^(\d{4})-(\d{2})-(\d{2}) (\d{2}):(\d{2}):(\d{2})$/ },
+  timestamp: { type: 'number', min: 0, max: 4294967295 }, // UInt32
   type: { type: 'string', enum: Object.values(HitType) },
   dataSource: { type: 'string', enum: Object.values(HitDataSource), optional: true },
   pageUrl: { type: 'url', empty: true },

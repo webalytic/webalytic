@@ -47,7 +47,7 @@ export default class Service {
     const customDefinitionByScope = await this.configurationService.extendCustomDefinition(resourceId, hit)
     Object.assign(hit, customDefinitionByScope[custom_definition.CustomDefinitionScope.HIT])
 
-    if (session && !session.shouldBeEnd(trafficSource, sessionControl, hit.type, hit.time)) {
+    if (session && !session.shouldBeEnd(trafficSource, sessionControl, hit.type, hit.timestamp)) {
       // ** Update current session
       session.addHit(hit, customDefinitionByScope[custom_definition.CustomDefinitionScope.SESSION])
     } else {
