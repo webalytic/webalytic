@@ -147,7 +147,6 @@ export default class Session {
     hitType: string,
     hitTimestamp: number
   ): boolean {
-    // Todo: check 30 minutes without hits
     return hitType === HitType.PAGEVIEW && (
       sessionControl === HitSessionControl.START
       || this.date !== moment.unix(hitTimestamp).format('YYYY-MM-DD')
