@@ -107,6 +107,17 @@ describe('Session unit test', () => {
       expect(result).to.be.equal(true)
     })
 
+    it('Should return TRUE, traffic source not changed, pageview hit in 30 minutes after last hit', () => {
+      const instance = createSession()
+
+      const newTrafficSource = new session.TrafficSource()
+      const hitTimestamp = moment.unix(instance.hits[0].timestamp).add(30, 'minutes').unix()
+
+      const result = instance.shouldBeEnd(newTrafficSource, null, HitType.PAGEVIEW, hitTimestamp)
+
+      expect(result).to.be.equal(true)
+    })
+
     it('Should return FALSE, traffic source not changed, session control equal start, event hit', () => {
       const instance = createSession()
 
