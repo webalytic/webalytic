@@ -44,11 +44,11 @@ executors:
     docker:
       - image: circleci/node:12
 
-  node-machine: 
+  node-machine:
     machine:
       image: default
 
-  buildpack: 
+  buildpack:
     docker:
       - image: circleci/buildpack-deps:stretch
 
@@ -68,6 +68,8 @@ jobs:
     executor: buildpack
     working_directory: ~/project/src/<< parameters.package_name >>
     steps:
+      - setup_remote_docker:
+        version: 19.03.13
       - attach_workspace:
           at: ~/
       - setup_remote_docker
@@ -91,8 +93,8 @@ jobs:
           path: ~/project
       - restore_cache:
           keys:
-          - v1-dependencies-{{ checksum "./package.json" }}
-          - v1-dependencies-
+            - v1-dependencies-{{ checksum "./package.json" }}
+            - v1-dependencies-
       - run: rm ../../package.json
       - run: cp ../../yarn.lock ./yarn.lock
       - run: yarn install
@@ -143,7 +145,7 @@ jobs:
             [ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"
             nvm install v12.18.1 && nvm use v12.18.1 && nvm alias default v12.18.1
             npm run test
-            
+
 workflows:
   version: 2
 
@@ -153,7 +155,6 @@ workflows:
     when: << pipeline.parameters.trigger >>
     jobs:
       - trigger-workflows
-
 
   # Workflows defined for each package.
 
@@ -199,7 +200,7 @@ workflows:
           package_name: log-collector
           requires:
             - log-collector-build
-      - typescript:  
+      - typescript:
           name: log-collector-typescript
           package_name: log-collector
           requires:
@@ -230,7 +231,7 @@ workflows:
           package_name: api-gateway
           requires:
             - api-gateway-build
-      - typescript:  
+      - typescript:
           name: api-gateway-typescript
           package_name: api-gateway
           requires:
@@ -261,7 +262,7 @@ workflows:
           package_name: configuration
           requires:
             - configuration-build
-      - typescript:  
+      - typescript:
           name: configuration-typescript
           package_name: configuration
           requires:
@@ -280,7 +281,7 @@ workflows:
           filters:
             branches:
               only: master
-  
+
   data-storage:
     when: << pipeline.parameters.data-storage >>
     jobs:
@@ -292,7 +293,7 @@ workflows:
           package_name: data-storage
           requires:
             - data-storage-build
-      - typescript:  
+      - typescript:
           name: data-storage-typescript
           package_name: data-storage
           requires:
@@ -343,7 +344,7 @@ workflows:
           package_name: web-sdk
           requires:
             - web-sdk-build
-      - typescript:  
+      - typescript:
           name: web-sdk-typescript
           package_name: web-sdk
           requires:
