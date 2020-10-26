@@ -8,7 +8,7 @@ Service provide all Webalytic API:
 ## Package.json scripts
 
 ```bash
-# Start HTTP server 
+# Start HTTP server
 yarn start
 
 # Run test integration
